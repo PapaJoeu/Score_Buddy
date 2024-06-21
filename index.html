@@ -11,6 +11,8 @@
         <h1>Kev's Bitchin Print Calculator</h1>
         <form id="layoutForm">
             <div class="form-grid">
+
+                <!-- TODO: #4 Add buttons for 12x18, 13x19, 9x12, and custom -->
                 <!-- Sheet Inputs -->
                 <div class="form-group">
                     <label for="sheetWidth">Sheet Width (inches):</label>
@@ -21,6 +23,7 @@
                     <input type="number" id="sheetLength" name="sheetLength" step="0.01" value="18.0">
                 </div>
                 
+                <!-- TODO: #5 Add buttons for Business Card (3.5x2), Letter (8.5x11), Chipotle Opening Card (4x6) and Custom -->
                 <!-- Document Inputs -->
                 <div class="form-group">
                     <label for="docWidth">Document Width (inches):</label>
@@ -31,6 +34,7 @@
                     <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
                 </div>
 
+                <!-- TODO: #6 Add Buttons for 1/8th Inch, 1/16 inch, 0 Inch, and Custom -->
                 <!-- Margin Inputs -->
                 <div class="form-group">
                     <label for="gutterWidth">Gutter Width (inches):</label>
@@ -63,8 +67,9 @@
                 <option value="bifold">Bifold</option>
                 <option value="trifold">Trifold</option>
             </select>
-
+            <!-- TODO: #7 Create a new section titled "Additional Functions" -->
             <button type="button" id="calculateScoresButton">Calculate Scores</button>
+            <!-- TODO: #8 Add buttons that trigger functions such as calculate scores -->
         </div>
 
         <div id="scorePositions"></div>

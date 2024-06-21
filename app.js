@@ -50,6 +50,7 @@ function calculateLayout() {
     drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
 }
 
+// TODO: #2 rewrite this function so it actually calculates the program sequence (ask chatgpt to translate the logic from the python code to JS)
 function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength) {
     let sequence = `
         <h2>Program Sequence</h2>
@@ -117,7 +118,7 @@ function calculateScores() {
             </thead>
             <tbody>
     `;
-
+    // TODO: #1  add comments that explain the logic behind the score positions
     if (foldType === 'bifold') {
         for (let i = 0; i < docsDown; i++) {
             scores += `<tr><td>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
@@ -132,6 +133,9 @@ function calculateScores() {
     scores += '</tbody></table>';
     document.getElementById('scorePositions').innerHTML = scores;
 }
+
+// TODO: #3 add comments to this function that explain what it does
+// TODO: #3 Figure out how to scale the layout of the sheet to always be the width of the screen 
 
 function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin) {
     const canvas = document.getElementById('layoutCanvas');
