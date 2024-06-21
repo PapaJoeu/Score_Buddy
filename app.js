@@ -149,8 +149,7 @@ function calculateScores() {
             </thead>
             <tbody>
     `;
-    // TODO: #1 Add comments that explain the logic behind the score positions
-
+    
     // If the fold type is bifold
     if (foldType === 'bifold') {
         // Calculate score positions for bifold
