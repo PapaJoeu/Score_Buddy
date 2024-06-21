@@ -2,6 +2,23 @@ document.getElementById('calculateButton').addEventListener('click', calculateLa
 document.getElementById('scoreButton').addEventListener('click', showScoreOptions);
 document.getElementById('calculateScoresButton').addEventListener('click', calculateScores);
 
+document.querySelectorAll('.sheet-size-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const width = button.getAttribute('data-width');
+        const length = button.getAttribute('data-length');
+        
+        if (button.id === 'customSheetSizeButton') {
+            document.getElementById('sheetWidthGroup').style.display = 'block';
+            document.getElementById('sheetLengthGroup').style.display = 'block';
+        } else {
+            document.getElementById('sheetWidth').value = width;
+            document.getElementById('sheetLength').value = length;
+            document.getElementById('sheetWidthGroup').style.display = 'none';
+            document.getElementById('sheetLengthGroup').style.display = 'none';
+        }
+    });
+});
+
 function calculateLayout() {
     const sheetWidth = parseFloat(document.getElementById('sheetWidth').value);
     const sheetLength = parseFloat(document.getElementById('sheetLength').value);
@@ -173,28 +190,32 @@ function calculateScores() {
     document.getElementById('scorePositions').innerHTML = scores;
 }
 
-// TODO: #3 add comments to this function that explain what it does
-// TODO: #3 Figure out how to scale the layout of the sheet to always be the width of the screen 
-
+// Draw the layout of the sheet on the canvas
 function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin) {
     const canvas = document.getElementById('layoutCanvas');
     const ctx = canvas.getContext('2d');
 
+    // Scale factor to fit the sheet within the canvas
     const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
 
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Calculate the position of the sheet on the canvas
     const sheetX = (canvas.width - sheetWidth * scaleFactor) / 2;
     const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
 
+    // Draw the sheet
     ctx.strokeStyle = '#000';
     ctx.lineWidth = .5;
     ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
 
+    // Label the sheet
     ctx.fillStyle = '#000';
     ctx.font = '12px Arial';
     ctx.fillText('Sheet', sheetX + 5, sheetY + 15);
 
+    // Draw the documents within the sheet
     ctx.strokeStyle = '#007BFF';
     ctx.lineWidth = .5;
     for (let i = 0; i < docsAcross; i++) {
@@ -206,4 +227,3 @@ function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, doc
         }
     }
 }
-
