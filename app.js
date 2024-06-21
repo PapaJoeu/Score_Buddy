@@ -29,14 +29,16 @@ function calculateLayout() {
 
     const layoutDetails = `
         <h2>Layout Details</h2>
-        <p>Sheet Size: ${sheetWidth.toFixed(3)} inches x ${sheetLength.toFixed(3)} inches</p>
-        <p>Document Size: ${docWidth.toFixed(3)} inches x ${docLength.toFixed(3)} inches</p>
-        <p>Documents Across: ${docsAcross}</p>
-        <p>Documents Down: ${docsDown}</p>
-        <p>Top Margin: ${topMargin.toFixed(3)} inches</p>
-        <p>Bottom Margin: ${bottomMargin.toFixed(3)} inches</p>
-        <p>Left Margin: ${leftMargin.toFixed(3)} inches</p>
-        <p>Right Margin: ${rightMargin.toFixed(3)} inches</p>
+        <table class="details-table">
+            <tr><th>Sheet Size</th><td>${sheetWidth.toFixed(3)} inches x ${sheetLength.toFixed(3)} inches</td></tr>
+            <tr><th>Document Size</th><td>${docWidth.toFixed(3)} inches x ${docLength.toFixed(3)} inches</td></tr>
+            <tr><th>Documents Across</th><td>${docsAcross}</td></tr>
+            <tr><th>Documents Down</th><td>${docsDown}</td></tr>
+            <tr><th>Top Margin</th><td>${topMargin.toFixed(3)} inches</td></tr>
+            <tr><th>Bottom Margin</th><td>${bottomMargin.toFixed(3)} inches</td></tr>
+            <tr><th>Left Margin</th><td>${leftMargin.toFixed(3)} inches</td></tr>
+            <tr><th>Right Margin</th><td>${rightMargin.toFixed(3)} inches</td></tr>
+        </table>
     `;
 
     document.getElementById('layoutDetails').innerHTML = layoutDetails;

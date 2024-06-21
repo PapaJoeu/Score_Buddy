@@ -84,3 +84,24 @@ ul {
     width: 100%;
     height: 400px;
 }
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.details-table th, .details-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.details-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.details-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
