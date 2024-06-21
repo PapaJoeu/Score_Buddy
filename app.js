@@ -145,7 +145,7 @@ function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, doc
     const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
 
     ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = .5;
     ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
 
     ctx.fillStyle = '#000';
@@ -153,7 +153,7 @@ function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, doc
     ctx.fillText('Sheet', sheetX + 5, sheetY + 15);
 
     ctx.strokeStyle = '#007BFF';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = .5;
     for (let i = 0; i < docsAcross; i++) {
         for (let j = 0; j < docsDown; j++) {
             const x = sheetX + (leftMargin + i * (docWidth + gutterWidth)) * scaleFactor;
