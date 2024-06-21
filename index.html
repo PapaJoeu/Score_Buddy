@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Layout Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Document Layout Manager</h1>
+        <form id="layoutForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="sheetWidth">Sheet Width (inches):</label>
+                    <input type="number" id="sheetWidth" name="sheetWidth" step="0.01" value="12.0">
+                </div>
+                <div class="form-group">
+                    <label for="sheetLength">Sheet Length (inches):</label>
+                    <input type="number" id="sheetLength" name="sheetLength" step="0.01" value="18.0">
+                </div>
+                <div class="form-group">
+                    <label for="docWidth">Document Width (inches):</label>
+                    <input type="number" id="docWidth" name="docWidth" step="0.01" value="5.0">
+                </div>
+                <div class="form-group">
+                    <label for="docLength">Document Length (inches):</label>
+                    <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
+                </div>
+                <div class="form-group">
+                    <label for="gutterWidth">Gutter Width (inches):</label>
+                    <input type="number" id="gutterWidth" name="gutterWidth" step="0.01" value="0.125">
+                </div>
+                <div class="form-group">
+                    <label for="gutterLength">Gutter Length (inches):</label>
+                    <input type="number" id="gutterLength" name="gutterLength" step="0.01" value="0.125">
+                </div>
+            </div>
+            <button type="button" id="calculateButton">Calculate Layout</button>
+        </form>
+
+        <div id="layoutDetails"></div>
+        <div id="programSequence"></div>
+
+        <button type="button" id="scoreButton">Score Layout</button>
+
+        <div id="scoredOptions" class="hidden">
+            <label for="scoredWithMargins">Scored with margins?</label>
+            <select id="scoredWithMargins">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+
+            <label for="foldType">Fold Type:</label>
+            <select id="foldType">
+                <option value="bifold">Bifold</option>
+                <option value="trifold">Trifold</option>
+            </select>
+
+            <button type="button" id="calculateScoresButton">Calculate Scores</button>
+        </div>
+
+        <div id="scorePositions"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
