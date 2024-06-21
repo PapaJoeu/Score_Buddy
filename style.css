@@ -107,3 +107,56 @@ ul {
 .details-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+.sequence-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sequence-table th, .sequence-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.sequence-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.sequence-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .sequence-table, .sequence-table th, .sequence-table td {
+        font-size: 14px;
+    }
+}
+
+
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.score-table th, .score-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.score-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.score-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .score-table, .score-table th, .score-table td {
+        font-size: 14px;
+    }
+}

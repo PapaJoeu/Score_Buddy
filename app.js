@@ -27,10 +27,11 @@ function calculateLayout() {
     const leftMargin = (sheetWidth - imposedSpaceWidth) / 2;
     const rightMargin = leftMargin;
 
+    const sheetSize = `${sheetWidth.toFixed(2)}x${sheetLength.toFixed(2)}`;
     const layoutDetails = `
         <h2>Layout Details</h2>
         <table class="details-table">
-            <tr><th>Sheet Size</th><td>${sheetWidth.toFixed(3)} inches x ${sheetLength.toFixed(3)} inches</td></tr>
+            <tr><th>Sheet Size</th><td>${sheetSize}</td></tr>
             <tr><th>Document Size</th><td>${docWidth.toFixed(3)} inches x ${docLength.toFixed(3)} inches</td></tr>
             <tr><th>Documents Across</th><td>${docsAcross}</td></tr>
             <tr><th>Documents Down</th><td>${docsDown}</td></tr>
@@ -52,17 +53,31 @@ function calculateLayout() {
 function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength) {
     let sequence = `
         <h2>Program Sequence</h2>
-        <ul>
+        <table class="sequence-table">
+            <tr>
+                <th>Step</th>
+                <th>Cut Measurement</th>
+            </tr>
     `;
 
     for (let i = 1; i < docsAcross; i++) {
-        sequence += `<li>${(imposedSpaceWidth - i * (docWidth + gutterWidth)).toFixed(3)} inches</li>`;
+        sequence += `
+            <tr>
+                <td>${i}</td>
+                <td>${(imposedSpaceWidth - i * (docWidth + gutterWidth)).toFixed(3)} inches</td>
+            </tr>
+        `;
     }
     for (let i = 1; i < docsDown; i++) {
-        sequence += `<li>${(imposedSpaceLength - i * (docLength + gutterLength)).toFixed(3)} inches</li>`;
+        sequence += `
+            <tr>
+                <td>${i + docsAcross - 1}</td>
+                <td>${(imposedSpaceLength - i * (docLength + gutterLength)).toFixed(3)} inches</td>
+            </tr>
+        `;
     }
 
-    sequence += '</ul>';
+    sequence += '</table>';
     return sequence;
 }
 
@@ -94,21 +109,27 @@ function calculateScores() {
 
     let scores = `
         <h2>Score Positions</h2>
-        <ul>
+        <table class="score-table">
+            <thead>
+                <tr>
+                    <th>Score Position (inches)</th>
+                </tr>
+            </thead>
+            <tbody>
     `;
 
     if (foldType === 'bifold') {
         for (let i = 0; i < docsDown; i++) {
-            scores += `<li>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)} inches</li>`;
+            scores += `<tr><td>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
     } else if (foldType === 'trifold') {
         for (let i = 0; i < docsDown; i++) {
-            scores += `<li>${((docLength / 3) + i * (docLength + gutterLength) + marginOffset).toFixed(3)} inches</li>`;
-            scores += `<li>${((2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset).toFixed(3)} inches</li>`;
+            scores += `<tr><td>${((docLength / 3) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
+            scores += `<tr><td>${((2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
     }
 
-    scores += '</ul>';
+    scores += '</tbody></table>';
     document.getElementById('scorePositions').innerHTML = scores;
 }
 
