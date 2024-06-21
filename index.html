@@ -9,20 +9,34 @@
 <body>
     <div class="container">
         <h1>Kev's Bitchin Print Calculator</h1>
+        
+        <!-- Canvas Visualizer -->
+        <canvas id="layoutCanvas"></canvas>
+
         <form id="layoutForm">
             <div class="form-grid">
 
-                <!-- TODO: #4 Add buttons for 12x18, 13x19, 9x12, and custom -->
+                <!-- Sheet Dimension Header -->
+                <h2>Sheet Dimensions</h2>
+
+                <!-- Sheet Size Buttons -->
+                <div class="button-group">
+                    <button type="button" class="sheet-size-button" data-width="12" data-length="18">12x18</button>
+                    <button type="button" class="sheet-size-button" data-width="13" data-length="19">13x19</button>
+                    <button type="button" class="sheet-size-button" data-width="9" data-length="12">9x12</button>
+                    <button type="button" class="sheet-size-button" id="customSheetSizeButton">Custom</button>
+                </div>
+
                 <!-- Sheet Inputs -->
-                <div class="form-group">
+                <div class="form-group" id="sheetWidthGroup">
                     <label for="sheetWidth">Sheet Width (inches):</label>
                     <input type="number" id="sheetWidth" name="sheetWidth" step="0.01" value="12.0">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="sheetLengthGroup">
                     <label for="sheetLength">Sheet Length (inches):</label>
                     <input type="number" id="sheetLength" name="sheetLength" step="0.01" value="18.0">
                 </div>
-                
+
                 <!-- TODO: #5 Add buttons for Business Card (3.5x2), Letter (8.5x11), Chipotle Opening Card (4x6) and Custom -->
                 <!-- Document Inputs -->
                 <div class="form-group">
@@ -50,8 +64,6 @@
 
         <div id="layoutDetails"></div>
         <div id="programSequence"></div>
-
-        <canvas id="layoutCanvas"></canvas>
 
         <button type="button" id="scoreButton">Score Layout</button>
 

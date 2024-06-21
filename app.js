@@ -2,6 +2,23 @@ document.getElementById('calculateButton').addEventListener('click', calculateLa
 document.getElementById('scoreButton').addEventListener('click', showScoreOptions);
 document.getElementById('calculateScoresButton').addEventListener('click', calculateScores);
 
+document.querySelectorAll('.sheet-size-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const width = button.getAttribute('data-width');
+        const length = button.getAttribute('data-length');
+        
+        if (button.id === 'customSheetSizeButton') {
+            document.getElementById('sheetWidthGroup').style.display = 'block';
+            document.getElementById('sheetLengthGroup').style.display = 'block';
+        } else {
+            document.getElementById('sheetWidth').value = width;
+            document.getElementById('sheetLength').value = length;
+            document.getElementById('sheetWidthGroup').style.display = 'none';
+            document.getElementById('sheetLengthGroup').style.display = 'none';
+        }
+    });
+});
+
 function calculateLayout() {
     const sheetWidth = parseFloat(document.getElementById('sheetWidth').value);
     const sheetLength = parseFloat(document.getElementById('sheetLength').value);
@@ -88,9 +105,10 @@ function calculateSequence(layout) {
     return sequence;
 }
 
-// TODO: #2 rewrite this function so it actually calculates the program sequence (ask chatgpt to translate the logic from the python code to JS)
-function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength) {
-    let sequence = `
+function calculateProgramSequence(layout) {
+    let sequence = calculateSequence(layout);
+    
+    let sequenceHTML = `
         <h2>Program Sequence</h2>
         <table class="sequence-table">
             <tr>
@@ -99,25 +117,17 @@ function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gut
             </tr>
     `;
 
-    for (let i = 1; i < docsAcross; i++) {
-        sequence += `
+    for (let i = 0; i < sequence.length; i++) {
+        sequenceHTML += `
             <tr>
-                <td>${i}</td>
-                <td>${(imposedSpaceWidth - i * (docWidth + gutterWidth)).toFixed(3)} inches</td>
-            </tr>
-        `;
-    }
-    for (let i = 1; i < docsDown; i++) {
-        sequence += `
-            <tr>
-                <td>${i + docsAcross - 1}</td>
-                <td>${(imposedSpaceLength - i * (docLength + gutterLength)).toFixed(3)} inches</td>
+                <td>${i + 1}</td>
+                <td>${sequence[i].toFixed(3)} inches</td>
             </tr>
         `;
     }
 
-    sequence += '</table>';
-    return sequence;
+    sequenceHTML += '</table>';
+    return sequenceHTML;
 }
 
 function showScoreOptions() {
@@ -156,14 +166,22 @@ function calculateScores() {
             </thead>
             <tbody>
     `;
-    // TODO: #1  add comments that explain the logic behind the score positions
+    
+    // If the fold type is bifold
     if (foldType === 'bifold') {
+        // Calculate score positions for bifold
         for (let i = 0; i < docsDown; i++) {
+            // Each score position is located at the center of each document, plus the margin offset
             scores += `<tr><td>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
-    } else if (foldType === 'trifold') {
+    } 
+    // If the fold type is trifold
+    else if (foldType === 'trifold') {
+        // Calculate score positions for trifold
         for (let i = 0; i < docsDown; i++) {
+            // The first score position is located at one-third of the document length, plus the margin offset
             scores += `<tr><td>${((docLength / 3) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
+            // The second score position is located at two-thirds of the document length, minus a small adjustment, plus the margin offset
             scores += `<tr><td>${((2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
     }
@@ -172,28 +190,32 @@ function calculateScores() {
     document.getElementById('scorePositions').innerHTML = scores;
 }
 
-// TODO: #3 add comments to this function that explain what it does
-// TODO: #3 Figure out how to scale the layout of the sheet to always be the width of the screen 
-
+// Draw the layout of the sheet on the canvas
 function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin) {
     const canvas = document.getElementById('layoutCanvas');
     const ctx = canvas.getContext('2d');
 
+    // Scale factor to fit the sheet within the canvas
     const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
 
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Calculate the position of the sheet on the canvas
     const sheetX = (canvas.width - sheetWidth * scaleFactor) / 2;
     const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
 
+    // Draw the sheet
     ctx.strokeStyle = '#000';
     ctx.lineWidth = .5;
     ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
 
+    // Label the sheet
     ctx.fillStyle = '#000';
     ctx.font = '12px Arial';
     ctx.fillText('Sheet', sheetX + 5, sheetY + 15);
 
+    // Draw the documents within the sheet
     ctx.strokeStyle = '#007BFF';
     ctx.lineWidth = .5;
     for (let i = 0; i < docsAcross; i++) {
@@ -205,4 +227,3 @@ function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, doc
         }
     }
 }
-
