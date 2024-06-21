@@ -43,6 +43,8 @@ function calculateLayout() {
 
     const programSequence = calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength);
     document.getElementById('programSequence').innerHTML = programSequence;
+
+    drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
 }
 
 function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength) {
@@ -106,4 +108,30 @@ function calculateScores() {
 
     scores += '</ul>';
     document.getElementById('scorePositions').innerHTML = scores;
+}
+
+function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin) {
+    const canvas = document.getElementById('layoutCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1;
+
+    const sheetX = (canvas.width - sheetWidth * scaleFactor) / 2;
+    const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
+
+    ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
+
+    for (let i = 0; i < docsAcross; i++) {
+        for (let j = 0; j < docsDown; j++) {
+            const x = sheetX + (leftMargin + i * (docWidth + gutterWidth)) * scaleFactor;
+            const y = sheetY + (topMargin + j * (docLength + gutterLength)) * scaleFactor;
+
+            ctx.strokeRect(x, y, docWidth * scaleFactor, docLength * scaleFactor);
+        }
+    }
 }
