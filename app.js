@@ -120,20 +120,26 @@ function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, doc
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 1;
-
     const sheetX = (canvas.width - sheetWidth * scaleFactor) / 2;
     const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
 
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
     ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
 
+    ctx.fillStyle = '#000';
+    ctx.font = '12px Arial';
+    ctx.fillText('Sheet', sheetX + 5, sheetY + 15);
+
+    ctx.strokeStyle = '#007BFF';
+    ctx.lineWidth = 1;
     for (let i = 0; i < docsAcross; i++) {
         for (let j = 0; j < docsDown; j++) {
             const x = sheetX + (leftMargin + i * (docWidth + gutterWidth)) * scaleFactor;
             const y = sheetY + (topMargin + j * (docLength + gutterLength)) * scaleFactor;
-
             ctx.strokeRect(x, y, docWidth * scaleFactor, docLength * scaleFactor);
+            ctx.fillText(`Doc ${i + 1}-${j + 1}`, x + 5, y + 15);
         }
     }
 }
+
