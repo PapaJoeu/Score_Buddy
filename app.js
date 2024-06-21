@@ -44,10 +44,48 @@ function calculateLayout() {
 
     document.getElementById('layoutDetails').innerHTML = layoutDetails;
 
-    const programSequence = calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength);
+    const layout = {
+        sheetLength,
+        sheetWidth,
+        bottomMargin,
+        rightMargin,
+        imposedSpaceLength,
+        imposedSpaceWidth,
+        docWidth,
+        docLength,
+        gutterWidth,
+        gutterLength,
+        docsAcross,
+        docsDown
+    };
+
+    const programSequence = calculateProgramSequence(layout);
     document.getElementById('programSequence').innerHTML = programSequence;
 
     drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
+}
+
+function calculateSequence(layout) {
+    let sequence = [
+        layout.sheetLength - layout.bottomMargin,
+        layout.sheetWidth - layout.rightMargin,
+        layout.imposedSpaceLength,
+        layout.imposedSpaceWidth,
+    ];
+
+    for (let i = 1; i < layout.docsAcross; i++) {
+        sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
+    }
+
+    sequence = sequence.concat(Array(layout.docsAcross - 1).fill(layout.docWidth));
+
+    for (let i = 1; i < layout.docsDown; i++) {
+        sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterLength));
+    }
+
+    sequence = sequence.concat(Array(layout.docsDown - 1).fill(layout.docLength));
+
+    return sequence;
 }
 
 // TODO: #2 rewrite this function so it actually calculates the program sequence (ask chatgpt to translate the logic from the python code to JS)
