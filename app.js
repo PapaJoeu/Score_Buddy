@@ -88,9 +88,10 @@ function calculateSequence(layout) {
     return sequence;
 }
 
-// TODO: #2 rewrite this function so it actually calculates the program sequence (ask chatgpt to translate the logic from the python code to JS)
-function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, imposedSpaceWidth, imposedSpaceLength) {
-    let sequence = `
+function calculateProgramSequence(layout) {
+    let sequence = calculateSequence(layout);
+    
+    let sequenceHTML = `
         <h2>Program Sequence</h2>
         <table class="sequence-table">
             <tr>
@@ -99,25 +100,17 @@ function calculateProgramSequence(docsAcross, docsDown, docWidth, docLength, gut
             </tr>
     `;
 
-    for (let i = 1; i < docsAcross; i++) {
-        sequence += `
+    for (let i = 0; i < sequence.length; i++) {
+        sequenceHTML += `
             <tr>
-                <td>${i}</td>
-                <td>${(imposedSpaceWidth - i * (docWidth + gutterWidth)).toFixed(3)} inches</td>
-            </tr>
-        `;
-    }
-    for (let i = 1; i < docsDown; i++) {
-        sequence += `
-            <tr>
-                <td>${i + docsAcross - 1}</td>
-                <td>${(imposedSpaceLength - i * (docLength + gutterLength)).toFixed(3)} inches</td>
+                <td>${i + 1}</td>
+                <td>${sequence[i].toFixed(3)} inches</td>
             </tr>
         `;
     }
 
-    sequence += '</table>';
-    return sequence;
+    sequenceHTML += '</table>';
+    return sequenceHTML;
 }
 
 function showScoreOptions() {
@@ -156,14 +149,23 @@ function calculateScores() {
             </thead>
             <tbody>
     `;
-    // TODO: #1  add comments that explain the logic behind the score positions
+    // TODO: #1 Add comments that explain the logic behind the score positions
+
+    // If the fold type is bifold
     if (foldType === 'bifold') {
+        // Calculate score positions for bifold
         for (let i = 0; i < docsDown; i++) {
+            // Each score position is located at the center of each document, plus the margin offset
             scores += `<tr><td>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
-    } else if (foldType === 'trifold') {
+    } 
+    // If the fold type is trifold
+    else if (foldType === 'trifold') {
+        // Calculate score positions for trifold
         for (let i = 0; i < docsDown; i++) {
+            // The first score position is located at one-third of the document length, plus the margin offset
             scores += `<tr><td>${((docLength / 3) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
+            // The second score position is located at two-thirds of the document length, minus a small adjustment, plus the margin offset
             scores += `<tr><td>${((2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
     }
