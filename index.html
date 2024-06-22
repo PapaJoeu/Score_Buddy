@@ -10,23 +10,32 @@
     <div class="container">
         <h1>Kev's Bitchin Print Calculator</h1>
         
+        <!-- TODO: make the visualizer load on load -->
         <!-- Canvas Visualizer -->
         <canvas id="layoutCanvas"></canvas>
 
         <form id="layoutForm">
             <div class="form-grid">
 
-                <!-- Sheet Dimension Header -->
-                <h2>Sheet Dimensions</h2>
-
-                <!-- Sheet Size Buttons -->
-                <div class="button-group">
-                    <button type="button" class="sheet-size-button" data-width="12" data-length="18">12x18</button>
-                    <button type="button" class="sheet-size-button" data-width="13" data-length="19">13x19</button>
-                    <button type="button" class="sheet-size-button" data-width="9" data-length="12">9x12</button>
-                    <button type="button" class="sheet-size-button" id="customSheetSizeButton">Custom</button>
+                <!-- TODO: Make the sheet dimensions header rest above the buttons -->
+                <!-- Sheet Dimensions Header -->
+                <div class="header">
+                    <h2>Sheet Dimensions</h2>
                 </div>
 
+                <!-- TODO: make inputs at the bottom but only appear on custom click -->
+                <!-- Sheet Size Buttons -->
+                <div class="button-group">
+                    <div class="grid-row">
+                        <button type="button" class="sheet-size-button" data-width="12" data-length="18">12x18</button>
+                        <button type="button" class="sheet-size-button" data-width="13" data-length="19">13x19</button>
+                    </div>
+                    <div class="grid-row">
+                        <button type="button" class="sheet-size-button" data-width="9" data-length="12">9x12</button>
+                        <button type="button" class="sheet-size-button" id="customSheetSizeButton">Custom</button>
+                    </div>
+                </div>
+                
                 <!-- Sheet Inputs -->
                 <div class="form-group" id="sheetWidthGroup">
                     <label for="sheetWidth">Sheet Width (inches):</label>
