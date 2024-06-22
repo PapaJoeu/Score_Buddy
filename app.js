@@ -1,7 +1,9 @@
+// Event listeners for buttons
 document.getElementById('calculateButton').addEventListener('click', calculateLayout);
 document.getElementById('scoreButton').addEventListener('click', showScoreOptions);
 document.getElementById('calculateScoresButton').addEventListener('click', calculateScores);
 
+// Event listeners for sheet size buttons
 document.querySelectorAll('.sheet-size-button').forEach(button => {
     button.addEventListener('click', () => {
         const width = button.getAttribute('data-width');
@@ -19,6 +21,7 @@ document.querySelectorAll('.sheet-size-button').forEach(button => {
     });
 });
 
+// Calculate the layout based on inputs
 function calculateLayout() {
     const sheetWidth = parseFloat(document.getElementById('sheetWidth').value);
     const sheetLength = parseFloat(document.getElementById('sheetLength').value);
@@ -82,6 +85,7 @@ function calculateLayout() {
     drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
 }
 
+// Calculate the cutting sequence
 function calculateSequence(layout) {
     let sequence = [
         layout.sheetLength - layout.bottomMargin,
@@ -105,6 +109,7 @@ function calculateSequence(layout) {
     return sequence;
 }
 
+// Generate the program sequence HTML
 function calculateProgramSequence(layout) {
     let sequence = calculateSequence(layout);
     
@@ -130,10 +135,12 @@ function calculateProgramSequence(layout) {
     return sequenceHTML;
 }
 
+// Show score options
 function showScoreOptions() {
     document.getElementById('scoredOptions').classList.remove('hidden');
 }
 
+// Calculate score positions based on margins and fold type
 function calculateScores() {
     const scoredWithMargins = document.getElementById('scoredWithMargins').value === 'yes';
     const foldType = document.getElementById('foldType').value;
@@ -167,21 +174,12 @@ function calculateScores() {
             <tbody>
     `;
     
-    // If the fold type is bifold
-    if (foldType === 'bifold') {
-        // Calculate score positions for bifold
-        for (let i = 0; i < docsDown; i++) {
-            // Each score position is located at the center of each document, plus the margin offset
+    // Calculate score positions for bifold and trifold
+    for (let i = 0; i < docsDown; i++) {
+        if (foldType === 'bifold') {
             scores += `<tr><td>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
-        }
-    } 
-    // If the fold type is trifold
-    else if (foldType === 'trifold') {
-        // Calculate score positions for trifold
-        for (let i = 0; i < docsDown; i++) {
-            // The first score position is located at one-third of the document length, plus the margin offset
+        } else if (foldType === 'trifold') {
             scores += `<tr><td>${((docLength / 3) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
-            // The second score position is located at two-thirds of the document length, minus a small adjustment, plus the margin offset
             scores += `<tr><td>${((2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
         }
     }
@@ -240,19 +238,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     sheetButtons.forEach(button => {
         button.addEventListener('click', function() {
+            sheetButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
             const width = button.getAttribute('data-width');
             const length = button.getAttribute('data-length');
-            sheetWidthInput.value = width;
-            sheetLengthInput.value = length;
+            if (button.id === 'customSheetSizeButton') {
+                document.getElementById('sheetWidthGroup').classList.remove('hidden');
+            } else {
+                document.getElementById('sheetWidth').value = width;
+                document.getElementById('sheetLength').value = length;
+                document.getElementById('sheetWidthGroup').classList.add('hidden');
+            }
         });
     });
 
     docButtons.forEach(button => {
         button.addEventListener('click', function() {
+            docButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
             const width = button.getAttribute('data-width');
             const length = button.getAttribute('data-length');
-            docWidthInput.value = width;
-            docLengthInput.value = length;
+            if (button.id === 'customDocSizeButton') {
+                document.getElementById('docWidthGroup').classList.remove('hidden');
+            } else {
+                document.getElementById('docWidth').value = width;
+                document.getElementById('docLength').value = length;
+                document.getElementById('docWidthGroup').classList.add('hidden');
+            }
         });
     });
 
@@ -266,3 +280,4 @@ document.addEventListener('DOMContentLoaded', function() {
         docLengthInput.value = '';
     });
 });
+

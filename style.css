@@ -45,7 +45,6 @@ form {
     margin-bottom: 20px;
 }
 
-/* Form Grid Styles */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -92,6 +91,11 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+button.active {
+    background-color: #0056b3;
+    color: #fff;
 }
 
 /* Hidden Elements */
@@ -163,4 +167,14 @@ ul {
     .score-table, .score-table th, .score-table td {
         font-size: 14px;
     }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-row {
+        flex-direction: column;
+        gap: 5px;
+    }
 }
+
