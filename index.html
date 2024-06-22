@@ -15,47 +15,64 @@
         <canvas id="layoutCanvas"></canvas>
 
         <form id="layoutForm">
-            <div class="form-grid">
 
                 <!-- TODO: Make the sheet dimensions header rest above the buttons -->
                 <!-- Sheet Dimensions Header -->
-                <div class="header">
+                <div class="header" id="sheetDimensionsHeader">
                     <h2>Sheet Dimensions</h2>
                 </div>
 
                 <!-- TODO: make inputs at the bottom but only appear on custom click -->
                 <!-- Sheet Size Buttons -->
                 <div class="button-group">
-                    <div class="grid-row">
+                    <div class="form-grid">
                         <button type="button" class="sheet-size-button" data-width="12" data-length="18">12x18</button>
                         <button type="button" class="sheet-size-button" data-width="13" data-length="19">13x19</button>
                     </div>
-                    <div class="grid-row">
+                    <div class="form-grid">
                         <button type="button" class="sheet-size-button" data-width="9" data-length="12">9x12</button>
                         <button type="button" class="sheet-size-button" id="customSheetSizeButton">Custom</button>
                     </div>
                 </div>
                 
                 <!-- Sheet Inputs -->
-                <div class="form-group" id="sheetWidthGroup">
-                    <label for="sheetWidth">Sheet Width (inches):</label>
-                    <input type="number" id="sheetWidth" name="sheetWidth" step="0.01" value="12.0">
-                </div>
-                <div class="form-group" id="sheetLengthGroup">
-                    <label for="sheetLength">Sheet Length (inches):</label>
-                    <input type="number" id="sheetLength" name="sheetLength" step="0.01" value="18.0">
+                <div class="form-grid" id="sheetWidthGroup">
+                    <label for="sheetWidth">Width</label>
+                    <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
+                    <label for="sheetLength">Length</label>
+                    <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
                 </div>
 
-                <!-- TODO: #5 Add buttons for Business Card (3.5x2), Letter (8.5x11), Chipotle Opening Card (4x6) and Custom -->
+                <!-- Documents -->
+                <div class="header">
+                    <h2>Document Dimensions</h2>
+                </div>
+                
+                <!-- TODO: Make the buttons actually change the inputs and stuff -->
+                <!-- Document Size Buttons -->
+                <div class="button-group">
+                    <div class="grid-row">      
+                        <button type="button" class="doc-size-button" data-width="3.5" data-length="2">Business Card (3.5x2)</button>
+                        <button type="button" class="doc-size-button" data-width="8.5" data-length="11">Letter (8.5x11)</button>
+                    </div>
+                    <div class="grid-row">
+                        <button type="button" class="doc-size-button" data-width="4" data-length="6">Chipotle Opening Card (4x6)</button>
+                        <button type="button" class="doc-size-button" id="customDocSizeButton">Custom</button>
+                    </div>
+                </div>
+                
                 <!-- Document Inputs -->
-                <div class="form-group">
-                    <label for="docWidth">Document Width (inches):</label>
-                    <input type="number" id="docWidth" name="docWidth" step="0.01" value="5.0">
+                <div class="grid-row">
+                    <div class="form-group" id="docWidthGroup">
+                        <label for="docWidth">Width</label>
+                        <input type="number" id="docWidth" name="docWidth" step="0.01" value="5.0">
+                    </div>
+                    <div class="form-group" id="docLengthGroup">
+                        <label for="docLength">Length</label>
+                        <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="docLength">Document Length (inches):</label>
-                    <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
-                </div>
+
 
                 <!-- TODO: #6 Add Buttons for 1/8th Inch, 1/16 inch, 0 Inch, and Custom -->
                 <!-- Margin Inputs -->
