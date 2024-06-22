@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -13,32 +14,66 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Header Styles */
 h1 {
     text-align: center;
     font-size: 24px;
 }
 
+h2 {
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
 }
 
+.header {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Button Group Styles */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Form Grid Styles */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
+.grid-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Form Group Styles */
 .form-group {
     display: flex;
     flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
 }
 
+/* Label Styles */
 label {
     font-size: 16px;
     margin-top: 10px;
 }
 
+/* Input, Select, and Button Styles */
 input, select, button {
     font-size: 18px;
     padding: 10px;
@@ -59,15 +94,12 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Hidden Elements */
 .hidden {
     display: none;
 }
 
-h2 {
-    margin-top: 30px;
-    font-size: 20px;
-}
-
+/* Text and List Styles */
 p, ul {
     font-size: 16px;
 }
@@ -77,6 +109,7 @@ ul {
     padding: 0;
 }
 
+/* Canvas Styles */
 #layoutCanvas {
     display: block;
     margin: 20px auto;
@@ -86,76 +119,47 @@ ul {
     max-height: 400px;
 }
 
-
-.details-table {
+/* Table Styles */
+.details-table, .sequence-table, .score-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.details-table th, .details-table td {
+.details-table th, .details-table td,
+.sequence-table th, .sequence-table td,
+.score-table th, .score-table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
 }
 
-.details-table th {
+.details-table th, .score-table th {
     background-color: #f4f4f4;
     font-weight: bold;
 }
 
-.details-table tr:nth-child(even) {
+.details-table tr:nth-child(even),
+.sequence-table tr:nth-child(even),
+.score-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.sequence-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.sequence-table th, .sequence-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-.sequence-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
+/* Sequence Table Styles */
 .sequence-table th {
     background-color: #4CAF50;
     color: white;
 }
 
-@media screen and (max-width: 600px) {
-    .sequence-table, .sequence-table th, .sequence-table td {
-        font-size: 14px;
-    }
-}
-
-
-.score-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.score-table th, .score-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-.score-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
+/* Score Table Styles */
 .score-table th {
     background-color: #4CAF50;
     color: white;
 }
 
+/* Media Queries */
 @media screen and (max-width: 600px) {
+    .sequence-table, .sequence-table th, .sequence-table td,
     .score-table, .score-table th, .score-table td {
         font-size: 14px;
     }

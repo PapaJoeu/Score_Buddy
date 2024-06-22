@@ -228,3 +228,41 @@ function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, doc
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const sheetButtons = document.querySelectorAll('.sheet-size-button');
+    const docButtons = document.querySelectorAll('.doc-size-button');
+    const customSheetButton = document.getElementById('customSheetSizeButton');
+    const customDocButton = document.getElementById('customDocSizeButton');
+    const sheetWidthInput = document.getElementById('sheetWidth');
+    const sheetLengthInput = document.getElementById('sheetLength');
+    const docWidthInput = document.getElementById('docWidth');
+    const docLengthInput = document.getElementById('docLength');
+
+    sheetButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const width = button.getAttribute('data-width');
+            const length = button.getAttribute('data-length');
+            sheetWidthInput.value = width;
+            sheetLengthInput.value = length;
+        });
+    });
+
+    docButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const width = button.getAttribute('data-width');
+            const length = button.getAttribute('data-length');
+            docWidthInput.value = width;
+            docLengthInput.value = length;
+        });
+    });
+
+    customSheetButton.addEventListener('click', function() {
+        sheetWidthInput.value = '';
+        sheetLengthInput.value = '';
+    });
+
+    customDocButton.addEventListener('click', function() {
+        docWidthInput.value = '';
+        docLengthInput.value = '';
+    });
+});
