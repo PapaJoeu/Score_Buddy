@@ -49,14 +49,14 @@ form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
-.grid-row {
+/* .grid-row {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-}
+} */
 
 /* Form Group Styles */
 .form-group {
@@ -68,14 +68,14 @@ form {
 
 /* Label Styles */
 label {
-    font-size: 16px;
-    margin-top: 10px;
+    font-size: px;
+    margin-top: 5px;
 }
 
 /* Input, Select, and Button Styles */
 input, select, button {
-    font-size: 18px;
-    padding: 10px;
+    font-size: 20px;
+    padding: 9px;
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -86,7 +86,7 @@ button {
     color: white;
     border: none;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 button:hover {
