@@ -35,6 +35,8 @@
             <div class="form-grid hidden" id="sheetWidthGroup">
                 <label for="sheetWidth">Width</label>
                 <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
+            <div class="form-grid hidden" id="sheetLengthGroup">
+            </div>
                 <label for="sheetLength">Length</label>
                 <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
             </div>
@@ -46,11 +48,11 @@
 
             <!-- Document Size Buttons -->
             <div class="button-group">
-                <div class="grid-row">
+                <div class="form-grid">
                     <button type="button" class="doc-size-button" data-width="3.5" data-length="2">Business Card (3.5x2)</button>
                     <button type="button" class="doc-size-button" data-width="8.5" data-length="11">Letter (8.5x11)</button>
                 </div>
-                <div class="grid-row">
+                <div class="form-grid">
                     <button type="button" class="doc-size-button" data-width="4" data-length="6">Chipotle Opening Card (4x6)</button>
                     <button type="button" class="doc-size-button" id="customDocSizeButton">Custom</button>
                 </div>
