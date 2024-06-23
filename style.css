@@ -1,90 +1,108 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Tahoma', 'Verdana', sans-serif; /* Common Windows 98 fonts */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #c0c0c0; /* Light grey background typical of Windows 98 */
+    line-height: 1.6;
+    box-sizing: border-box;
+    font-size: 16px; /* Slightly smaller font size */
+    color: #000; /* Black text for high contrast */
 }
 
-p {
+/* Paragraph and List Styles */
+p, ul {
     font-size: 16px;
-    text-align: center;
+    text-align: left; /* Left-align text for better readability */
+    line-height: 1.8;
+    margin-bottom: 1em; /* Add margin-bottom for spacing */
 }
 
+ul {
+    list-style-type: disc; /* Add list bullets for clarity */
+    padding-left: 20px;
+}
+
+/* Container */
 .container {
-    max-width: 600px;
+    max-width: 700px; /* Slightly larger container */
     margin: auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* More padding for better spacing */
+    background-color: #fff; /* White background for content */
+    border: 2px solid #000; /* Black border */
+    box-shadow: 3px 3px #808080; /* Simple shadow for 3D effect */
 }
 
 /* Header Styles */
 h1 {
     text-align: center;
     font-size: 24px;
-    margin-bottom: auto;
+    margin-bottom: 20px;
+    color: #000080; /* Windows 98 blue */
+    border-bottom: 2px solid #000; /* Underline */
+    padding-bottom: 5px;
 }
 
 h2 {
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 20px;
+    color: #000080; /* Windows 98 blue */
 }
 
 /* Form Styles */
 form {
-    display: grid;
-    flex-direction: column;
+    display: block; /* Use block layout for simplicity */
     margin-top: 20px;
-}
-
-.header {
-    margin-top: 20px;
-    margin-bottom: 10px;
 }
 
 /* Button Group Styles */
 .button-group {
-    display: grid;
+    display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px; /* Increased gap for better touch target size */
 }
 
+/* Grid for Form Elements */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 15px;
 }
 
 /* Label Styles */
 label {
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: 10px;
+    color: #000; /* Black text */
 }
 
 /* Input, Select, and Button Styles */
 input, select, button {
     font-size: 16px;
-    padding: 9px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 8px; /* Padding for easier interaction */
+    margin-top: 10px;
+    border-radius: 0; /* No border-radius for boxy look */
+    border: 2px solid #000; /* Black border */
+    width: 100%; /* Full width for better accessibility */
 }
 
+/* Button Styles */
 button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
+    background-color: #c0c0c0; /* Grey background */
+    color: black;
+    border: 2px solid #000;
     cursor: pointer;
-    margin-top: 5px;
+    box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #fff inset, 1px -1px 0 #808080 inset, -1px 1px 0 #808080 inset; /* 3D button effect */
+    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 16px; /* Ensure button text is readable */
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #a0a0a0; /* Darker grey for hover effect */
 }
 
 button.active {
-    background-color: #4eba2a;
+    background-color: #000080; /* Windows 98 blue for active state */
     color: #fff;
 }
 
@@ -93,21 +111,11 @@ button.active {
     display: none;
 }
 
-/* Text and List Styles */
-p, ul {
-    font-size: 16px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
 /* Canvas Styles */
 #layoutCanvas {
     display: block;
     margin: 20px auto;
-    border: 1px solid #ccc;
+    border: 2px solid #000;
     width: 100%;
     height: auto;
     max-height: 400px;
@@ -123,42 +131,43 @@ ul {
 .details-table th, .details-table td,
 .sequence-table th, .sequence-table td,
 .score-table th, .score-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
+    border: 2px solid #000; /* Black border for table cells */
+    padding: 10px; /* Padding for easier reading */
     text-align: left;
 }
 
 .details-table th, .score-table th {
-    background-color: #f4f4f4;
+    background-color: #c0c0c0; /* Grey background for headers */
     font-weight: bold;
 }
 
 .details-table tr:nth-child(even),
 .sequence-table tr:nth-child(even),
 .score-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #e0e0e0; /* Light grey for alternate rows */
 }
 
 /* Sequence and Score Table Styles */
-.sequence-table th,
-.score-table th {
-    background-color: #4CAF50;
+.sequence-table th, .score-table th {
+    background-color: #000080; /* Windows 98 blue for headers */
     color: white;
 }
 
-/* Media Queries */
-@media screen and (max-width: 600px) {
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 700px) {
+    /* Adjust table font size for smaller screens */
     .sequence-table, .sequence-table th, .sequence-table td,
     .score-table, .score-table th, .score-table td {
         font-size: 14px;
     }
 
+    /* Stack form elements vertically on smaller screens */
     .form-grid {
         grid-template-columns: 1fr;
     }
 
     .grid-row {
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
     }
 }
