@@ -10,7 +10,6 @@
     <div class="container">
         <h1>Kev's Bitchin Print Calculator</h1>
 
-
         <!-- Layout Form -->
         <form id="layoutForm">
             <!-- Sheet Dimensions Header -->
@@ -84,17 +83,25 @@
         <!-- Canvas Visualizer -->
         <canvas id="layoutCanvas"></canvas>
 
+        <!-- Input Modification Buttons -->
+        <!-- TODO: Add buttons for Rotate Docs, Rotate Sheet (js will also need to be added to switch input values depending upon the button)-->
+         <div class="button-group">
+            <button type="button" id="rotateDocsButton">Rotate Docs</button>
+            <button type="button" id="rotateSheetButton">Rotate Sheet</button>
+        </div>
+
         <!-- Program Sequence -->
         <div id="programSequence"></div>
 
         <!-- Layout Details -->
         <div id="layoutDetails"></div>
 
-
+        <!-- Score Layout Button Dialogue -->
+        <!-- TODO: Make score layout button similar in appearance to calculate layout button -->
         <button type="button" id="scoreButton">Score Layout</button>
 
         <div id="scoredOptions" class="hidden">
-            <label for="scoredWithMargins">Scored with margins?</label>
+            <label for="scoredWithMargins">Score Uncircumsized (Wth Margins)?</label>
             <select id="scoredWithMargins">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>

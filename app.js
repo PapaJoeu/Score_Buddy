@@ -281,3 +281,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Rotate the input values for documents
+document.getElementById('rotateDocsButton').addEventListener('click', function() {
+    var docWidth = document.getElementById('docWidth');
+    var docLength = document.getElementById('docLength');
+    var temp = docWidth.value;
+    docWidth.value = docLength.value;
+    docLength.value = temp;
+    calculateLayout(); // Run the calculateLayout function again
+});
+
+// Rotate the input values for sheets
+document.getElementById('rotateSheetButton').addEventListener('click', function() {
+    var sheetWidth = document.getElementById('sheetWidth');
+    /**
+     * Represents the length of the sheet.
+     * @type {HTMLElement}
+     */
+    var sheetLength = document.getElementById('sheetLength');
+    var temp = sheetWidth.value;
+    sheetWidth.value = sheetLength.value;
+    sheetLength.value = temp;
+    calculateLayout(); // Run the calculateLayout function again
+});
