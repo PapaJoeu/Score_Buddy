@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Cache DOM elements
     const sheetButtons = document.querySelectorAll('.sheet-size-button');
     const docButtons = document.querySelectorAll('.doc-size-button');
     const gutterButtons = document.querySelectorAll('.gutter-size-button');
@@ -13,10 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const gutterWidthInput = document.getElementById('gutterWidth');
     const gutterLengthInput = document.getElementById('gutterLength');
 
+    // Initialize event listeners
     setupButtonEventListeners();
     setupCustomSizeEventListeners();
     setupRotateButtonEventListeners();
 
+    // Function to set up button event listeners
     function setupButtonEventListeners() {
         document.getElementById('calculateButton').addEventListener('click', calculateLayout);
         document.getElementById('scoreButton').addEventListener('click', showScoreOptions);
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Function to set up custom size input event listeners
     function setupCustomSizeEventListeners() {
         customSheetButton.addEventListener('click', () => {
             sheetWidthInput.value = '';
@@ -55,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Function to set up rotate button event listeners
     function setupRotateButtonEventListeners() {
         document.getElementById('rotateDocsButton').addEventListener('click', () => {
             rotateInputValues(docWidthInput, docLengthInput);
@@ -67,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Event handler for sheet size buttons
     function handleSheetSizeButtonClick(event) {
         const button = event.currentTarget;
         const width = button.getAttribute('data-width');
@@ -81,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleActiveClass(sheetButtons, button);
     }
 
+    // Event handler for document size buttons
     function handleDocSizeButtonClick(event) {
         const button = event.currentTarget;
         const width = button.getAttribute('data-width');
@@ -95,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleActiveClass(docButtons, button);
     }
 
+    // Event handler for gutter size buttons
     function handleGutterSizeButtonClick(event) {
         const button = event.currentTarget;
         const width = button.getAttribute('data-gutter');
@@ -108,23 +116,27 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleActiveClass(gutterButtons, button);
     }
 
+    // Function to toggle custom size input visibility
     function toggleCustomSizeInput(widthGroupId, lengthGroupId, isVisible) {
         const displayStyle = isVisible ? 'block' : 'none';
         document.getElementById(widthGroupId).style.display = displayStyle;
         document.getElementById(lengthGroupId).style.display = displayStyle;
     }
 
+    // Function to set size input values
     function setSizeInputValues(widthInput, lengthInput, width, length) {
         widthInput.value = width;
         lengthInput.value = length;
     }
 
+    // Function to rotate input values
     function rotateInputValues(input1, input2) {
         const temp = input1.value;
         input1.value = input2.value;
         input2.value = temp;
     }
 
+    // Function to calculate layout
     function calculateLayout() {
         const sheetWidth = parseFloat(sheetWidthInput.value);
         const sheetLength = parseFloat(sheetLengthInput.value);
@@ -174,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
     }
 
+    // Function to generate layout details HTML
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
         return `
             <h2>Layout Details</h2>
@@ -190,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // Function to generate program sequence HTML
     function generateProgramSequenceHTML(layout) {
         let sequence = calculateSequence(layout);
         
@@ -215,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return sequenceHTML;
     }
 
+    // Function to calculate sequence
     function calculateSequence(layout) {
         let sequence = [
             layout.sheetLength - layout.bottomMargin,
@@ -238,10 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return sequence;
     }
 
+    // Function to show score options
     function showScoreOptions() {
         document.getElementById('scoredOptions').classList.remove('hidden');
     }
 
+    // Function to calculate scores
     function calculateScores() {
         const scoredWithMargins = document.getElementById('scoredWithMargins').value === 'yes';
         const foldType = document.getElementById('foldType').value;
@@ -268,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('scorePositions').innerHTML = scoresHTML;
     }
 
+    // Function to generate scores HTML
     function generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType) {
         let scoresHTML = `
             <h2>Score Positions</h2>
@@ -293,6 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return scoresHTML;
     }
 
+    // Function to draw layout on canvas
     function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin) {
         const canvas = document.getElementById('layoutCanvas');
         const ctx = canvas.getContext('2d');
@@ -324,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Function to toggle active class on buttons
     function toggleActiveClass(buttons, activeButton) {
         buttons.forEach(button => button.classList.remove('active'));
         activeButton.classList.add('active');

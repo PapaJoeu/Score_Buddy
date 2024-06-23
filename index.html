@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kev's Bitchin' Print Caclulator</title>
+    <title>Kev's Bitchin' Print Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Kev's Bitchin Print Calculator</h1>
+        <h1>Kev's Bitchin' Print Calculator</h1>
         <p>Sure The Math Isn't Hard Why Suffer</p>
 
         <!-- Layout Form -->
@@ -19,7 +19,7 @@
             </div>
 
             <!-- Sheet Size Buttons -->
-            <div class="button-group">
+            <div class="button-group" id="sheetSizeButtons">
                 <div class="form-grid">
                     <button type="button" class="sheet-size-button" data-width="12" data-length="18">12x18</button>
                     <button type="button" class="sheet-size-button" data-width="13" data-length="19">13x19</button>
@@ -44,7 +44,7 @@
             </div>
 
             <!-- Document Size Buttons -->
-            <div class="button-group">
+            <div class="button-group" id="docSizeButtons">
                 <div class="form-grid">
                     <button type="button" class="doc-size-button" data-width="3.5" data-length="2">Business Card (3.5x2)</button>
                     <button type="button" class="doc-size-button" data-width="8.5" data-length="11">Letter (8.5x11)</button>
@@ -71,7 +71,7 @@
             </div>
 
             <!-- Gutter Size Buttons -->
-            <div class="button-group">
+            <div class="button-group" id="gutterSizeButtons">
                 <div class="form-grid">
                     <button type="button" class="gutter-size-button" data-gutter="0.125">1/8</button>
                     <button type="button" class="gutter-size-button" data-gutter="0.25">1/4</button>
