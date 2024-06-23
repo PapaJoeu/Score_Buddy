@@ -3,72 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Layout Manager</title>
+    <title>Kev's Bitchin' Print Caclulator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Kev's Bitchin Print Calculator</h1>
-        
-        <!-- Canvas Visualizer -->
-        <canvas id="layoutCanvas"></canvas>
+        <p>Sure The Math Isn't Hard Why Suffer</p>
 
+        <!-- Layout Form -->
         <form id="layoutForm">
-            <div class="form-grid">
-
-                <!-- Sheet Dimension Header -->
+            <!-- Sheet Dimensions Header -->
+            <div class="header" id="sheetDimensionsHeader">
                 <h2>Sheet Dimensions</h2>
+            </div>
 
-                <!-- Sheet Size Buttons -->
-                <div class="button-group">
+            <!-- Sheet Size Buttons -->
+            <div class="button-group">
+                <div class="form-grid">
                     <button type="button" class="sheet-size-button" data-width="12" data-length="18">12x18</button>
                     <button type="button" class="sheet-size-button" data-width="13" data-length="19">13x19</button>
+                </div>
+                <div class="form-grid">
                     <button type="button" class="sheet-size-button" data-width="9" data-length="12">9x12</button>
                     <button type="button" class="sheet-size-button" id="customSheetSizeButton">Custom</button>
                 </div>
+            </div>
 
-                <!-- Sheet Inputs -->
-                <div class="form-group" id="sheetWidthGroup">
-                    <label for="sheetWidth">Sheet Width (inches):</label>
-                    <input type="number" id="sheetWidth" name="sheetWidth" step="0.01" value="12.0">
-                </div>
-                <div class="form-group" id="sheetLengthGroup">
-                    <label for="sheetLength">Sheet Length (inches):</label>
-                    <input type="number" id="sheetLength" name="sheetLength" step="0.01" value="18.0">
-                </div>
+            <!-- Sheet Inputs -->
+            <div class="form-grid hidden" id="sheetWidthGroup">
+                <label for="sheetWidth">Width</label>
+                <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
+            </div>
+            <div class="form-grid hidden" id="sheetLengthGroup">
+                <label for="sheetLength">Length</label>
+                <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
+            </div>
 
-                <!-- TODO: #5 Add buttons for Business Card (3.5x2), Letter (8.5x11), Chipotle Opening Card (4x6) and Custom -->
-                <!-- Document Inputs -->
-                <div class="form-group">
-                    <label for="docWidth">Document Width (inches):</label>
-                    <input type="number" id="docWidth" name="docWidth" step="0.01" value="5.0">
-                </div>
-                <div class="form-group">
-                    <label for="docLength">Document Length (inches):</label>
-                    <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
-                </div>
+            <!-- Document Dimensions Header -->
+            <div class="header">
+                <h2>Document Dimensions</h2>
+            </div>
 
-                <!-- TODO: #6 Add Buttons for 1/8th Inch, 1/16 inch, 0 Inch, and Custom -->
-                <!-- Margin Inputs -->
-                <div class="form-group">
-                    <label for="gutterWidth">Gutter Width (inches):</label>
-                    <input type="number" id="gutterWidth" name="gutterWidth" step="0.01" value="0.125">
+            <!-- Document Size Buttons -->
+            <div class="button-group">
+                <div class="form-grid">
+                    <button type="button" class="doc-size-button" data-width="3.5" data-length="2">Business Card (3.5x2)</button>
+                    <button type="button" class="doc-size-button" data-width="8.5" data-length="11">Letter (8.5x11)</button>
                 </div>
-                <div class="form-group">
-                    <label for="gutterLength">Gutter Length (inches):</label>
-                    <input type="number" id="gutterLength" name="gutterLength" step="0.01" value="0.125">
+                <div class="form-grid">
+                    <button type="button" class="doc-size-button" data-width="4" data-length="6">Chipotle Opening Card (4x6)</button>
+                    <button type="button" class="doc-size-button" id="customDocSizeButton">Custom</button>
                 </div>
             </div>
+
+            <!-- Document Inputs -->
+            <div class="form-grid hidden" id="docWidthGroup">
+                <label for="docWidth">Width</label>
+                <input type="number" id="docWidth" name="docWidth" step="0.01" value="5.0">
+                <label for="docLength">Length</label>
+                <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
+            </div>
+
+            <!-- Gutter Dimensions Header -->
+            <div class="header">
+                <h2>Gutter Sizes</h2>
+            </div>
+
+            <!-- Gutter Size Buttons -->
+            <div class="button-group">
+                <div class="form-grid">
+                    <button type="button" class="gutter-size-button" data-gutter="0.125">1/8</button>
+                    <button type="button" class="gutter-size-button" data-gutter="0.25">1/4</button>
+                </div>
+                <div class="form-grid">
+                    <button type="button" class="gutter-size-button" data-gutter="0.5">1/2</button>
+                    <button type="button" class="gutter-size-button" id="customGutterSizeButton">Custom</button>
+                </div>
+            </div>
+
+            <!-- Gutter Inputs -->
+            <div class="form-group hidden" id="gutterWidthGroup">
+                <label for="gutterWidth">Gutter Width (inches):</label>
+                <input type="number" id="gutterWidth" name="gutterWidth" step="0.01" value="0.125">
+            </div>
+            <div class="form-group hidden" id="gutterLengthGroup">
+                <label for="gutterLength">Gutter Length (inches):</label>
+                <input type="number" id="gutterLength" name="gutterLength" step="0.01" value="0.125">
+            </div>
+
             <button type="button" id="calculateButton">Calculate Layout</button>
         </form>
 
-        <div id="layoutDetails"></div>
+        <!-- Canvas Visualizer -->
+        <canvas id="layoutCanvas" width="800" height="600"></canvas>
+
+        <!-- Input Modification Buttons -->
+        <div class="button-group">
+            <button type="button" id="rotateDocsButton">Rotate Docs</button>
+            <button type="button" id="rotateSheetButton">Rotate Sheet</button>
+        </div>
+
+        <!-- Program Sequence -->
         <div id="programSequence"></div>
 
+        <!-- Layout Details -->
+        <div id="layoutDetails"></div>
+
+        <!-- Score Layout Button Dialogue -->
         <button type="button" id="scoreButton">Score Layout</button>
 
         <div id="scoredOptions" class="hidden">
-            <label for="scoredWithMargins">Scored with margins?</label>
+            <label for="scoredWithMargins">Score Uncircumsized (With Margins)?</label>
             <select id="scoredWithMargins">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
@@ -79,9 +125,7 @@
                 <option value="bifold">Bifold</option>
                 <option value="trifold">Trifold</option>
             </select>
-            <!-- TODO: #7 Create a new section titled "Additional Functions" -->
             <button type="button" id="calculateScoresButton">Calculate Scores</button>
-            <!-- TODO: #8 Add buttons that trigger functions such as calculate scores -->
         </div>
 
         <div id="scorePositions"></div>
