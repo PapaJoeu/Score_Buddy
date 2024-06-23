@@ -33,8 +33,8 @@
             <div class="form-grid hidden" id="sheetWidthGroup">
                 <label for="sheetWidth">Width</label>
                 <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
-            <div class="form-grid hidden" id="sheetLengthGroup">
             </div>
+            <div class="form-grid hidden" id="sheetLengthGroup">
                 <label for="sheetLength">Length</label>
                 <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
             </div>
@@ -64,15 +64,29 @@
                 <input type="number" id="docLength" name="docLength" step="0.01" value="7.0">
             </div>
 
-            <!-- TODO: Add Label for Margins -->
+            <!-- Gutter Dimensions Header -->
+            <div class="header">
+                <h2>Gutter Sizes</h2>
+            </div>
 
-            <!-- TODO: Add Buttons for Gutters (1/8th, 1/4, 1/2, custom) -->
-            <!-- Margin Inputs -->
-            <div class="form-group">
+            <!-- Gutter Size Buttons -->
+            <div class="button-group">
+                <div class="form-grid">
+                    <button type="button" class="gutter-size-button" data-gutter="0.125">1/8</button>
+                    <button type="button" class="gutter-size-button" data-gutter="0.25">1/4</button>
+                </div>
+                <div class="form-grid">
+                    <button type="button" class="gutter-size-button" data-gutter="0.5">1/2</button>
+                    <button type="button" class="gutter-size-button" id="customGutterSizeButton">Custom</button>
+                </div>
+            </div>
+
+            <!-- Gutter Inputs -->
+            <div class="form-group hidden" id="gutterWidthGroup">
                 <label for="gutterWidth">Gutter Width (inches):</label>
                 <input type="number" id="gutterWidth" name="gutterWidth" step="0.01" value="0.125">
             </div>
-            <div class="form-group">
+            <div class="form-group hidden" id="gutterLengthGroup">
                 <label for="gutterLength">Gutter Length (inches):</label>
                 <input type="number" id="gutterLength" name="gutterLength" step="0.01" value="0.125">
             </div>
@@ -81,11 +95,10 @@
         </form>
 
         <!-- Canvas Visualizer -->
-        <canvas id="layoutCanvas"></canvas>
+        <canvas id="layoutCanvas" width="800" height="600"></canvas>
 
         <!-- Input Modification Buttons -->
-        <!-- TODO: Add buttons for Rotate Docs, Rotate Sheet (js will also need to be added to switch input values depending upon the button)-->
-         <div class="button-group">
+        <div class="button-group">
             <button type="button" id="rotateDocsButton">Rotate Docs</button>
             <button type="button" id="rotateSheetButton">Rotate Sheet</button>
         </div>
@@ -97,11 +110,10 @@
         <div id="layoutDetails"></div>
 
         <!-- Score Layout Button Dialogue -->
-        <!-- TODO: Make score layout button similar in appearance to calculate layout button -->
         <button type="button" id="scoreButton">Score Layout</button>
 
         <div id="scoredOptions" class="hidden">
-            <label for="scoredWithMargins">Score Uncircumsized (Wth Margins)?</label>
+            <label for="scoredWithMargins">Score Uncircumsized (With Margins)?</label>
             <select id="scoredWithMargins">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
