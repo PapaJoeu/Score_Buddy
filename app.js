@@ -193,17 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const docWidthDisplay = docWidth % 1 === 0 ? docWidth.toFixed(0) : docWidth.toFixed(3);
         const docLengthDisplay = docLength % 1 === 0 ? docLength.toFixed(0) : docLength.toFixed(3);
         const nUp = docsAcross * docsDown;
+        const areaUsed = (docWidth * docLength * nUp) / (sheetWidth * sheetLength);
 
         return `
             <h2>Layout Details</h2>
             <table class="details-table">
-                <tr><th>Sheet Size</th><td>${sheetWidthDisplay}x${sheetLengthDisplay} in</td></tr>
-                <tr><th>Document Size</th><td>${docWidthDisplay} in x ${docLengthDisplay} in</td></tr>
-                <tr><th>N-Up</th><td>${nUp} (${docsAcross}x${docsDown})</td></tr>
-                <tr><th>Top Margin</th><td>${topMargin.toFixed(3)} in</td></tr>
-                <tr><th>Bottom Margin</th><td>${bottomMargin.toFixed(3)} in</td></tr>
-                <tr><th>Left Margin</th><td>${leftMargin.toFixed(3)} in</td></tr>
-                <tr><th>Right Margin</th><td>${rightMargin.toFixed(3)} in</td></tr>
+            <tr><th>Sheet Size</th><td>${sheetWidthDisplay}x${sheetLengthDisplay} in</td></tr>
+            <tr><th>Document Size</th><td>${docWidthDisplay} in x ${docLengthDisplay} in</td></tr>
+            <tr><th>N-Up</th><td>${nUp} (${docsAcross}x${docsDown})</td></tr>
+            <tr><th>Top Margin</th><td>${topMargin.toFixed(3)} in</td></tr>
+            <tr><th>Bottom Margin</th><td>${bottomMargin.toFixed(3)} in</td></tr>
+            <tr><th>Left Margin</th><td>${leftMargin.toFixed(3)} in</td></tr>
+            <tr><th>Right Margin</th><td>${rightMargin.toFixed(3)} in</td></tr>
+            <tr><th>Coverage Percentage</th><td>${(areaUsed * 100).toFixed(2)}%</td></tr>
+            <tr><th>Wasted Space</th><td>${(100 - (areaUsed * 100)).toFixed(2)}%</td></tr>
             </table>
         `;
     }
