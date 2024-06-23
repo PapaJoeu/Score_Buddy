@@ -188,17 +188,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to generate layout details HTML
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
+        const sheetWidthDisplay = sheetWidth % 1 === 0 ? sheetWidth.toFixed(0) : sheetWidth.toFixed(2);
+        const sheetLengthDisplay = sheetLength % 1 === 0 ? sheetLength.toFixed(0) : sheetLength.toFixed(2);
+        const docWidthDisplay = docWidth % 1 === 0 ? docWidth.toFixed(0) : docWidth.toFixed(3);
+        const docLengthDisplay = docLength % 1 === 0 ? docLength.toFixed(0) : docLength.toFixed(3);
+        const nUp = docsAcross * docsDown;
+
         return `
             <h2>Layout Details</h2>
             <table class="details-table">
-                <tr><th>Sheet Size</th><td>${sheetWidth.toFixed(2)}x${sheetLength.toFixed(2)}</td></tr>
-                <tr><th>Document Size</th><td>${docWidth.toFixed(3)} inches x ${docLength.toFixed(3)} inches</td></tr>
-                <tr><th>Documents Across</th><td>${docsAcross}</td></tr>
-                <tr><th>Documents Down</th><td>${docsDown}</td></tr>
-                <tr><th>Top Margin</th><td>${topMargin.toFixed(3)} inches</td></tr>
-                <tr><th>Bottom Margin</th><td>${bottomMargin.toFixed(3)} inches</td></tr>
-                <tr><th>Left Margin</th><td>${leftMargin.toFixed(3)} inches</td></tr>
-                <tr><th>Right Margin</th><td>${rightMargin.toFixed(3)} inches</td></tr>
+                <tr><th>Sheet Size</th><td>${sheetWidthDisplay}x${sheetLengthDisplay} in</td></tr>
+                <tr><th>Document Size</th><td>${docWidthDisplay} in x ${docLengthDisplay} in</td></tr>
+                <tr><th>N-Up</th><td>${nUp} (${docsAcross}x${docsDown})</td></tr>
+                <tr><th>Top Margin</th><td>${topMargin.toFixed(3)} in</td></tr>
+                <tr><th>Bottom Margin</th><td>${bottomMargin.toFixed(3)} in</td></tr>
+                <tr><th>Left Margin</th><td>${leftMargin.toFixed(3)} in</td></tr>
+                <tr><th>Right Margin</th><td>${rightMargin.toFixed(3)} in</td></tr>
             </table>
         `;
     }
