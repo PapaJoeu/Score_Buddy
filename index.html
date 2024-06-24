@@ -89,17 +89,42 @@
                 <label for="gutterLength">Length</label>
                 <input type="number" id="gutterLength" name="gutterLength" step="0.125" value="0.125">
             </div>
-
-            <button type="button" id="calculateButton">Calculate Layout</button>
         </form>
 
         <!-- Canvas Visualizer -->
+         <div class="header">
+            <h2>Layout Visualizer</h2>
+        </div>
         <canvas id="layoutCanvas" width="800" height="600"></canvas>
 
         <!-- Input Modification Buttons -->
         <div class="button-group">
-            <button type="button" id="rotateDocsButton">Rotate Docs</button>
-            <button type="button" id="rotateSheetButton">Rotate Sheet</button>
+            <div class="form-grid">
+                <button type="button" id="rotateDocsButton">Rotate Docs</button>
+                <button type="button" id="rotateSheetButton">Rotate Sheet</button>
+            </div>
+        </div>
+
+        <!-- Calculate and Score Button -->
+        <div class="button-group">
+            <div class="form-grid">
+                <button type="button" id="calculateButton">Calculate Layout</button>
+                <button type="button" id="scoreButton">Score Layout</button>
+            </div>
+            <div id="scoredOptions" class="hidden">
+                <label for="scoredWithMargins">Trim The Margins?</label>
+                <select id="scoredWithMargins">
+                    <option value="no">Trim The Margins Then Score</option>
+                    <option value="yes">Score Without Trimming</option>
+                </select>
+
+                <label for="foldType">Fold Type:</label>
+                <select id="foldType">
+                    <option value="bifold">Bifold</option>
+                    <option value="trifold">Trifold</option>
+                </select>
+                <button type="button" id="calculateScoresButton">Calculate Scores</button>
+            </div>        
         </div>
 
         <!-- Program Sequence -->
@@ -107,24 +132,6 @@
 
         <!-- Layout Details -->
         <div id="layoutDetails"></div>
-
-        <!-- Score Layout Button Dialogue -->
-        <button type="button" id="scoreButton">Score Layout</button>
-
-        <div id="scoredOptions" class="hidden">
-            <label for="scoredWithMargins">Score Uncircumsized (With Margins)?</label>
-            <select id="scoredWithMargins">
-                <option value="no">No</option>
-                <option value="yes">Yes</option>
-            </select>
-
-            <label for="foldType">Fold Type:</label>
-            <select id="foldType">
-                <option value="bifold">Bifold</option>
-                <option value="trifold">Trifold</option>
-            </select>
-            <button type="button" id="calculateScoresButton">Calculate Scores</button>
-        </div>
 
         <div id="scorePositions"></div>
     </div>
