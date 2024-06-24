@@ -36,6 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
         gutterButtons.forEach(button => {
             button.addEventListener('click', handleGutterSizeButtonClick);
         });
+
+        // Preselect default buttons (12x18 sheet, 3.5x2 doc, 0.125 gutter)
+        const defaultSheetButton = document.querySelector('.sheet-size-button[data-width="12"][data-length="18"]');
+        const defaultDocButton = document.querySelector('.doc-size-button[data-width="3.5"][data-length="2"]');
+        const defaultGutterButton = document.querySelector('.gutter-size-button[data-gutter="0.125"]');
+        const calculateButton = document.getElementById('calculateButton');
+
+        // Set default values and calculate layout
+        defaultSheetButton.classList.add('active');
+        defaultDocButton.classList.add('active');
+        defaultGutterButton.classList.add('active');
+        calculateButton.click();
     }
 
     // Function to set up custom size input event listeners
