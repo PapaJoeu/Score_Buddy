@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+# Ignore notes folder
+notes/
+
 # IDE - Visual Studio Code
 .vscode/
 
