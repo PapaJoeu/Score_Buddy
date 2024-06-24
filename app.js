@@ -378,7 +378,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to toggle active class on buttons
     function toggleActiveClass(buttons, activeButton) {
-        buttons.forEach(button => button.classList.remove('active'));
-        activeButton.classList.add('active');
+        buttons.forEach(button => {
+            if (button === activeButton) {
+                button.classList.toggle('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
     }
 });
