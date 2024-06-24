@@ -156,27 +156,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const docLength = parseFloat(docLengthInput.value);
         const gutterWidth = parseFloat(gutterWidthInput.value);
         const gutterLength = parseFloat(gutterLengthInput.value);
-
+    
         const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
         const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
         const totalGutterWidth = (docsAcross - 1) * gutterWidth;
         const totalGutterLength = (docsDown - 1) * gutterLength;
         const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
         const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
-
+    
         if (imposedSpaceWidth > sheetWidth || imposedSpaceLength > sheetLength) {
             alert("The current layout is not possible with the given sheet dimensions.");
             return;
         }
-
+    
         const topMargin = (sheetLength - imposedSpaceLength) / 2;
         const bottomMargin = topMargin;
         const leftMargin = (sheetWidth - imposedSpaceWidth) / 2;
         const rightMargin = leftMargin;
-
+    
         const layoutDetailsHTML = generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin);
         document.getElementById('layoutDetails').innerHTML = layoutDetailsHTML;
-
+    
         const layout = {
             sheetLength,
             sheetWidth,
@@ -191,12 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
             docsAcross,
             docsDown
         };
-
+    
         const programSequenceHTML = generateProgramSequenceHTML(layout);
         document.getElementById('programSequence').innerHTML = programSequenceHTML;
-
+    
         drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
     }
+    
 
     // Function to generate layout details HTML
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
@@ -278,34 +279,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('scoredOptions').classList.remove('hidden');
     }
 
-    // Function to calculate scores
     function calculateScores() {
         const scoredWithMargins = document.getElementById('scoredWithMargins').value === 'yes';
         const foldType = document.getElementById('foldType').value;
-
+    
         const sheetWidth = parseFloat(sheetWidthInput.value);
         const sheetLength = parseFloat(sheetLengthInput.value);
         const docWidth = parseFloat(docWidthInput.value);
         const docLength = parseFloat(docLengthInput.value);
         const gutterWidth = parseFloat(gutterWidthInput.value);
         const gutterLength = parseFloat(gutterLengthInput.value);
-
+    
         const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
         const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
         const totalGutterWidth = (docsAcross - 1) * gutterWidth;
         const totalGutterLength = (docsDown - 1) * gutterLength;
         const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
         const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
-
+    
         const topMargin = (sheetLength - imposedSpaceLength) / 2;
-
+    
         let marginOffset = scoredWithMargins ? topMargin : 0;
-
-        let scoresHTML = generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType);
-        document.getElementById('scorePositions').innerHTML = scoresHTML;
+    
+        let scorePositions = [];
+        for (let i = 0; i < docsDown; i++) {
+            if (foldType === 'bifold') {
+                scorePositions.push({ y: (docLength / 2) + i * (docLength + gutterLength) + marginOffset });
+            } else if (foldType === 'trifold') {
+                scorePositions.push({ y: (docLength / 3) + i * (docLength + gutterLength) + marginOffset });
+                scorePositions.push({ y: (2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset });
+            }
+        }
+    
+        drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, (sheetWidth - imposedSpaceWidth) / 2, scorePositions);
+        generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType);
     }
 
-    // Function to generate scores HTML
     function generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType) {
         let scoresHTML = `
             <h2>Score Positions</h2>
@@ -328,35 +337,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         scoresHTML += '</tbody></table>';
-        return scoresHTML;
+        document.getElementById('scorePositions').innerHTML = scoresHTML;
     }
 
-    // Function to draw layout on canvas
-    function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin) {
+    function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin, scorePositions) {
         // Get the canvas element and its context
         const canvas = document.getElementById('layoutCanvas');
         const ctx = canvas.getContext('2d');
-
+    
         // Calculate the scale factor based on the canvas size and sheet dimensions
         const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
-
+    
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
         // Calculate the position of the sheet on the canvas
         const sheetX = (canvas.width - sheetWidth * scaleFactor) / 2;
         const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
-
+    
         // Draw the sheet outline
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 0.5;
         ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
-
+    
         // Display the sheet size
         ctx.fillStyle = '#000';
         ctx.font = '12px Arial';
         ctx.fillText(`Sheet Size: ${sheetWidth}x${sheetLength}, Gutter Size: ${gutterWidth} x ${gutterLength}`, sheetX + 5, sheetY + 15);
-
+    
         // Draw the document rectangles
         ctx.strokeStyle = '#007BFF';
         ctx.lineWidth = 0.5;
@@ -365,16 +373,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Calculate the position of each document rectangle
                 const x = sheetX + (leftMargin + i * (docWidth + gutterWidth)) * scaleFactor;
                 const y = sheetY + (topMargin + j * (docLength + gutterLength)) * scaleFactor;
-                
+    
                 // Draw the document rectangle
                 ctx.strokeRect(x, y, docWidth * scaleFactor, docLength * scaleFactor);
-                
-                // Display the document label as centered text counting from top left
+    
+                // Display the document label as centered text
                 ctx.fillText(`${i + 1 + j * docsAcross}`, x + docWidth * scaleFactor / 2 - 5, y + docLength * scaleFactor / 2 + 5);
-
             }
         }
+    
+        // Draw score lines if score positions are provided
+        if (scorePositions && scorePositions.length > 0) {
+            ctx.strokeStyle = 'magenta';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);  // Make the line dotted
+    
+            ctx.beginPath();
+            scorePositions.forEach(position => {
+                const y = sheetY + (topMargin + position.y) * scaleFactor;
+                ctx.moveTo(sheetX, y);
+                ctx.lineTo(sheetX + sheetWidth * scaleFactor, y);
+            });
+            ctx.stroke();
+            
+            // Reset the line dash setting to solid for future drawings
+            ctx.setLineDash([]);
+        }
     }
+    
+    
+    
 
     // Function to toggle active class on buttons
     function toggleActiveClass(buttons, activeButton) {
