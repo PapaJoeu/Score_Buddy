@@ -52,23 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to set up custom size input event listeners
     function setupCustomSizeEventListeners() {
-        customSheetButton.addEventListener('click', () => {
-            sheetWidthInput.value = '';
-            sheetLengthInput.value = '';
-            toggleActiveClass(sheetButtons, customSheetButton);
-        });
+        const resetInputValues = (input1, input2) => {
+            input1.value = '';
+            input2.value = '';
+        };
 
-        customDocButton.addEventListener('click', () => {
-            docWidthInput.value = '';
-            docLengthInput.value = '';
-            toggleActiveClass(docButtons, customDocButton);
-        });
+        const setupCustomButtonEventListener = (customButton, widthInput, lengthInput, buttons) => {
+            customButton.addEventListener('click', () => {
+                resetInputValues(widthInput, lengthInput);
+                toggleActiveClass(buttons, customButton);
+            });
+        };
 
-        customGutterButton.addEventListener('click', () => {
-            gutterWidthInput.value = '';
-            gutterLengthInput.value = '';
-            toggleActiveClass(gutterButtons, customGutterButton);
-        });
+        setupCustomButtonEventListener(customSheetButton, sheetWidthInput, sheetLengthInput, sheetButtons);
+        setupCustomButtonEventListener(customDocButton, docWidthInput, docLengthInput, docButtons);
+        setupCustomButtonEventListener(customGutterButton, gutterWidthInput, gutterLengthInput, gutterButtons);
     }
 
     // Function to set up rotate button event listeners
