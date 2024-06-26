@@ -21,27 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to set up button event listeners
     function setupButtonEventListeners() {
-        document.getElementById('calculateButton').addEventListener('click', calculateLayout);
-        document.getElementById('scoreButton').addEventListener('click', showScoreOptions);
-        document.getElementById('calculateScoresButton').addEventListener('click', calculateScores);
+        const calculateButton = document.getElementById('calculateButton');
+        const scoreButton = document.getElementById('scoreButton');
+        const calculateScoresButton = document.getElementById('calculateScoresButton');
 
-        sheetButtons.forEach(button => {
-            button.addEventListener('click', handleSheetSizeButtonClick);
-        });
+        calculateButton.addEventListener('click', calculateLayout);
+        scoreButton.addEventListener('click', showScoreOptions);
+        calculateScoresButton.addEventListener('click', calculateScores);
 
-        docButtons.forEach(button => {
-            button.addEventListener('click', handleDocSizeButtonClick);
-        });
+        const addEventListenerToButtons = (buttons, eventHandler) => {
+            buttons.forEach(button => {
+                button.addEventListener('click', eventHandler);
+            });
+        };
 
-        gutterButtons.forEach(button => {
-            button.addEventListener('click', handleGutterSizeButtonClick);
-        });
+        addEventListenerToButtons(sheetButtons, handleSheetSizeButtonClick);
+        addEventListenerToButtons(docButtons, handleDocSizeButtonClick);
+        addEventListenerToButtons(gutterButtons, handleGutterSizeButtonClick);
 
         // Preselect default buttons (12x18 sheet, 3.5x2 doc, 0.125 gutter)
         const defaultSheetButton = document.querySelector('.sheet-size-button[data-width="12"][data-length="18"]');
         const defaultDocButton = document.querySelector('.doc-size-button[data-width="3.5"][data-length="2"]');
         const defaultGutterButton = document.querySelector('.gutter-size-button[data-gutter="0.125"]');
-        const calculateButton = document.getElementById('calculateButton');
 
         // Set default values and calculate layout
         defaultSheetButton.classList.add('active');
