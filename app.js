@@ -72,15 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to set up rotate button event listeners
     function setupRotateButtonEventListeners() {
-        document.getElementById('rotateDocsButton').addEventListener('click', () => {
-            rotateInputValues(docWidthInput, docLengthInput);
-            calculateLayout();
-        });
+        const rotateDocsButton = document.getElementById('rotateDocsButton');
+        const rotateSheetButton = document.getElementById('rotateSheetButton');
 
-        document.getElementById('rotateSheetButton').addEventListener('click', () => {
-            rotateInputValues(sheetWidthInput, sheetLengthInput);
-            calculateLayout();
-        });
+        rotateDocsButton.addEventListener('click', handleRotateButtonClick.bind(null, docWidthInput, docLengthInput));
+        rotateSheetButton.addEventListener('click', handleRotateButtonClick.bind(null, sheetWidthInput, sheetLengthInput));
+    }
+
+    // Event handler for rotate button click
+    function handleRotateButtonClick(input1, input2) {
+        rotateInputValues(input1, input2);
+        calculateLayout();
     }
 
     // Event handler for sheet size buttons
