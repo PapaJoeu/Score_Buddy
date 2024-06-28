@@ -99,16 +99,20 @@
          <div class="header">
             <h2>Layout Visualizer</h2>
         </div>
-        <canvas id="layoutCanvas" width="800" height="600"></canvas>
-
         <!-- Input Modification Buttons -->
         <div class="button-group">
             <div class="form-grid">
                 <button type="button" id="rotateDocsButton">Rotate Docs</button>
                 <button type="button" id="rotateSheetButton">Rotate Sheet</button>
+                <!-- TODO: Make This Button Rotate Both -->
                 <button type="button" id="rotateDocsAndSheetButton">Rotate Docs and Sheet</button>
             </div>
         </div>
+
+        <!-- The Actual Visualizer -->
+        <canvas id="layoutCanvas"></canvas>
+
+
 
         <!-- Calculate and Score Button -->
         <div class="button-group">
