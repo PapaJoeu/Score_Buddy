@@ -358,17 +358,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
         // Draw the sheet outline
         ctx.strokeStyle = '#000';
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
-    
-        // Display the sheet size
-        ctx.fillStyle = '#000';
-        ctx.font = '12px Arial';
-        ctx.fillText(`Sheet Size: ${sheetWidth}x${sheetLength}, Gutter Size: ${gutterWidth} x ${gutterLength}`, sheetX + 5, sheetY + 15);
     
         // Draw the document rectangles
         ctx.strokeStyle = '#007BFF';
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         for (let i = 0; i < docsAcross; i++) {
             for (let j = 0; j < docsDown; j++) {
                 // Calculate the position of each document rectangle

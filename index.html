@@ -56,11 +56,11 @@
             <!-- Document Inputs -->
             <div class="form-grid hidden" id="docWidthGroup">
                 <label for="docWidth">Width</label>
-                <input type="number" id="docWidth" name="docWidth" step="0.01" value="3.5">
+                <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5">
             </div>
             <div class="form-grid hidden" id="docLengthGroup">
                 <label for="docLength">Length</label>
-                <input type="number" id="docLength" name="docLength" step="0.01" value="2">
+                <input type="number" id="docLength" name="docLength" step="0.25" value="2">
             </div>
 
             <!-- Gutter Dimensions Header -->
@@ -72,6 +72,7 @@
             <div class="button-group" id="gutterSizeButtons">
                 <div class="form-grid">
                     <button type="button" class="gutter-size-button" data-gutter="0.125">1/8</button>
+                    <!-- TODO: Make It So Gutters Only Dislay 2 buttons 1/8 and More Options () -->
                     <button type="button" class="gutter-size-button" data-gutter="0.25">1/4</button>
                     <button type="button" class="gutter-size-button" data-gutter="0.5">1/2</button>
                     <button type="button" class="gutter-size-button" id="customGutterSizeButton">Custom</button>
