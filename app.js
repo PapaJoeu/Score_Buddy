@@ -78,10 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         rotateDocsButton.addEventListener('click', handleRotateButtonClick.bind(null, docWidthInput, docLengthInput));
         rotateSheetButton.addEventListener('click', handleRotateButtonClick.bind(null, sheetWidthInput, sheetLengthInput));
-        rotateDocsAndSheetButton.addEventListener('click', () => {
-            handleRotateButtonClick(docWidthInput, docLengthInput);
-            handleRotateButtonClick(sheetWidthInput, sheetLengthInput);
-        });
+        
     }
 
     // Event handler for rotate button click
