@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 
-    // Function to generate layout details HTML
+    // TODO: Refactor Out Into Separate File layout.js
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
         const sheetWidthDisplay = sheetWidth % 1 === 0 ? sheetWidth.toFixed(0) : sheetWidth.toFixed(2);
         const sheetLengthDisplay = sheetLength % 1 === 0 ? sheetLength.toFixed(0) : sheetLength.toFixed(2);
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, (sheetWidth - imposedSpaceWidth) / 2, scorePositions);
         generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType);
     }
-
+    // Refactor Out Into Separate File score.js
     function generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType) {
         let scoresHTML = `
             <h2>Score Positions</h2>
@@ -341,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('scorePositions').innerHTML = scoresHTML;
     }
 
+    // TODO: Refactor Out Into Separate File vis.js
     function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin, scorePositions) {
         // Get the canvas element and its context
         const canvas = document.getElementById('layoutCanvas');
