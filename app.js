@@ -341,11 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('scorePositions').innerHTML = scoresHTML;
     }
 
-    // TODO: Refactor Out Into Separate File vis.js
     function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin, scorePositions) {
         // Get the canvas element and its context
         const canvas = document.getElementById('layoutCanvas');
         const ctx = canvas.getContext('2d');
+        const offsetMargin = document.getElementById('scoredWithMargins').value === 'yes' ? topMargin : 0;
+
+        // Set the canvas size to match the sheet size
+        const canvasWidth = scoredWithMargins ? sheetWidth : imposedSpaceWidth;
+        const canvasHeight = scoredWithMargins ? sheetLength : imposedSpaceLength;
+        canvas.width = canvasWidth * 100;
+        canvas.height = canvasHeight * 100;
+
     
         // Calculate the scale factor based on the canvas size and sheet dimensions
         const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
