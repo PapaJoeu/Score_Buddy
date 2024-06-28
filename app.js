@@ -53,11 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to set up custom size input event listeners
     function setupCustomSizeEventListeners() {
+        // Function to reset input values
         const resetInputValues = (input1, input2) => {
             input1.value = '';
             input2.value = '';
         };
 
+        // Function to set up event listener for custom button
         const setupCustomButtonEventListener = (customButton, widthInput, lengthInput, buttons) => {
             customButton.addEventListener('click', () => {
                 resetInputValues(widthInput, lengthInput);
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
+        // Set up event listeners for custom size buttons
         setupCustomButtonEventListener(customSheetButton, sheetWidthInput, sheetLengthInput, sheetButtons);
         setupCustomButtonEventListener(customDocButton, docWidthInput, docLengthInput, docButtons);
         setupCustomButtonEventListener(customGutterButton, gutterWidthInput, gutterLengthInput, gutterButtons);
