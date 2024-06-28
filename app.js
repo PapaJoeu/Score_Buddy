@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleCustomSizeInput('sheetWidthGroup', 'sheetLengthGroup', false);
         }
         toggleActiveClass(sheetButtons, button);
+        calculateLayout();
     }
 
     // Event handler for document size buttons
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleCustomSizeInput('docWidthGroup', 'docLengthGroup', false);
         }
         toggleActiveClass(docButtons, button);
+        calculateLayout();
     }
 
     // Event handler for gutter size buttons
