@@ -21,27 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to set up button event listeners
     function setupButtonEventListeners() {
-        document.getElementById('calculateButton').addEventListener('click', calculateLayout);
-        document.getElementById('scoreButton').addEventListener('click', showScoreOptions);
-        document.getElementById('calculateScoresButton').addEventListener('click', calculateScores);
+        const calculateButton = document.getElementById('calculateButton');
+        const scoreButton = document.getElementById('scoreButton');
+        const calculateScoresButton = document.getElementById('calculateScoresButton');
 
-        sheetButtons.forEach(button => {
-            button.addEventListener('click', handleSheetSizeButtonClick);
-        });
+        calculateButton.addEventListener('click', calculateLayout);
+        scoreButton.addEventListener('click', showScoreOptions);
+        calculateScoresButton.addEventListener('click', calculateScores);
 
-        docButtons.forEach(button => {
-            button.addEventListener('click', handleDocSizeButtonClick);
-        });
+        const addEventListenerToButtons = (buttons, eventHandler) => {
+            buttons.forEach(button => {
+                button.addEventListener('click', eventHandler);
+            });
+        };
 
-        gutterButtons.forEach(button => {
-            button.addEventListener('click', handleGutterSizeButtonClick);
-        });
+        addEventListenerToButtons(sheetButtons, handleSheetSizeButtonClick);
+        addEventListenerToButtons(docButtons, handleDocSizeButtonClick);
+        addEventListenerToButtons(gutterButtons, handleGutterSizeButtonClick);
 
         // Preselect default buttons (12x18 sheet, 3.5x2 doc, 0.125 gutter)
         const defaultSheetButton = document.querySelector('.sheet-size-button[data-width="12"][data-length="18"]');
         const defaultDocButton = document.querySelector('.doc-size-button[data-width="3.5"][data-length="2"]');
         const defaultGutterButton = document.querySelector('.gutter-size-button[data-gutter="0.125"]');
-        const calculateButton = document.getElementById('calculateButton');
 
         // Set default values and calculate layout
         defaultSheetButton.classList.add('active');
@@ -52,36 +53,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to set up custom size input event listeners
     function setupCustomSizeEventListeners() {
-        customSheetButton.addEventListener('click', () => {
-            sheetWidthInput.value = '';
-            sheetLengthInput.value = '';
-            toggleActiveClass(sheetButtons, customSheetButton);
-        });
+        // Function to reset input values
+        const resetInputValues = (input1, input2) => {
+            input1.value = '';
+            input2.value = '';
+        };
 
-        customDocButton.addEventListener('click', () => {
-            docWidthInput.value = '';
-            docLengthInput.value = '';
-            toggleActiveClass(docButtons, customDocButton);
-        });
+        // Function to set up event listener for custom button
+        const setupCustomButtonEventListener = (customButton, widthInput, lengthInput, buttons) => {
+            customButton.addEventListener('click', () => {
+                resetInputValues(widthInput, lengthInput);
+                toggleActiveClass(buttons, customButton);
+            });
+        };
 
-        customGutterButton.addEventListener('click', () => {
-            gutterWidthInput.value = '';
-            gutterLengthInput.value = '';
-            toggleActiveClass(gutterButtons, customGutterButton);
-        });
+        // Set up event listeners for custom size buttons
+        setupCustomButtonEventListener(customSheetButton, sheetWidthInput, sheetLengthInput, sheetButtons);
+        setupCustomButtonEventListener(customDocButton, docWidthInput, docLengthInput, docButtons);
+        setupCustomButtonEventListener(customGutterButton, gutterWidthInput, gutterLengthInput, gutterButtons);
     }
 
     // Function to set up rotate button event listeners
     function setupRotateButtonEventListeners() {
-        document.getElementById('rotateDocsButton').addEventListener('click', () => {
-            rotateInputValues(docWidthInput, docLengthInput);
-            calculateLayout();
-        });
+        const rotateDocsButton = document.getElementById('rotateDocsButton');
+        const rotateSheetButton = document.getElementById('rotateSheetButton');
+        const rotateDocsAndSheetButton = document.getElementById('rotateDocsAndSheetButton');
 
-        document.getElementById('rotateSheetButton').addEventListener('click', () => {
-            rotateInputValues(sheetWidthInput, sheetLengthInput);
-            calculateLayout();
-        });
+        rotateDocsButton.addEventListener('click', handleRotateButtonClick.bind(null, docWidthInput, docLengthInput));
+        rotateSheetButton.addEventListener('click', handleRotateButtonClick.bind(null, sheetWidthInput, sheetLengthInput));
+        
+    }
+
+    // Event handler for rotate button click
+    function handleRotateButtonClick(input1, input2) {
+        rotateInputValues(input1, input2);
+        calculateLayout();
     }
 
     // Event handler for sheet size buttons
@@ -97,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleCustomSizeInput('sheetWidthGroup', 'sheetLengthGroup', false);
         }
         toggleActiveClass(sheetButtons, button);
+        calculateLayout();
     }
 
     // Event handler for document size buttons
@@ -112,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleCustomSizeInput('docWidthGroup', 'docLengthGroup', false);
         }
         toggleActiveClass(docButtons, button);
+        calculateLayout();
     }
 
     // Event handler for gutter size buttons
@@ -199,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 
-    // Function to generate layout details HTML
+    // TODO: Refactor Out Into Separate File layout.js
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
         const sheetWidthDisplay = sheetWidth % 1 === 0 ? sheetWidth.toFixed(0) : sheetWidth.toFixed(2);
         const sheetLengthDisplay = sheetLength % 1 === 0 ? sheetLength.toFixed(0) : sheetLength.toFixed(2);
@@ -314,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, (sheetWidth - imposedSpaceWidth) / 2, scorePositions);
         generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType);
     }
-
+    // Refactor Out Into Separate File score.js
     function generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType) {
         let scoresHTML = `
             <h2>Score Positions</h2>
@@ -344,6 +352,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Get the canvas element and its context
         const canvas = document.getElementById('layoutCanvas');
         const ctx = canvas.getContext('2d');
+        const offsetMargin = document.getElementById('scoredWithMargins').value === 'yes' ? topMargin : 0;
+
+        // Set the canvas size to match the sheet size
+        const canvasWidth = scoredWithMargins ? sheetWidth : imposedSpaceWidth;
+        const canvasHeight = scoredWithMargins ? sheetLength : imposedSpaceLength;
+        canvas.width = canvasWidth * 100;
+        canvas.height = canvasHeight * 100;
+
     
         // Calculate the scale factor based on the canvas size and sheet dimensions
         const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
@@ -357,17 +373,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
         // Draw the sheet outline
         ctx.strokeStyle = '#000';
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
-    
-        // Display the sheet size
-        ctx.fillStyle = '#000';
-        ctx.font = '12px Arial';
-        ctx.fillText(`Sheet Size: ${sheetWidth}x${sheetLength}, Gutter Size: ${gutterWidth} x ${gutterLength}`, sheetX + 5, sheetY + 15);
     
         // Draw the document rectangles
         ctx.strokeStyle = '#007BFF';
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 1;
         for (let i = 0; i < docsAcross; i++) {
             for (let j = 0; j < docsDown; j++) {
                 // Calculate the position of each document rectangle
