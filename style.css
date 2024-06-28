@@ -37,14 +37,14 @@ ul {
 h1 {
     text-align: center;
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     color: #000080; /* Windows 98 blue */
     border-bottom: 2px solid #000; /* Underline */
     padding-bottom: 5px;
 }
 
 h2 {
-    margin-top: 15px;
+    margin-top: 5px;
     font-size: 20px;
     color: #000080; /* Windows 98 blue */
 }
@@ -59,7 +59,7 @@ form {
 .button-group {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Increased gap for better touch target size */
+    gap: 5px; /* Increased gap for better touch target size */
 }
 
 /* Grid for Form Elements */
@@ -80,7 +80,7 @@ label {
 input, select, button {
     font-size: 16px;
     padding: 8px; /* Padding for easier interaction */
-    margin-top: 10px;
+    margin-top: 5px;
     border-radius: 0; /* No border-radius for boxy look */
     border: 2px solid #000; /* Black border */
     width: 100%; /* Full width for better accessibility */
@@ -118,7 +118,7 @@ button.active {
     border: 2px solid #000;
     width: 100%;
     height: auto;
-    max-height: 400px;
+    max-height: auto;
 }
 
 /* Table Styles */
