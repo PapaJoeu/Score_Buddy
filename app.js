@@ -244,27 +244,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
-        const sheetWidthDisplay = sheetWidth % 1 === 0 ? sheetWidth.toFixed(0) : sheetWidth.toFixed(2);
-        const sheetLengthDisplay = sheetLength % 1 === 0 ? sheetLength.toFixed(0) : sheetLength.toFixed(2);
-        const docWidthDisplay = docWidth % 1 === 0 ? docWidth.toFixed(0) : docWidth.toFixed(3);
-        const docLengthDisplay = docLength % 1 === 0 ? docLength.toFixed(0) : docLength.toFixed(3);
+        const sheetWidthDisplay = formatNumber(sheetWidth);
+        const sheetLengthDisplay = formatNumber(sheetLength);
+        const docWidthDisplay = formatNumber(docWidth);
+        const docLengthDisplay = formatNumber(docLength);
         const nUp = docsAcross * docsDown;
         const areaUsed = (docWidth * docLength * nUp) / (sheetWidth * sheetLength);
 
         return `
             <h2>Layout Details</h2>
             <table class="details-table">
-            <tr><th>Sheet Size</th><td>${sheetWidthDisplay}x${sheetLengthDisplay} in</td></tr>
-            <tr><th>Document Size</th><td>${docWidthDisplay} in x ${docLengthDisplay} in</td></tr>
-            <tr><th>N-Up</th><td>${nUp} (${docsAcross}x${docsDown})</td></tr>
-            <tr><th>Top Margin</th><td>${topMargin.toFixed(3)} in</td></tr>
-            <tr><th>Bottom Margin</th><td>${bottomMargin.toFixed(3)} in</td></tr>
-            <tr><th>Left Margin</th><td>${leftMargin.toFixed(3)} in</td></tr>
-            <tr><th>Right Margin</th><td>${rightMargin.toFixed(3)} in</td></tr>
-            <tr><th>Coverage Percentage</th><td>${(areaUsed * 100).toFixed(2)}%</td></tr>
-            <tr><th>Wasted Space</th><td>${(100 - (areaUsed * 100)).toFixed(2)}%</td></tr>
+                <tr><th>Sheet Size</th><td>${sheetWidthDisplay}x${sheetLengthDisplay} in</td></tr>
+                <tr><th>Document Size</th><td>${docWidthDisplay} in x ${docLengthDisplay} in</td></tr>
+                <tr><th>N-Up</th><td>${nUp} (${docsAcross}x${docsDown})</td></tr>
+                <tr><th>Top Margin</th><td>${formatNumber(topMargin)} in</td></tr>
+                <tr><th>Bottom Margin</th><td>${formatNumber(bottomMargin)} in</td></tr>
+                <tr><th>Left Margin</th><td>${formatNumber(leftMargin)} in</td></tr>
+                <tr><th>Right Margin</th><td>${formatNumber(rightMargin)} in</td></tr>
+                <tr><th>Coverage Percentage</th><td>${formatNumber(areaUsed * 100)}%</td></tr>
+                <tr><th>Wasted Space</th><td>${formatNumber(100 - (areaUsed * 100))}%</td></tr>
             </table>
         `;
+    }
+
+    function formatNumber(number) {
+        return number % 1 === 0 ? number.toFixed(0) : number.toFixed(2);
     }
 
     function generateProgramSequenceHTML(layout) {
