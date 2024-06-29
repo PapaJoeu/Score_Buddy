@@ -130,6 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         rotateButtons.doc.addEventListener('click', () => handleRotateButtonClick(inputs.doc));
         rotateButtons.sheet.addEventListener('click', () => handleRotateButtonClick(inputs.sheet));
+        rotateButtons.both.addEventListener('click', () => {
+            handleRotateButtonClick(inputs.doc);
+            handleRotateButtonClick(inputs.sheet);
+        });
     }
 
     function handleRotateButtonClick(inputGroup) {
