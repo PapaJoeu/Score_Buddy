@@ -1,25 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Cache DOM elements
-    const sheetButtons = document.querySelectorAll('.sheet-size-button');
-    const docButtons = document.querySelectorAll('.doc-size-button');
-    const gutterButtons = document.querySelectorAll('.gutter-size-button');
-    const customSheetButton = document.getElementById('customSheetSizeButton');
-    const customDocButton = document.getElementById('customDocSizeButton');
-    const customGutterButton = document.getElementById('customGutterSizeButton');
-    
-    const sheetWidthInput = document.getElementById('sheetWidth');
-    const sheetLengthInput = document.getElementById('sheetLength');
-    const docWidthInput = document.getElementById('docWidth');
-    const docLengthInput = document.getElementById('docLength');
-    const gutterWidthInput = document.getElementById('gutterWidth');
-    const gutterLengthInput = document.getElementById('gutterLength');
+    const buttons = {
+        sheet: document.querySelectorAll('.sheet-size-button'),
+        doc: document.querySelectorAll('.doc-size-button'),
+        gutter: document.querySelectorAll('.gutter-size-button'),
+    };
+    const customButtons = {
+        sheet: document.getElementById('customSheetSizeButton'),
+        doc: document.getElementById('customDocSizeButton'),
+        gutter: document.getElementById('customGutterSizeButton'),
+    };
+    const inputs = {
+        sheet: {
+            width: document.getElementById('sheetWidth'),
+            length: document.getElementById('sheetLength')
+        },
+        doc: {
+            width: document.getElementById('docWidth'),
+            length: document.getElementById('docLength')
+        },
+        gutter: {
+            width: document.getElementById('gutterWidth'),
+            length: document.getElementById('gutterLength')
+        }
+    };
 
     // Initialize event listeners
     setupButtonEventListeners();
     setupCustomSizeEventListeners();
     setupRotateButtonEventListeners();
 
-    // Function to set up button event listeners
     function setupButtonEventListeners() {
         const calculateButton = document.getElementById('calculateButton');
         const scoreButton = document.getElementById('scoreButton');
@@ -29,162 +39,127 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreButton.addEventListener('click', showScoreOptions);
         calculateScoresButton.addEventListener('click', calculateScores);
 
-        const addEventListenerToButtons = (buttons, eventHandler) => {
-            buttons.forEach(button => {
-                button.addEventListener('click', eventHandler);
-            });
-        };
-
-        addEventListenerToButtons(sheetButtons, handleSheetSizeButtonClick);
-        addEventListenerToButtons(docButtons, handleDocSizeButtonClick);
-        addEventListenerToButtons(gutterButtons, handleGutterSizeButtonClick);
+        Object.keys(buttons).forEach(type => {
+            addEventListenerToButtons(buttons[type], handleButtonClick(type));
+        });
 
         // Preselect default buttons (12x18 sheet, 3.5x2 doc, 0.125 gutter)
-        const defaultSheetButton = document.querySelector('.sheet-size-button[data-width="12"][data-length="18"]');
-        const defaultDocButton = document.querySelector('.doc-size-button[data-width="3.5"][data-length="2"]');
-        const defaultGutterButton = document.querySelector('.gutter-size-button[data-gutter="0.125"]');
-
-        // Set default values and calculate layout
-        defaultSheetButton.classList.add('active');
-        defaultDocButton.classList.add('active');
-        defaultGutterButton.classList.add('active');
+        preselectDefaultButtons();
         calculateButton.click();
     }
 
-    // Function to set up custom size input event listeners
+    function addEventListenerToButtons(buttons, eventHandler) {
+        buttons.forEach(button => {
+            button.addEventListener('click', eventHandler);
+        });
+    }
+
     function setupCustomSizeEventListeners() {
-        // Function to reset input values
-        const resetInputValues = (input1, input2) => {
-            input1.value = '';
-            input2.value = '';
-        };
-
-        // Function to set up event listener for custom button
-        const setupCustomButtonEventListener = (customButton, widthInput, lengthInput, buttons) => {
-            customButton.addEventListener('click', () => {
-                resetInputValues(widthInput, lengthInput);
-                toggleActiveClass(buttons, customButton);
+        Object.keys(customButtons).forEach(type => {
+            customButtons[type].addEventListener('click', () => {
+                resetInputValues(inputs[type].width, inputs[type].length);
+                toggleActiveClass(buttons[type], customButtons[type]);
             });
+        });
+    }
+
+    function setupRotateButtonEventListeners() {
+        const rotateButtons = {
+            doc: document.getElementById('rotateDocsButton'),
+            sheet: document.getElementById('rotateSheetButton'),
+            both: document.getElementById('rotateDocsAndSheetButton')
         };
 
-        // Set up event listeners for custom size buttons
-        setupCustomButtonEventListener(customSheetButton, sheetWidthInput, sheetLengthInput, sheetButtons);
-        setupCustomButtonEventListener(customDocButton, docWidthInput, docLengthInput, docButtons);
-        setupCustomButtonEventListener(customGutterButton, gutterWidthInput, gutterLengthInput, gutterButtons);
+        rotateButtons.doc.addEventListener('click', () => handleRotateButtonClick(inputs.doc));
+        rotateButtons.sheet.addEventListener('click', () => handleRotateButtonClick(inputs.sheet));
     }
 
-    // Function to set up rotate button event listeners
-    function setupRotateButtonEventListeners() {
-        const rotateDocsButton = document.getElementById('rotateDocsButton');
-        const rotateSheetButton = document.getElementById('rotateSheetButton');
-        const rotateDocsAndSheetButton = document.getElementById('rotateDocsAndSheetButton');
-
-        rotateDocsButton.addEventListener('click', handleRotateButtonClick.bind(null, docWidthInput, docLengthInput));
-        rotateSheetButton.addEventListener('click', handleRotateButtonClick.bind(null, sheetWidthInput, sheetLengthInput));
-        
-    }
-
-    // Event handler for rotate button click
-    function handleRotateButtonClick(input1, input2) {
-        rotateInputValues(input1, input2);
+    function handleRotateButtonClick(inputGroup) {
+        rotateInputValues(inputGroup.width, inputGroup.length);
         calculateLayout();
     }
 
-    // Event handler for sheet size buttons
-    function handleSheetSizeButtonClick(event) {
-        const button = event.currentTarget;
-        const width = button.getAttribute('data-width');
-        const length = button.getAttribute('data-length');
-        
-        if (button.id === 'customSheetSizeButton') {
-            toggleCustomSizeInput('sheetWidthGroup', 'sheetLengthGroup', true);
-        } else {
-            setSizeInputValues(sheetWidthInput, sheetLengthInput, width, length);
-            toggleCustomSizeInput('sheetWidthGroup', 'sheetLengthGroup', false);
-        }
-        toggleActiveClass(sheetButtons, button);
-        calculateLayout();
+    function handleButtonClick(type) {
+        return event => {
+            const button = event.currentTarget;
+            const width = button.getAttribute(`data-width`);
+            const length = button.getAttribute(`data-length`);
+            const isCustom = button.id === customButtons[type].id;
+
+            if (isCustom) {
+                toggleCustomSizeInput(`${type}WidthGroup`, `${type}LengthGroup`, true);
+            } else {
+                setSizeInputValues(inputs[type].width, inputs[type].length, width, length);
+                toggleCustomSizeInput(`${type}WidthGroup`, `${type}LengthGroup`, false);
+            }
+
+            toggleActiveClass(buttons[type], button);
+            calculateLayout();
+        };
     }
 
-    // Event handler for document size buttons
-    function handleDocSizeButtonClick(event) {
-        const button = event.currentTarget;
-        const width = button.getAttribute('data-width');
-        const length = button.getAttribute('data-length');
-        
-        if (button.id === 'customDocSizeButton') {
-            toggleCustomSizeInput('docWidthGroup', 'docLengthGroup', true);
-        } else {
-            setSizeInputValues(docWidthInput, docLengthInput, width, length);
-            toggleCustomSizeInput('docWidthGroup', 'docLengthGroup', false);
-        }
-        toggleActiveClass(docButtons, button);
-        calculateLayout();
+    function preselectDefaultButtons() {
+        const defaultButtons = {
+            sheet: document.querySelector('.sheet-size-button[data-width="12"][data-length="18"]'),
+            doc: document.querySelector('.doc-size-button[data-width="3.5"][data-length="2"]'),
+            gutter: document.querySelector('.gutter-size-button[data-gutter="0.125"]')
+        };
+
+        defaultButtons.sheet.classList.add('active');
+        defaultButtons.doc.classList.add('active');
+        defaultButtons.gutter.classList.add('active');
     }
 
-    // Event handler for gutter size buttons
-    function handleGutterSizeButtonClick(event) {
-        const button = event.currentTarget;
-        const width = button.getAttribute('data-gutter');
-        
-        if (button.id === 'customGutterSizeButton') {
-            toggleCustomSizeInput('gutterWidthGroup', 'gutterLengthGroup', true);
-        } else {
-            setSizeInputValues(gutterWidthInput, gutterLengthInput, width, width);
-            toggleCustomSizeInput('gutterWidthGroup', 'gutterLengthGroup', false);
-        }
-        toggleActiveClass(gutterButtons, button);
+    function resetInputValues(input1, input2) {
+        input1.value = '';
+        input2.value = '';
     }
 
-    // Function to toggle custom size input visibility
     function toggleCustomSizeInput(widthGroupId, lengthGroupId, isVisible) {
         const displayStyle = isVisible ? 'block' : 'none';
         document.getElementById(widthGroupId).style.display = displayStyle;
         document.getElementById(lengthGroupId).style.display = displayStyle;
     }
 
-    // Function to set size input values
     function setSizeInputValues(widthInput, lengthInput, width, length) {
         widthInput.value = width;
         lengthInput.value = length;
     }
 
-    // Function to rotate input values
     function rotateInputValues(input1, input2) {
         const temp = input1.value;
         input1.value = input2.value;
         input2.value = temp;
     }
 
-    // Function to calculate layout
     function calculateLayout() {
-        const sheetWidth = parseFloat(sheetWidthInput.value);
-        const sheetLength = parseFloat(sheetLengthInput.value);
-        const docWidth = parseFloat(docWidthInput.value);
-        const docLength = parseFloat(docLengthInput.value);
-        const gutterWidth = parseFloat(gutterWidthInput.value);
-        const gutterLength = parseFloat(gutterLengthInput.value);
-    
+        const sheetWidth = parseFloat(inputs.sheet.width.value);
+        const sheetLength = parseFloat(inputs.sheet.length.value);
+        const docWidth = parseFloat(inputs.doc.width.value);
+        const docLength = parseFloat(inputs.doc.length.value);
+        const gutterWidth = parseFloat(inputs.gutter.width.value);
+        const gutterLength = parseFloat(inputs.gutter.length.value);
+
         const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
         const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
         const totalGutterWidth = (docsAcross - 1) * gutterWidth;
         const totalGutterLength = (docsDown - 1) * gutterLength;
         const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
         const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
-    
+
         if (imposedSpaceWidth > sheetWidth || imposedSpaceLength > sheetLength) {
             alert("The current layout is not possible with the given sheet dimensions.");
             return;
         }
-    
+
         const topMargin = (sheetLength - imposedSpaceLength) / 2;
         const bottomMargin = topMargin;
         const leftMargin = (sheetWidth - imposedSpaceWidth) / 2;
         const rightMargin = leftMargin;
-    
+
         const layoutDetailsHTML = generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin);
         document.getElementById('layoutDetails').innerHTML = layoutDetailsHTML;
-    
+
         const layout = {
             sheetLength,
             sheetWidth,
@@ -199,15 +174,13 @@ document.addEventListener('DOMContentLoaded', () => {
             docsAcross,
             docsDown
         };
-    
+
         const programSequenceHTML = generateProgramSequenceHTML(layout);
         document.getElementById('programSequence').innerHTML = programSequenceHTML;
-    
+
         drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin);
     }
-    
 
-    // TODO: Refactor Out Into Separate File layout.js
     function generateLayoutDetailsHTML(sheetWidth, sheetLength, docWidth, docLength, docsAcross, docsDown, topMargin, bottomMargin, leftMargin, rightMargin) {
         const sheetWidthDisplay = sheetWidth % 1 === 0 ? sheetWidth.toFixed(0) : sheetWidth.toFixed(2);
         const sheetLengthDisplay = sheetLength % 1 === 0 ? sheetLength.toFixed(0) : sheetLength.toFixed(2);
@@ -232,10 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Function to generate program sequence HTML
     function generateProgramSequenceHTML(layout) {
         let sequence = calculateSequence(layout);
-        
+
         let sequenceHTML = `
             <h2>Program Sequence</h2>
             <table class="sequence-table">
@@ -258,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return sequenceHTML;
     }
 
-    // Function to calculate sequence
     function calculateSequence(layout) {
         let sequence = [
             layout.sheetLength - layout.bottomMargin,
@@ -282,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return sequence;
     }
 
-    // Function to show score options
     function showScoreOptions() {
         document.getElementById('scoredOptions').classList.remove('hidden');
     }
@@ -290,25 +260,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function calculateScores() {
         const scoredWithMargins = document.getElementById('scoredWithMargins').value === 'yes';
         const foldType = document.getElementById('foldType').value;
-    
-        const sheetWidth = parseFloat(sheetWidthInput.value);
-        const sheetLength = parseFloat(sheetLengthInput.value);
-        const docWidth = parseFloat(docWidthInput.value);
-        const docLength = parseFloat(docLengthInput.value);
-        const gutterWidth = parseFloat(gutterWidthInput.value);
-        const gutterLength = parseFloat(gutterLengthInput.value);
-    
+
+        const sheetWidth = parseFloat(inputs.sheet.width.value);
+        const sheetLength = parseFloat(inputs.sheet.length.value);
+        const docWidth = parseFloat(inputs.doc.width.value);
+        const docLength = parseFloat(inputs.doc.length.value);
+        const gutterWidth = parseFloat(inputs.gutter.width.value);
+        const gutterLength = parseFloat(inputs.gutter.length.value);
+
         const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
         const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
         const totalGutterWidth = (docsAcross - 1) * gutterWidth;
         const totalGutterLength = (docsDown - 1) * gutterLength;
         const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
         const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
-    
+
         const topMargin = (sheetLength - imposedSpaceLength) / 2;
-    
+
         let marginOffset = scoredWithMargins ? topMargin : 0;
-    
+
         let scorePositions = [];
         for (let i = 0; i < docsDown; i++) {
             if (foldType === 'bifold') {
@@ -318,11 +288,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 scorePositions.push({ y: (2 * docLength / 3) - 0.05 + i * (docLength + gutterLength) + marginOffset });
             }
         }
-    
+
         drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, (sheetWidth - imposedSpaceWidth) / 2, scorePositions);
         generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType);
     }
-    // Refactor Out Into Separate File score.js
+
     function generateScoresHTML(docsDown, docLength, gutterLength, marginOffset, foldType) {
         let scoresHTML = `
             <h2>Score Positions</h2>
@@ -334,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </thead>
                 <tbody>
         `;
-        
+
         for (let i = 0; i < docsDown; i++) {
             if (foldType === 'bifold') {
                 scoresHTML += `<tr><td>${((docLength / 2) + i * (docLength + gutterLength) + marginOffset).toFixed(3)}</td></tr>`;
@@ -349,56 +319,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawLayout(sheetWidth, sheetLength, docsAcross, docsDown, docWidth, docLength, gutterWidth, gutterLength, topMargin, leftMargin, scorePositions) {
-        // Get the canvas element and its context
         const canvas = document.getElementById('layoutCanvas');
         const ctx = canvas.getContext('2d');
         const offsetMargin = document.getElementById('scoredWithMargins').value === 'yes' ? topMargin : 0;
 
-        // Set the canvas size to match the sheet size
         const canvasWidth = scoredWithMargins ? sheetWidth : imposedSpaceWidth;
         const canvasHeight = scoredWithMargins ? sheetLength : imposedSpaceLength;
         canvas.width = canvasWidth * 100;
         canvas.height = canvasHeight * 100;
 
-    
-        // Calculate the scale factor based on the canvas size and sheet dimensions
         const scaleFactor = Math.min(canvas.width / sheetWidth, canvas.height / sheetLength);
-    
-        // Clear the canvas
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-        // Calculate the position of the sheet on the canvas
+
         const sheetX = (canvas.width - sheetWidth * scaleFactor) / 2;
         const sheetY = (canvas.height - sheetLength * scaleFactor) / 2;
-    
-        // Draw the sheet outline
+
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 1;
         ctx.strokeRect(sheetX, sheetY, sheetWidth * scaleFactor, sheetLength * scaleFactor);
-    
-        // Draw the document rectangles
+
         ctx.strokeStyle = '#007BFF';
         ctx.lineWidth = 1;
         for (let i = 0; i < docsAcross; i++) {
             for (let j = 0; j < docsDown; j++) {
-                // Calculate the position of each document rectangle
                 const x = sheetX + (leftMargin + i * (docWidth + gutterWidth)) * scaleFactor;
                 const y = sheetY + (topMargin + j * (docLength + gutterLength)) * scaleFactor;
-    
-                // Draw the document rectangle
+
                 ctx.strokeRect(x, y, docWidth * scaleFactor, docLength * scaleFactor);
-    
-                // Display the document label as centered text
+
                 ctx.fillText(`${i + 1 + j * docsAcross}`, x + docWidth * scaleFactor / 2 - 5, y + docLength * scaleFactor / 2 + 5);
             }
         }
-    
-        // Draw score lines if score positions are provided
+
         if (scorePositions && scorePositions.length > 0) {
             ctx.strokeStyle = 'magenta';
             ctx.lineWidth = 1;
-            ctx.setLineDash([5, 5]);  // Make the line dotted
-    
+            ctx.setLineDash([5, 5]);
+
             ctx.beginPath();
             scorePositions.forEach(position => {
                 const y = sheetY + (topMargin + position.y) * scaleFactor;
@@ -406,16 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.lineTo(sheetX + sheetWidth * scaleFactor, y);
             });
             ctx.stroke();
-            
-            // Reset the line dash setting to solid for future drawings
+
             ctx.setLineDash([]);
         }
     }
-    
-    
-    
 
-    // Function to toggle active class on buttons
     function toggleActiveClass(buttons, activeButton) {
         buttons.forEach(button => {
             if (button === activeButton) {
