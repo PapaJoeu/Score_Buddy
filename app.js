@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    // Create buttons
+    // Create buttons for each size option listed in the sizeOptions object and add event listeners
     createButtons('sheet', sizeOptions.sheet, 'sheetButtonsContainer', 'sheet-size-button', 'customSheetSizeButton', 'Custom');
     createButtons('doc', sizeOptions.doc, 'docButtonsContainer', 'doc-size-button', 'customDocSizeButton', 'Custom');
     createButtons('gutter', sizeOptions.gutter, 'gutterButtonsContainer', 'gutter-size-button', 'customGutterSizeButton', 'Custom');
