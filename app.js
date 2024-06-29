@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Size options
+    const sizeOptions = {
+        sheet: [
+            { width: 12, length: 18 },
+            { width: 13, length: 19 },
+            { width: 9, length: 12 },
+            { width: 8.5, length: 11 },
+            { width: 26, length: 40 }
+        ],
+        doc: [
+            { width: 3.5, length: 2, name: "Business Card" },
+            { width: 4, length: 6, name: "Chipotle Opening Card" },
+            { width: 4.25, length: 11, name: "Door Hanger" },
+            { width: 5, length: 7, name: "Invite" },
+            { width: 5.5, length: 8.5, name: "Half Letter" },
+            { width: 6, length: 9, name: "Sunrun Postcard" },
+            { width: 8.5, length: 11, name: "Letter" },
+            { width: 9, length: 12, name: "Rich People Letterhead" }
+        ],
+        gutter: [
+            { gutter: 0.125 },
+            { gutter: 0.25 }
+        ]
+    };
+
+    // Create buttons
+    createButtons('sheet', sizeOptions.sheet, 'sheetButtonsContainer', 'sheet-size-button', 'customSheetSizeButton', 'Custom');
+    createButtons('doc', sizeOptions.doc, 'docButtonsContainer', 'doc-size-button', 'customDocSizeButton', 'Custom');
+    createButtons('gutter', sizeOptions.gutter, 'gutterButtonsContainer', 'gutter-size-button', 'customGutterSizeButton', 'Custom');
+
     // Cache DOM elements
     const buttons = {
         sheet: document.querySelectorAll('.sheet-size-button'),
@@ -29,6 +59,34 @@ document.addEventListener('DOMContentLoaded', () => {
     setupButtonEventListeners();
     setupCustomSizeEventListeners();
     setupRotateButtonEventListeners();
+
+    function createButtons(type, options, containerId, buttonClass, customButtonId, customButtonText) {
+        const container = document.getElementById(containerId);
+        options.forEach(option => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = buttonClass;
+            if (type === 'sheet' || type === 'doc') {
+                button.setAttribute('data-width', option.width);
+                button.setAttribute('data-length', option.length);
+                button.textContent = `${option.width} x ${option.length}`;
+                if (type === 'doc') {
+                    button.setAttribute('data-name', option.name);
+                }
+            } else if (type === 'gutter') {
+                button.setAttribute('data-gutter', option.gutter);
+                button.textContent = option.gutter;
+            }
+            container.appendChild(button);
+        });
+        // Add custom button
+        const customButton = document.createElement('button');
+        customButton.type = 'button';
+        customButton.id = customButtonId;
+        customButton.className = buttonClass;
+        customButton.textContent = customButtonText;
+        container.appendChild(customButton);
+    }
 
     function setupButtonEventListeners() {
         const calculateButton = document.getElementById('calculateButton');
@@ -82,8 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleButtonClick(type) {
         return event => {
             const button = event.currentTarget;
-            const width = button.getAttribute(`data-width`);
-            const length = button.getAttribute(`data-length`);
+            const width = button.getAttribute('data-width');
+            const length = button.getAttribute('data-length');
             const isCustom = button.id === customButtons[type].id;
 
             if (isCustom) {

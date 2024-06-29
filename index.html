@@ -18,14 +18,7 @@
 
             <!-- Sheet Size Buttons -->
             <div class="button-group" id="sheetSizeButtons">
-                <div class="form-grid">
-                    <button type="button" class="sheet-size-button" data-width="12" data-length="18">12 x 18</button>
-                    <button type="button" class="sheet-size-button" data-width="13" data-length="19">13 x 19</button>
-                    <button type="button" class="sheet-size-button" data-width="9" data-length="12">9 x 12</button>
-                    <button type="button" class="sheet-size-button" data-width="8.5" data-length="11">8.5 x 11</button>
-                    <button type="button" class="sheet-size-button" data-width="26" data-length="40">26 x 40</button>
-                    <button type="button" class="sheet-size-button" id="customSheetSizeButton">Custom</button>
-                </div>
+                <div class="form-grid" id="sheetButtonsContainer"></div>
             </div>
 
             <!-- Sheet Inputs -->
@@ -45,17 +38,7 @@
 
             <!-- Document Size Buttons -->
             <div class="button-group" id="docSizeButtons">
-                <div class="form-grid">
-                    <button type="button" class="doc-size-button" data-width="3.5" data-length="2" data-name="Business Card">3.5 x 2</button>
-                    <button type="button" class="doc-size-button" data-width="4" data-length="6" data-name="Chipotle Opening Card">4 x 6</button>
-                    <button type="button" class="doc-size-button" data-width="4.25" data-length="11" data-name="Door Hanger">4.25 x 11</button>
-                    <button type="button" class="doc-size-button" data-width="5" data-length="7" data-name="Invite">5 x 7</button>
-                    <button type="button" class="doc-size-button" data-width="5.5" data-length="8.5" data-name="Half Letter">5.5 x 8.5</button>
-                    <button type="button" class="doc-size-button" data-width="6" data-length="9" data-name="Sunrun Postcard">6 x 9</button>
-                    <button type="button" class="doc-size-button" data-width="8.5" data-length="11" data-name="Letter">8.5 x 11</button>
-                    <button type="button" class="doc-size-button" data-width="9" data-length="12" data-name="Rich People Letterhead">9 x 12</button>
-                    <button type="button" class="doc-size-button" id="customDocSizeButton">Custom</button>
-                </div>
+                <div class="form-grid" id="docButtonsContainer"></div>
             </div>
 
             <!-- Document Inputs -->
@@ -74,13 +57,9 @@
             </div>
 
             <!-- Gutter Size Buttons -->
-             <!-- TODO: Make It So This is An Extendable Menu, nobody is changes the gutters that often  -->
+            <!-- TODO: Make It So This is An Extendable Menu, nobody changes the gutters that often  -->
             <div class="button-group" id="gutterSizeButtons">
-                <div class="form-grid">
-                    <button type="button" class="gutter-size-button" data-gutter="0.125">1/8</button>
-                    <button type="button" class="gutter-size-button" data-gutter="0.25">1/4</button>
-                    <button type="button" class="gutter-size-button" id="customGutterSizeButton">Custom</button>
-                </div>
+                <div class="form-grid" id="gutterButtonsContainer"></div>
             </div>
 
             <!-- Gutter Inputs -->
@@ -95,8 +74,8 @@
         </form>
 
         <!-- Canvas Visualizer -->
-            <h2>Layout Visualizer</h2>
-        
+        <h2>Layout Visualizer</h2>
+
         <!-- Input Modification Buttons -->
         <div class="button-group">
             <div class="form-grid">
@@ -113,11 +92,11 @@
         <!-- Calculate and Score Button -->
         <div class="button-group">
             <div class="form-grid">
-                <!--TODO: Make this buton calculate and extend or hide the program sequence-->
+                <!-- TODO: Make this button calculate and extend or hide the program sequence -->
                 <button type="button" id="calculateButton">Program Sequence</button>
-                <!-- TODO: Make this button calculate and extendent or hide the score measurements -->
+                <!-- TODO: Make this button calculate and extend or hide the score measurements -->
                 <button type="button" id="scoreButton">Score Measurements</button>
-                <!-- TODO: Make This Button Calculate and Extened or Hide the Layot Details Tab -->
+                <!-- TODO: Make This Button Calculate and Extend or Hide the Layout Details Tab -->
                 <button type="button" id="miscDataButton">Misc Data</button>
             </div>
             <div id="scoredOptions" class="hidden">
