@@ -367,22 +367,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Step 4: Rotate 90 degrees and trim off the left margin
         sequence.push(layout.imposedSpaceWidth);
 
-        // Steps 5 to 4+docsAcross: Cut vertical gutters, leaving a back cut
+        // Step 5: to 4+docsAcross: Cut vertical gutters, leaving a back cut
         for (let i = 1; i < layout.docsAcross; i++) {
             sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
         }
 
-        // Steps 5+docsAcross to 4+2*docsAcross: Remove back cuts on width
+        // Step 6: repeat docwidth for docsAcross minus 1
         for (let i = 1; i < layout.docsAcross; i++) {
             sequence.push(layout.docWidth);
         }
 
-        // Steps 5+2*docsAcross to 4+2*docsAcross+docsDown: Cut horizontal gutters, leaving a back cut
+        // Step 7: Cut horizontal gutters, leaving a back cut
         for (let i = 1; i < layout.docsDown; i++) {
             sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterWidth));
         }
 
-        // Final steps: Remove back cuts on length
+        // Step 8: repeat docLength for docsDown minus 1
         for (let i = 1; i < layout.docsDown; i++) {
             sequence.push(layout.docLength);
         }
