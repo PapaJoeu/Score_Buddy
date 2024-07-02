@@ -220,6 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalGutterLength = (docsDown - 1) * gutterWidth;
         const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
         const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
+        const gutterSpaceWidth = totalGutterWidth;
+        const gutterSpaceLength = totalGutterLength;
 
         const topMargin = (sheetLength - imposedSpaceLength) / 2;
         const leftMargin = (sheetWidth - imposedSpaceWidth) / 2;
@@ -227,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return {
             sheetWidth, sheetLength, docWidth, docLength, gutterWidth,
             docsAcross, docsDown, imposedSpaceWidth, imposedSpaceLength,
-            topMargin, leftMargin
+            topMargin, leftMargin, gutterSpaceWidth, gutterSpaceLength
         };
     }
 
@@ -409,11 +411,12 @@ function displayLayoutDetails(layout) {
         <table>
             <tr><th>Sheet Size</th><td>${layout.sheetWidth} x ${layout.sheetLength} in</td></tr>
             <tr><th>Document Size</th><td>${layout.docWidth} x ${layout.docLength} in</td></tr>
+            <tr><th>Imposed Space Size</th><td>${layout.imposedSpaceWidth.toFixed(2)} x ${layout.imposedSpaceLength.toFixed(2)} in</td></tr>
             <tr><th>N-Up</th><td>${nUp} (${layout.docsAcross}x${layout.docsDown})</td></tr>
             <tr><th>Top Margin</th><td>${layout.topMargin.toFixed(2)} in</td></tr>
             <tr><th>Left Margin</th><td>${layout.leftMargin.toFixed(2)} in</td></tr>
-            <tr><th>Coverage Percentage</th><td>${(areaUsed * 100).toFixed(2)}%</td></tr>
-            <tr><th>Wasted Space</th><td>${((1 - areaUsed) * 100).toFixed(2)}%</td></tr>
+            <tr><th>Coverage Percentage / Wasted Percentage</th><td>${(areaUsed * 100).toFixed(2)}% : ${(100 - areaUsed * 100).toFixed(2)}%</td></tr>
+            <tr><th>Doc Plus Gutter Size</th><td>${(layout.docWidth + layout.gutterWidth).toFixed(2)} x ${(layout.docLength + layout.gutterWidth).toFixed(2)} in</td></tr>
         </table>
     `;
     elements.layoutDetails.innerHTML = html;
