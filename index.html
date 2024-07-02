@@ -9,119 +9,72 @@
 <body>
     <div class="container">
         <h1>Kev's Bitchin' Print Calculator</h1>
-        <!-- Layout Form -->
-        <form id="layoutForm">
-            <!-- Sheet Dimensions Header -->
-            <div class="header" id="sheetDimensionsHeader">
-                <h2>Sheet Dimensions</h2>
-            </div>
+        
+        <main>
+            <form id="layoutForm">
+                <section class="dimensions-section">
+                    <h2>Sheet Dimensions</h2>
+                    <div class="button-grid" id="sheetButtonsContainer"></div>
+                    <div class="input-group hidden" id="sheetDimensionsInputs">
+                        <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
+                        <span>x</span>
+                        <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
+                    </div>
+                </section>
 
-            <!-- Sheet Size Buttons -->
-            <div class="button-group" id="sheetSizeButtons">
-                <div class="form-grid" id="sheetButtonsContainer"></div>
-            </div>
+                <section class="dimensions-section">
+                    <h2>Document Dimensions</h2>
+                    <div class="button-grid" id="docButtonsContainer"></div>
+                    <div class="input-group hidden" id="docDimensionsInputs">
+                        <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5">
+                        <span>x</span>
+                        <input type="number" id="docLength" name="docLength" step="0.25" value="2">
+                    </div>
+                </section>
 
-            <!-- Sheet Inputs -->
-            <div class="form-grid hidden" id="sheetWidthGroup">
-                <label for="sheetWidth">Width</label>
-                <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
-            </div>
-            <div class="form-grid hidden" id="sheetLengthGroup">
-                <label for="sheetLength">Length</label>
-                <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
-            </div>
+                <section class="dimensions-section">
+                    <h2>Gutter Sizes</h2>
+                    <div class="button-grid" id="gutterButtonsContainer"></div>
+                    <div class="input-group hidden" id="gutterDimensionsInputs">
+                        <input type="number" id="gutterWidth" name="gutterWidth" step="0.125" value="0.125">
+                    </div>
+                </section>
+            </form>
 
-            <!-- Document Dimensions Header -->
-            <div class="header">
-                <h2>Document Dimensions</h2>
-            </div>
+            <section class="visualizer-section">
+                <h2>Layout Visualizer</h2>
+                <div class="button-grid">
+                    <button type="button" id="rotateDocsButton">Rotate Docs</button>
+                    <button type="button" id="rotateSheetButton">Rotate Sheet</button>
+                    <button type="button" id="rotateDocsAndSheetButton">Rotate Docs and Sheet</button>
+                </div>
+                <canvas id="layoutCanvas"></canvas>
+                <div class="button-grid">
+                    <button type="button" id="calculateButton">Program Sequence</button>
+                    <button type="button" id="scoreButton">Score Measurements</button>
+                    <button type="button" id="miscDataButton">Misc Data</button>
+                </div>
+            </section>
 
-            <!-- Document Size Buttons -->
-            <div class="button-group" id="docSizeButtons">
-                <div class="form-grid" id="docButtonsContainer"></div>
-            </div>
-
-            <!-- Document Inputs -->
-            <div class="form-grid hidden" id="docWidthGroup">
-                <label for="docWidth">Width</label>
-                <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5">
-            </div>
-            <div class="form-grid hidden" id="docLengthGroup">
-                <label for="docLength">Length</label>
-                <input type="number" id="docLength" name="docLength" step="0.25" value="2">
-            </div>
-
-            <!-- Gutter Dimensions Header -->
-            <div class="header">
-                <h2>Gutter Sizes</h2>
-            </div>
-
-            <!-- Gutter Size Buttons -->
-            <!-- TODO: Make It So This is An Extendable Menu, nobody changes the gutters that often  -->
-            <div class="button-group" id="gutterSizeButtons">
-                <div class="form-grid" id="gutterButtonsContainer"></div>
-            </div>
-
-            <!-- Gutter Inputs -->
-            <div class="form-grid hidden" id="gutterWidthGroup">
-                <label for="gutterWidth">Width</label>
-                <input type="number" id="gutterWidth" name="gutterWidth" step="0.125" value="0.125">
-            </div>
-            <div class="form-grid hidden" id="gutterLengthGroup">
-                <label for="gutterLength">Length</label>
-                <input type="number" id="gutterLength" name="gutterLength" step="0.125" value="0.125">
-            </div>
-        </form>
-
-        <!-- Canvas Visualizer -->
-        <h2>Layout Visualizer</h2>
-
-        <!-- Input Modification Buttons -->
-        <div class="button-group">
-            <div class="form-grid">
-                <button type="button" id="rotateDocsButton">Rotate Docs</button>
-                <button type="button" id="rotateSheetButton">Rotate Sheet</button>
-                <!-- TODO: Make This Button Rotate Both -->
-                <button type="button" id="rotateDocsAndSheetButton">Rotate Docs and Sheet</button>
-            </div>
-        </div>
-
-        <!-- The Actual Visualizer -->
-        <canvas id="layoutCanvas"></canvas>
-
-        <!-- Calculate and Score Button -->
-        <div class="button-group">
-            <div class="form-grid">
-                <!-- TODO: Make this button calculate and extend or hide the program sequence -->
-                <button type="button" id="calculateButton">Program Sequence</button>
-                <!-- TODO: Make this button calculate and extend or hide the score measurements -->
-                <button type="button" id="scoreButton">Score Measurements</button>
-                <!-- TODO: Make This Button Calculate and Extend or Hide the Layout Details Tab -->
-                <button type="button" id="miscDataButton">Misc Data</button>
-            </div>
-            <div id="scoredOptions" class="hidden">
-                <label for="scoredWithMargins">Trim The Margins?</label>
-                <select id="scoredWithMargins">
-                    <option value="no">Trim The Margins Then Score</option>
-                    <option value="yes">Score Without Trimming</option>
-                </select>
-
-                <label for="foldType">Fold Type:</label>
-                <select id="foldType">
-                    <option value="bifold">Bifold</option>
-                    <option value="trifold">Trifold</option>
-                </select>
-                <button type="button" id="calculateScoresButton">Calculate Scores</button>
-            </div>        
-        </div>
-
-        <!-- Program Sequence -->
-        <div id="programSequence"></div>
-
-        <!-- Layout Details -->
-        <div id="layoutDetails"></div>
-
-        <div id="scorePositions"></div>
+            <section id="results-section">
+                <div id="programSequence"></div>
+                <div id="scoreOptions" class="hidden">
+                    <label for="scoredWithMargins">Trim The Margins?</label>
+                    <select id="scoredWithMargins">
+                        <option value="no">Trim The Margins Then Score</option>
+                        <option value="yes">Score Without Trimming</option>
+                    </select>
+                    <label for="foldType">Fold Type:</label>
+                    <select id="foldType">
+                        <option value="bifold">Bifold</option>
+                        <option value="trifold">Trifold</option>
+                    </select>
+                    <button type="button" id="calculateScoresButton">Calculate Scores</button>
+                </div>
+                <div id="layoutDetails" class="hidden"></div>
+                <div id="scorePositions"></div>
+            </section>
+        </main>
     </div>
     <script src="app.js"></script>
 </body>
