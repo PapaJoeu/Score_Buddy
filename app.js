@@ -223,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Draw the layout on the canvas
     function drawLayout(layout, scorePositions = []) {
+        const calculatedScale = calculateAdaptiveScale(layout, elements.canvas.width, elements.canvas.height);
         const ctx = elements.canvas.getContext('2d');
         
         // Set canvas size to match its display size
@@ -231,30 +232,29 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Calculate scale to make sheet width 80% of canvas width
         const scale = (elements.canvas.width * 0.8) / layout.sheetWidth;
-
-        // Scale the canvas length to match the sheet aspect ratio along with 80% length
-        elements.canvas.height = layout.sheetLength * scale;
-
+    
+        // Scale the canvas height to match the sheet aspect ratio
+        elements.canvas.height = layout.sheetLength * scale * 1.1; // Add 10% for padding
+    
         // Calculate offsets to center the sheet
         const offsetX = (elements.canvas.width - layout.sheetWidth * scale) / 2;
         const offsetY = (elements.canvas.height - layout.sheetLength * scale) / 2;
-
+    
         ctx.clearRect(0, 0, elements.canvas.width, elements.canvas.height);
         
         // Use crisp edges for all lines
         ctx.imageSmoothingEnabled = false;
         ctx.translate(0.5, 0.5);
-
+    
         // Draw sheet
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'black';
         ctx.strokeRect(
             Math.round(offsetX),
             Math.round(offsetY),
             Math.round(layout.sheetWidth * scale),
             Math.round(layout.sheetLength * scale)
         );
-
+    
         // Draw documents
         for (let i = 0; i < layout.docsAcross; i++) {
             for (let j = 0; j < layout.docsDown; j++) {
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
             }
         }
-
+    
         // Draw margins
         ctx.strokeStyle = 'red';
         ctx.strokeRect(
@@ -277,13 +277,14 @@ document.addEventListener('DOMContentLoaded', () => {
             Math.round(layout.imposedSpaceWidth * scale),
             Math.round(layout.imposedSpaceLength * scale)
         );
-
+    
         // Draw score lines
         if (scorePositions.length > 0) {
             ctx.strokeStyle = 'magenta';
             ctx.setLineDash([5, 5]);
             scorePositions.forEach(pos => {
-                const y = offsetY + pos.y * scale;
+                // Adjust y position based on whether margins are included
+                const y = offsetY + (elements.scoredWithMargins.value === 'yes' ? pos.y : pos.y + layout.topMargin) * scale;
                 ctx.beginPath();
                 ctx.moveTo(offsetX, Math.round(y));
                 ctx.lineTo(offsetX + layout.sheetWidth * scale, Math.round(y));
@@ -291,9 +292,46 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             ctx.setLineDash([]);
         }
-
+    
         ctx.translate(-0.5, -0.5);
+        // Draw document labels
+        drawDocumentLabels(ctx, layout, scale, offsetX, offsetY);
     }
+
+    // Calculate the scale for an adaptive layout
+        function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
+            const canvasAspectRatio = canvasWidth / canvasHeight;
+            const sheetAspectRatio = layout.sheetWidth / layout.sheetLength;
+            
+            let scale;
+            if (sheetAspectRatio > canvasAspectRatio) {
+                // Sheet is wider than canvas
+                scale = (canvasWidth * 0.9) / layout.sheetWidth;
+            } else {
+                // Sheet is taller than canvas
+                scale = (canvasHeight * 0.9) / layout.sheetLength;
+            }
+            
+            return scale;
+        }
+    
+    // Use this function in drawLayout
+        function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
+            ctx.font = '12px Arial';
+            ctx.fillStyle = 'blue';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+        
+            let docNumber = 1;
+            for (let i = 0; i < layout.docsAcross; i++) {
+                for (let j = 0; j < layout.docsDown; j++) {
+                    const x = offsetX + (layout.leftMargin + (i + 0.5) * (layout.docWidth + layout.gutterWidth)) * scale;
+                    const y = offsetY + (layout.topMargin + (j + 0.5) * (layout.docLength + layout.gutterWidth)) * scale;
+                    ctx.fillText(docNumber.toString(), x, y);
+                    docNumber++;
+                }
+            }
+        }
 
     // Display the program sequence
     function displayProgramSequence(layout) {
