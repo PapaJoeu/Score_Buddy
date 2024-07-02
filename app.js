@@ -26,32 +26,42 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Cache frequently used DOM elements
+    
+    // Sheet elements
     const elements = {
-        sheetButtons: document.getElementById('sheetButtonsContainer'),
-        docButtons: document.getElementById('docButtonsContainer'),
-        gutterButtons: document.getElementById('gutterButtonsContainer'),
-        sheetInputs: document.getElementById('sheetDimensionsInputs'),
-        docInputs: document.getElementById('docDimensionsInputs'),
-        gutterInputs: document.getElementById('gutterDimensionsInputs'),
-        sheetWidth: document.getElementById('sheetWidth'),
-        sheetLength: document.getElementById('sheetLength'),
-        docWidth: document.getElementById('docWidth'),
-        docLength: document.getElementById('docLength'),
-        gutterWidth: document.getElementById('gutterWidth'),
-        canvas: document.getElementById('layoutCanvas'),
-        rotateDocsButton: document.getElementById('rotateDocsButton'),
-        rotateSheetButton: document.getElementById('rotateSheetButton'),
-        rotateDocsAndSheetButton: document.getElementById('rotateDocsAndSheetButton'),
-        calculateButton: document.getElementById('calculateButton'),
-        scoreButton: document.getElementById('scoreButton'),
-        miscDataButton: document.getElementById('miscDataButton'),
-        programSequence: document.getElementById('programSequence'),
-        layoutDetails: document.getElementById('layoutDetails'),
-        scorePositions: document.getElementById('scorePositions'),
-        scoreOptions: document.getElementById('scoreOptions'),
-        scoredWithMargins: document.getElementById('scoredWithMargins'),
-        foldType: document.getElementById('foldType'),
-        calculateScoresButton: document.getElementById('calculateScoresButton')
+        sheetButtons: document.getElementById('sheetButtonsContainer'), // Buttons for sheet sizes
+        sheetInputs: document.getElementById('sheetDimensionsInputs'), // Inputs for sheet dimensions
+        sheetWidth: document.getElementById('sheetWidth'), // Input for sheet width
+        sheetLength: document.getElementById('sheetLength'), // Input for sheet length
+        
+        // Document elements
+        docButtons: document.getElementById('docButtonsContainer'), // Buttons for document sizes
+        docInputs: document.getElementById('docDimensionsInputs'), // Inputs for document dimensions
+        docWidth: document.getElementById('docWidth'), // Input for document width
+        docLength: document.getElementById('docLength'), // Input for document length
+        
+        // Gutter elements
+        gutterButtons: document.getElementById('gutterButtonsContainer'), // Buttons for gutter sizes
+        gutterInputs: document.getElementById('gutterDimensionsInputs'), // Inputs for gutter dimensions
+        gutterWidth: document.getElementById('gutterWidth'), // Input for gutter width
+        
+        // Canvas element
+        canvas: document.getElementById('layoutCanvas'), // Canvas for drawing the layout
+        
+        // Other buttons and inputs
+        rotateDocsButton: document.getElementById('rotateDocsButton'), // Button to rotate document size
+        rotateSheetButton: document.getElementById('rotateSheetButton'), // Button to rotate sheet size
+        rotateDocsAndSheetButton: document.getElementById('rotateDocsAndSheetButton'), // Button to rotate both document and sheet sizes
+        calculateButton: document.getElementById('calculateButton'), // Button to calculate layout
+        scoreButton: document.getElementById('scoreButton'), // Button to show score options
+        miscDataButton: document.getElementById('miscDataButton'), // Button to toggle miscellaneous data
+        programSequence: document.getElementById('programSequence'), // Element to display program sequence
+        layoutDetails: document.getElementById('layoutDetails'), // Element to display layout details
+        scorePositions: document.getElementById('scorePositions'), // Element to display score positions
+        scoreOptions: document.getElementById('scoreOptions'), // Element for score options
+        scoredWithMargins: document.getElementById('scoredWithMargins'), // Element for scored with margins
+        foldType: document.getElementById('foldType'), // Element for fold type
+        calculateScoresButton: document.getElementById('calculateScoresButton') // Button to calculate scores
     };
 
     // Initialize the application
