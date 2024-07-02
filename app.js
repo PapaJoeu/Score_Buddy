@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { width: 5.5, length: 8.5, name: "Half Letter" },
             { width: 6, length: 9, name: "Sunrun Postcard" },
             { width: 8.5, length: 11, name: "Letter" },
-            { width: 9, length: 12, name: "Rich People Letterhead" }
+            { width: 9, length: 12, name: "Rich People Letterhead" },
+            { width: 11, length: 17, name: "Tabloid" }
         ],
         gutter: [
             { gutter: 0.125 },
