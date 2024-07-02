@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Cache frequently used DOM elements
-    // TODO: Add default values for inputs (Sheet 12x18, Doc 3.5x2, Gutter 0.125)
     const elements = {
         sheetButtons: document.getElementById('sheetButtonsContainer'),
         docButtons: document.getElementById('docButtonsContainer'),
@@ -59,9 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         createSizeButtons();
         setupEventListeners();
-        // Set default selections
+        setDefaultValues();
         selectDefaultSizes();
         calculateLayout();
+    }
+
+    // Set default values for inputs
+    function setDefaultValues() {
+        elements.sheetWidth.value = "12.0";
+        elements.sheetLength.value = "18.0";
+        elements.docWidth.value = "3.5";
+        elements.docLength.value = "2.0";
+        elements.gutterWidth.value = "0.125";
     }
 
     // Create buttons for sheet, document, and gutter sizes
@@ -108,10 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.rotateDocsAndSheetButton.addEventListener('click', rotateDocsAndSheet);
         elements.calculateButton.addEventListener('click', calculateLayout);
         elements.scoreButton.addEventListener('click', showScoreOptions);
-        elements.miscDataButton.addEventListener('click', showMiscData);
-        elements.scoreButton.addEventListener('click', showScoreOptions);
-        elements.calculateScoresButton.addEventListener('click', calculateScores);
         elements.miscDataButton.addEventListener('click', toggleMiscData);
+        elements.calculateScoresButton.addEventListener('click', calculateScores);
     }
 
     // Handle click events for size buttons
@@ -157,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Select default sizes for sheet, doc, and gutter
-    // TODO: This currently doesnt fill in the inputs for custom sizes I don't know what it is doing but perhaps we can code the default sizes the elements when the page loads like the previous todo says
     function selectDefaultSizes() {
         const defaultSelections = {
             sheet: '12 x 18',
@@ -168,7 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.entries(defaultSelections).forEach(([type, value]) => {
             const container = elements[`${type}Buttons`];
             const button = Array.from(container.children).find(btn => btn.textContent === value);
-            if (button) button.click();
+            if (button) {
+                button.click();
+            } else {
+                // If the default button is not found, set the input values directly
+                if (type === 'gutter') {
+                    elements.gutterWidth.value = value;
+                } else {
+                    const [width, length] = value.split(' x ');
+                    elements[`${type}Width`].value = width;
+                    elements[`${type}Length`].value = length;
+                }
+            }
         });
     }
 
@@ -206,48 +222,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Draw the layout on the canvas
-    // TODO: Fix the CSS so the lines aren't blurry and use a consistent width.
-    // TODO: Align the sheet center to the canvas
-    // TODO: make the sheet width take up 80% of the canvas width.
-    function drawLayout(layout) {
+    function drawLayout(layout, scorePositions = []) {
         const ctx = elements.canvas.getContext('2d');
-        const scale = Math.min(elements.canvas.width / layout.sheetWidth, elements.canvas.height / layout.sheetLength);
+        
+        // Set canvas size to match its display size
+        elements.canvas.width = elements.canvas.offsetWidth;
+        elements.canvas.height = elements.canvas.offsetHeight;
+        
+        // Calculate scale to make sheet width 80% of canvas width
+        const scale = (elements.canvas.width * 0.8) / layout.sheetWidth;
+
+        // Scale the canvas length to match the sheet aspect ratio along with 80% length
+        elements.canvas.height = layout.sheetLength * scale;
+
+        // Calculate offsets to center the sheet
+        const offsetX = (elements.canvas.width - layout.sheetWidth * scale) / 2;
+        const offsetY = (elements.canvas.height - layout.sheetLength * scale) / 2;
 
         ctx.clearRect(0, 0, elements.canvas.width, elements.canvas.height);
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 1;
+        
+        // Use crisp edges for all lines
+        ctx.imageSmoothingEnabled = false;
+        ctx.translate(0.5, 0.5);
 
         // Draw sheet
-        ctx.strokeRect(0, 0, layout.sheetWidth * scale, layout.sheetLength * scale);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(
+            Math.round(offsetX),
+            Math.round(offsetY),
+            Math.round(layout.sheetWidth * scale),
+            Math.round(layout.sheetLength * scale)
+        );
 
         // Draw documents
         for (let i = 0; i < layout.docsAcross; i++) {
             for (let j = 0; j < layout.docsDown; j++) {
-                const x = (layout.leftMargin + i * (layout.docWidth + layout.gutterWidth)) * scale;
-                const y = (layout.topMargin + j * (layout.docLength + layout.gutterWidth)) * scale;
-                ctx.strokeRect(x, y, layout.docWidth * scale, layout.docLength * scale);
+                const x = offsetX + (layout.leftMargin + i * (layout.docWidth + layout.gutterWidth)) * scale;
+                const y = offsetY + (layout.topMargin + j * (layout.docLength + layout.gutterWidth)) * scale;
+                ctx.strokeRect(
+                    Math.round(x),
+                    Math.round(y),
+                    Math.round(layout.docWidth * scale),
+                    Math.round(layout.docLength * scale)
+                );
             }
         }
 
         // Draw margins
         ctx.strokeStyle = 'red';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(layout.leftMargin * scale, layout.topMargin * scale, layout.imposedSpaceWidth * scale, layout.imposedSpaceLength * scale);
+        ctx.strokeRect(
+            Math.round(offsetX + layout.leftMargin * scale),
+            Math.round(offsetY + layout.topMargin * scale),
+            Math.round(layout.imposedSpaceWidth * scale),
+            Math.round(layout.imposedSpaceLength * scale)
+        );
 
         // Draw score lines
-        // TODO: Score lines are not displaying 
         if (scorePositions.length > 0) {
             ctx.strokeStyle = 'magenta';
             ctx.setLineDash([5, 5]);
             scorePositions.forEach(pos => {
-                const y = pos.y * scale;
+                const y = offsetY + pos.y * scale;
                 ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(layout.sheetWidth * scale, y);
+                ctx.moveTo(offsetX, Math.round(y));
+                ctx.lineTo(offsetX + layout.sheetWidth * scale, Math.round(y));
                 ctx.stroke();
             });
             ctx.setLineDash([]);
         }
+
+        ctx.translate(-0.5, -0.5);
     }
 
     // Display the program sequence
@@ -270,99 +315,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calculate the sequence of cuts
     function calculateSequence(layout) {
-        let sequence = [
-            // The first four cuts are the cuts that trim off the margins of the sheet, essentially you rotate the sheet 90 degrees each cut and trim off the margins
-            layout.sheetLength - layout.topMargin,
-            layout.sheetWidth - layout.leftMargin,
-            layout.imposedSpaceLength,
-            layout.imposedSpaceWidth,
-        ];
+        let sequence = [];
 
-        // The next cuts are the cuts that trim down each width of the doc leaving a back cut that is removed when the final cut is repeated
+        // Step 1: Trim off the top margin
+        sequence.push(layout.sheetLength - layout.topMargin);
+
+        // Step 2: Rotate 90 degrees and trim off the right margin
+        sequence.push(layout.sheetWidth - layout.leftMargin);
+
+        // Step 3: Rotate 90 degrees and trim off the bottom margin
+        sequence.push(layout.imposedSpaceLength);
+
+        // Step 4: Rotate 90 degrees and trim off the left margin
+        sequence.push(layout.imposedSpaceWidth);
+
+        // Steps 5 to 4+docsAcross: Cut vertical gutters, leaving a back cut
         for (let i = 1; i < layout.docsAcross; i++) {
             sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
         }
-        // these are the final cuts that trim off the back cuts on the width
-        sequence = sequence.concat(Array(layout.docsAcross - 1).fill(layout.docWidth));
 
-        // The next cuts are the cuts that trim down each length of the doc leaving a back cut that is removed when the final cut is repeated
+        // Steps 5+docsAcross to 4+2*docsAcross: Remove back cuts on width
+        for (let i = 1; i < layout.docsAcross; i++) {
+            sequence.push(layout.docWidth);
+        }
+
+        // Steps 5+2*docsAcross to 4+2*docsAcross+docsDown: Cut horizontal gutters, leaving a back cut
         for (let i = 1; i < layout.docsDown; i++) {
             sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterWidth));
         }
-        // these are the final cuts that trim off the back cuts on the length
-        sequence = sequence.concat(Array(layout.docsDown - 1).fill(layout.docLength));
+
+        // Final steps: Remove back cuts on length
+        for (let i = 1; i < layout.docsDown; i++) {
+            sequence.push(layout.docLength);
+        }
 
         return sequence;
     }
 
-    // Display layout details
-    function displayLayoutDetails(layout) {
-        const nUp = layout.docsAcross * layout.docsDown;
-        const areaUsed = (layout.docWidth * layout.docLength * nUp) / (layout.sheetWidth * layout.sheetLength);
-        const html = `
-            <h2>Layout Details</h2>
-            <table>
-                <tr><th>Sheet Size</th><td>${layout.sheetWidth} x ${layout.sheetLength} in</td></tr>
-                <tr><th>Document Size</th><td>${layout.docWidth} x ${layout.docLength} in</td></tr>
-                <tr><th>N-Up</th><td>${nUp} (${layout.docsAcross}x${layout.docsDown})</td></tr>
-                <tr><th>Top Margin</th><td>${layout.topMargin.toFixed(2)} in</td></tr>
-                <tr><th>Left Margin</th><td>${layout.leftMargin.toFixed(2)} in</td></tr>
-                <tr><th>Coverage Percentage</th><td>${(areaUsed * 100).toFixed(2)}%</td></tr>
-                <tr><th>Wasted Space</th><td>${((1 - areaUsed) * 100).toFixed(2)}%</td></tr>
-            </table>
-        `;
-        elements.layoutDetails.innerHTML = html;
-    }
+// Display layout details
+function displayLayoutDetails(layout) {
+    const nUp = layout.docsAcross * layout.docsDown;
+    const areaUsed = (layout.docWidth * layout.docLength * nUp) / (layout.sheetWidth * layout.sheetLength);
+    const html = `
+        <h2>Layout Details</h2>
+        <table>
+            <tr><th>Sheet Size</th><td>${layout.sheetWidth} x ${layout.sheetLength} in</td></tr>
+            <tr><th>Document Size</th><td>${layout.docWidth} x ${layout.docLength} in</td></tr>
+            <tr><th>N-Up</th><td>${nUp} (${layout.docsAcross}x${layout.docsDown})</td></tr>
+            <tr><th>Top Margin</th><td>${layout.topMargin.toFixed(2)} in</td></tr>
+            <tr><th>Left Margin</th><td>${layout.leftMargin.toFixed(2)} in</td></tr>
+            <tr><th>Coverage Percentage</th><td>${(areaUsed * 100).toFixed(2)}%</td></tr>
+            <tr><th>Wasted Space</th><td>${((1 - areaUsed) * 100).toFixed(2)}%</td></tr>
+        </table>
+    `;
+    elements.layoutDetails.innerHTML = html;
+}
 
-    // Show miscellaneous data
-    function showMiscData() {
-        elements.layoutDetails.classList.toggle('hidden');
-    }
+// Toggle visibility of miscellaneous data (layout details)
+function toggleMiscData() {
+    elements.layoutDetails.classList.toggle('hidden');
+}
 
-    // Show score options 
-    function showScoreOptions() {
-        elements.scoreOptions.classList.toggle('hidden');
-    }
+// Show score options 
+function showScoreOptions() {
+    elements.scoreOptions.classList.toggle('hidden');
+}
 
-    // Calculate scores
-    function calculateScores() {
-        const scoredWithMargins = elements.scoredWithMargins.value === 'yes';
-        const foldType = elements.foldType.value;
-        const layout = calculateLayoutDetails();
-    
-        let marginOffset = scoredWithMargins ? layout.topMargin : 0;
-    
-        let scorePositions = [];
-        for (let i = 0; i < layout.docsDown; i++) {
-            if (foldType === 'bifold') {
-                scorePositions.push({ y: (layout.docLength / 2) + i * (layout.docLength + layout.gutterWidth) + marginOffset });
-            } else if (foldType === 'trifold') {
-                scorePositions.push({ y: (layout.docLength / 3) + i * (layout.docLength + layout.gutterWidth) + marginOffset });
-                scorePositions.push({ y: (2 * layout.docLength / 3) - 0.05 + i * (layout.docLength + layout.gutterWidth) + marginOffset });
-            }
+// Calculate scores based on user input
+function calculateScores() {
+    const scoredWithMargins = elements.scoredWithMargins.value === 'yes';
+    const foldType = elements.foldType.value;
+    const layout = calculateLayoutDetails();
+
+    let marginOffset = scoredWithMargins ? layout.topMargin : 0;
+
+    let scorePositions = [];
+    for (let i = 0; i < layout.docsDown; i++) {
+        if (foldType === 'bifold') {
+            scorePositions.push({ y: (layout.docLength / 2) + i * (layout.docLength + layout.gutterWidth) + marginOffset });
+        } else if (foldType === 'trifold') {
+            scorePositions.push({ y: (layout.docLength / 3) + i * (layout.docLength + layout.gutterWidth) + marginOffset });
+            scorePositions.push({ y: (2 * layout.docLength / 3) - 0.05 + i * (layout.docLength + layout.gutterWidth) + marginOffset });
         }
-    
-        drawLayout(layout, scorePositions);
-        displayScorePositions(scorePositions);
     }
 
-    // Display score positions
-    function displayScorePositions(scorePositions) {
-        let html = `
-            <h2>Score Positions</h2>
-            <table>
-                <tr><th>Score Position (inches)</th></tr>
-                ${scorePositions.map(pos => `<tr><td>${pos.y.toFixed(3)}</td></tr>`).join('')}
-            </table>
-        `;
-        elements.scorePositions.innerHTML = html;
-    }
+    drawLayout(layout, scorePositions);
+    displayScorePositions(scorePositions);
+}
 
-    // Show miscellaneous data
-    function showMiscData() {
-        elements.layoutDetails.classList.toggle('hidden');
-    }
+// Display calculated score positions
+function displayScorePositions(scorePositions) {
+    let html = `
+        <h2>Score Positions</h2>
+        <table>
+            <tr><th>Score Position (inches)</th></tr>
+            ${scorePositions.map(pos => `<tr><td>${pos.y.toFixed(3)}</td></tr>`).join('')}
+        </table>
+    `;
+    elements.scorePositions.innerHTML = html;
+}
 
-    // Initialize the application
-    init();
+// Initialize the application
+init();
 });
