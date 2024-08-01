@@ -55,7 +55,9 @@ button {
 }
 
 button:active, button.active {
-    box-shadow: inset -1px -1px #dfdfdf, inset 1px 1px #808080;
+    box-shadow: inset -1px -1px #dfdfdf, inset 1px 1px #000080;
+    background-color: #000080;
+    color: #fff;
 }
 
 /* Form Styles */

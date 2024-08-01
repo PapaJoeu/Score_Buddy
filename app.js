@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Toggle active class for visual feedback
             event.target.parentNode.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+            
 
             // Show/hide custom inputs based on button clicked
             inputs.classList.toggle('hidden', !isCustom);
