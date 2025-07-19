@@ -142,17 +142,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Size Manipulation =====
     // Function to rotate dimensions for a given type (doc or sheet)
-    function rotateSize(type) {
+    function rotateSize(type, shouldCalculate = true) {
         const widthInput = elements[`${type}Width`];
         const lengthInput = elements[`${type}Length`];
         [widthInput.value, lengthInput.value] = [lengthInput.value, widthInput.value];
-        calculateLayout();
+        if (shouldCalculate) {
+            calculateLayout();
+        }
     }
 
     // Function to rotate both document and sheet dimensions
     function rotateDocsAndSheet() {
-        rotateSize('doc');
-        rotateSize('sheet');
+        rotateSize('doc', false);
+        rotateSize('sheet', false);
+        calculateLayout();
     }
 
     // ===== Layout Calculation =====
