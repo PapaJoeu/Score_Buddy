@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
         }
 
-        // Step 6: repeat docwidth for docsAcross minus 1
+        // Step 6: repeat docWidth for docsAcross minus 1
         for (let i = 1; i < layout.docsAcross; i++) {
             sequence.push(layout.docWidth);
         }
