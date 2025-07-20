@@ -75,8 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
             button.type = 'button';
             button.className = `${type}-size-button`;
             if (type === 'gutter') {
-                button.textContent = option.gutter;
-                button.dataset.gutter = option.gutter;
+                button.textContent = `${option.width} x ${option.length}`;
+                button.dataset.width = option.width;
+                button.dataset.length = option.length;
             } else {
                 button.textContent = `${option.width} x ${option.length}`;
                 button.dataset.width = option.width;
@@ -129,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isCustom) {
                 // Set input values from button data
                 if (type === 'gutter') {
-                    elements.gutterWidth.value = event.target.dataset.gutter;
-                    elements.gutterLength.value = event.target.dataset.gutter;
+                    elements.gutterWidth.value = event.target.dataset.width;
+                    elements.gutterLength.value = event.target.dataset.length;
                 } else {
                     elements[`${type}Width`].value = event.target.dataset.width;
                     elements[`${type}Length`].value = event.target.dataset.length;
@@ -260,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const defaultSelections = {
             sheet: '12 x 18',
             doc: '3.5 x 2',
-            gutter: '0.125'
+            gutter: '0.125 x 0.125'
         };
 
         Object.entries(defaultSelections).forEach(([type, value]) => {
@@ -271,8 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // If the default button is not found, set the input values directly
                 if (type === 'gutter') {
-                    elements.gutterWidth.value = value;
-                    elements.gutterLength.value = value;
+                    const [width, length] = value.split(' x ');
+                    elements.gutterWidth.value = width;
+                    elements.gutterLength.value = length;
                 } else {
                     const [width, length] = value.split(' x ');
                     elements[`${type}Width`].value = width;
