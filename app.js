@@ -2,6 +2,7 @@
 
 // Import the drawLayout function from the visualizer module
 import { drawLayout } from './visualizer.js';
+import { calculateLayoutDetails as calcDetails, calculateSequence as calcSequence, calculateScorePositions } from './calculations.js';
 
 // Import the SIZE_OPTIONS object from the sizeOptions module
 import { SIZE_OPTIONS } from './sizeOptions.js';
@@ -176,23 +177,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const gutterWidth = parseFloat(elements.gutterWidth.value);
         const gutterLength = parseFloat(elements.gutterLength.value);
 
-        const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
-        const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
-        const totalGutterWidth = (docsAcross - 1) * gutterWidth;
-        const totalGutterLength = (docsDown - 1) * gutterLength;
-        const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
-        const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
-        const gutterSpaceWidth = totalGutterWidth;
-        const gutterSpaceLength = totalGutterLength;
-
-        const topMargin = (sheetLength - imposedSpaceLength) / 2;
-        const leftMargin = (sheetWidth - imposedSpaceWidth) / 2;
-
-        return {
-            sheetWidth, sheetLength, docWidth, docLength, gutterWidth, gutterLength,
-            docsAcross, docsDown, imposedSpaceWidth, imposedSpaceLength,
-            topMargin, leftMargin, gutterSpaceWidth, gutterSpaceLength
-        };
+        return calcDetails({
+            sheetWidth,
+            sheetLength,
+            docWidth,
+            docLength,
+            gutterWidth,
+            gutterLength
+        });
     }
 
     // ===== Drawing =====
@@ -292,41 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to calculate the sequence of cuts
     function calculateSequence(layout) {
-        let sequence = [];
-
-        // Step 1: Trim off the top margin
-        sequence.push(layout.sheetLength - layout.topMargin);
-
-        // Step 2: Rotate 90 degrees and trim off the right margin
-        sequence.push(layout.sheetWidth - layout.leftMargin);
-
-        // Step 3: Rotate 90 degrees and trim off the bottom margin
-        sequence.push(layout.imposedSpaceLength);
-
-        // Step 4: Rotate 90 degrees and trim off the left margin
-        sequence.push(layout.imposedSpaceWidth);
-
-        // Step 5: to 4+docsAcross: Cut vertical gutters, leaving a back cut
-        for (let i = 1; i < layout.docsAcross; i++) {
-            sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
-        }
-
-        // Step 6: repeat docWidth for docsAcross minus 1
-        for (let i = 1; i < layout.docsAcross; i++) {
-            sequence.push(layout.docWidth);
-        }
-
-        // Step 7: Cut horizontal gutters, leaving a back cut
-        for (let i = 1; i < layout.docsDown; i++) {
-            sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterLength));
-        }
-
-        // Step 8: repeat docLength for docsDown minus 1
-        for (let i = 1; i < layout.docsDown; i++) {
-            sequence.push(layout.docLength);
-        }
-
-        return sequence;
+        return calcSequence(layout);
     }
 
     // ===== UI Toggles =====
@@ -347,26 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const foldType = elements.foldType.value;
         const layout = calculateLayoutDetails();
 
-        let marginOffset = scoredWithMargins ? layout.topMargin : 0;
-
-        let scorePositions = [];
-        for (let i = 0; i < layout.docsDown; i++) {
-            if (foldType === 'bifold') {
-                scorePositions.push({ 
-                    y: (layout.docLength / 2) + i * (layout.docLength + layout.gutterLength) + marginOffset,
-                    scoredWithMargins: scoredWithMargins
-                });
-            } else if (foldType === 'trifold') {
-                scorePositions.push({ 
-                    y: (layout.docLength / 3) + i * (layout.docLength + layout.gutterLength) + marginOffset,
-                    scoredWithMargins: scoredWithMargins
-                });
-                scorePositions.push({ 
-                    y: (2 * layout.docLength / 3) - 0.05 + i * (layout.docLength + layout.gutterLength) + marginOffset,
-                    scoredWithMargins: scoredWithMargins
-                });
-            }
-        }
+        const scorePositions = calculateScorePositions(layout, { foldType, scoredWithMargins });
 
         // Draw the layout with score positions
         drawLayoutWrapper(layout, scorePositions);
