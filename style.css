@@ -9,6 +9,16 @@
     --bg-color: #c0c0c0;
     --primary-color: #000080;
     --font-family: 'Tahoma', 'Verdana', sans-serif;
+    /* Canvas drawing variables */
+    --canvas-sheet-color: #000;
+    --canvas-margin-color: red;
+    --canvas-score-color: magenta;
+    --canvas-label-color: blue;
+    --canvas-font-family: Arial, sans-serif;
+    /* Minimum font size in pixels for canvas text */
+    --canvas-font-size: 12;
+    /* Percentage of the document box used for label text */
+    --canvas-label-scale: 0.2;
 }
 
 /* General Styles */
