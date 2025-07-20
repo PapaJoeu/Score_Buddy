@@ -9,6 +9,14 @@
     --bg-color: #c0c0c0;
     --primary-color: #000080;
     --font-family: 'Tahoma', 'Verdana', sans-serif;
+    /* Canvas drawing variables */
+    --canvas-sheet-color: #000;
+    --canvas-margin-color: red;
+    --canvas-score-color: magenta;
+    --canvas-label-color: blue;
+    --canvas-font-family: Arial, sans-serif;
+    /* Base font size in pixels used for canvas text */
+    --canvas-font-size: 12;
 }
 
 /* General Styles */
