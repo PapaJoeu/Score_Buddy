@@ -20,9 +20,8 @@ export const SIZE_OPTIONS = {
         { width: 9, length: 12, name: "Rich People Letterhead" },
         { width: 11, length: 17, name: "Tabloid" }
     ],
-    // TODO: make the gutter options like the others with width and length (check the app.js to update the relevant code)
     gutter: [
-        { gutter: 0.125 },
-        { gutter: 0.25 }
+        { width: 0.125, length: 0.125 },
+        { width: 0.25, length: 0.25 }
     ]
 };
