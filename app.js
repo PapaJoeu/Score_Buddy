@@ -2,7 +2,8 @@
 
 // Import the drawLayout function from the visualizer module
 import { drawLayout } from './visualizer.js';
-import { calculateLayoutDetails as calcDetails, calculateSequence as calcSequence, calculateScorePositions } from './calculations.js';
+import { calculateLayoutDetails as calcDetails, calculateSequence as calcSequence } from './calculations.js';
+import { calculateScorePositions } from './scoring.js';
 
 // Import the SIZE_OPTIONS object from the sizeOptions module
 import { SIZE_OPTIONS } from './sizeOptions.js';
