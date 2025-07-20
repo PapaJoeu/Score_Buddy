@@ -1,9 +1,22 @@
+/*
+ * Default Theme Variables
+ * --bg-color: #c0c0c0;
+ * --primary-color: #000080;
+ * --font-family: 'Tahoma', 'Verdana', sans-serif;
+ */
+
+:root {
+    --bg-color: #c0c0c0;
+    --primary-color: #000080;
+    --font-family: 'Tahoma', 'Verdana', sans-serif;
+}
+
 /* General Styles */
 body {
-    font-family: 'Tahoma', 'Verdana', sans-serif;
+    font-family: var(--font-family);
     margin: 0;
     padding: 0;
-    background-color: #c0c0c0;
+    background-color: var(--bg-color);
     line-height: 1.6;
     font-size: 12px;
     color: #000;
@@ -23,14 +36,14 @@ h1 {
     text-align: center;
     margin: 0 0 10px 0;
     padding: 5px;
-    background-color: #000080;
+    background-color: var(--primary-color);
     color: #fff;
 }
 
 h2 {
     font-size: 14px;
     margin: 10px 0 5px 0;
-    color: #000080;
+    color: var(--primary-color);
 }
 
 /* Button Styles */
@@ -51,8 +64,8 @@ button {
 }
 
 button:active, button.active {
-    box-shadow: inset -1px -1px #dfdfdf, inset 1px 1px #000080;
-    background-color: #000080;
+    box-shadow: inset -1px -1px #dfdfdf, inset 1px 1px var(--primary-color);
+    background-color: var(--primary-color);
     color: #fff;
 }
 
@@ -91,7 +104,7 @@ th, td {
 }
 
 th {
-    background-color: #000080;
+    background-color: var(--primary-color);
     color: #fff;
 }
 
