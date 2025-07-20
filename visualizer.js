@@ -18,9 +18,10 @@ export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
 }
 
 // Draw document labels on the canvas
-export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
-    ctx.font = '12px Arial';
-    ctx.fillStyle = 'blue';
+export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, styles) {
+    const fontSize = Math.max(8, styles.baseFontSize * scale);
+    ctx.font = `${fontSize}px ${styles.fontFamily}`;
+    ctx.fillStyle = styles.labelColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
@@ -38,6 +39,17 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
 // Draw the layout on the canvas
 export function drawLayout(canvas, layout, scorePositions = []) {
     const ctx = canvas.getContext('2d');
+
+    // Get drawing styles from CSS variables
+    const rootStyle = getComputedStyle(document.documentElement);
+    const styles = {
+        sheetColor: rootStyle.getPropertyValue('--canvas-sheet-color').trim() || 'black',
+        marginColor: rootStyle.getPropertyValue('--canvas-margin-color').trim() || 'red',
+        scoreColor: rootStyle.getPropertyValue('--canvas-score-color').trim() || 'magenta',
+        labelColor: rootStyle.getPropertyValue('--canvas-label-color').trim() || 'blue',
+        fontFamily: rootStyle.getPropertyValue('--canvas-font-family').trim() || 'Arial',
+        baseFontSize: parseFloat(rootStyle.getPropertyValue('--canvas-font-size')) || 12
+    };
     
     // Set canvas size to match its display size
     canvas.width = canvas.offsetWidth;
@@ -60,7 +72,7 @@ export function drawLayout(canvas, layout, scorePositions = []) {
     ctx.translate(0.5, 0.5);
 
     // Draw sheet
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = styles.sheetColor;
     ctx.strokeRect(
         Math.round(offsetX),
         Math.round(offsetY),
@@ -83,7 +95,7 @@ export function drawLayout(canvas, layout, scorePositions = []) {
     }
 
     // Draw margins
-    ctx.strokeStyle = 'red';
+    ctx.strokeStyle = styles.marginColor;
     ctx.strokeRect(
         Math.round(offsetX + layout.leftMargin * scale),
         Math.round(offsetY + layout.topMargin * scale),
@@ -94,7 +106,7 @@ export function drawLayout(canvas, layout, scorePositions = []) {
     // Draw score lines
     // TODO: Add support for different gutter width or length values in calculating the score positions
     if (scorePositions.length > 0) {
-        ctx.strokeStyle = 'magenta';
+        ctx.strokeStyle = styles.scoreColor;
         ctx.setLineDash([5, 5]);
         scorePositions.forEach(pos => {
             // Adjust y position based on whether margins are included
@@ -109,5 +121,5 @@ export function drawLayout(canvas, layout, scorePositions = []) {
 
     ctx.translate(-0.5, -0.5);
     // Draw document labels
-    drawDocumentLabels(ctx, layout, scale, offsetX, offsetY);
+    drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, styles);
 }
