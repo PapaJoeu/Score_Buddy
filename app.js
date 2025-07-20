@@ -8,6 +8,7 @@ import { renderProgramSequence, renderLayoutDetails, renderScorePositions } from
 
 // Import the SIZE_OPTIONS object from the sizeOptions module
 import { SIZE_OPTIONS } from './sizeOptions.js';
+import { createSizeButtons, createButtonsForType } from './buttonCreation.js';
 
 // Wait for the DOM to be fully loaded before executing the script
 document.addEventListener('DOMContentLoaded', () => {
@@ -54,7 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Initialization =====
     // Function to initialize the application
     function init() {
-        createSizeButtons();
+        createSizeButtons({
+            sheetButtons: elements.sheetButtons,
+            docButtons: elements.docButtons,
+            gutterButtons: elements.gutterButtons
+        }, SIZE_OPTIONS);
         setupEventListeners();
         setDefaultValues();
         selectDefaultSizes();
@@ -62,41 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== Button Creation =====
-    // Function to create all size buttons
-    function createSizeButtons() {
-        createButtonsForType('sheet', elements.sheetButtons);
-        createButtonsForType('doc', elements.docButtons);
-        createButtonsForType('gutter', elements.gutterButtons);
-    }
-
-    // Function to create buttons for a specific type (sheet, doc, or gutter)
-    function createButtonsForType(type, container) {
-        // Create buttons for each predefined size option
-        SIZE_OPTIONS[type].forEach(option => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = `${type}-size-button`;
-            if (type === 'gutter') {
-                button.textContent = `${option.width} x ${option.length}`;
-                button.dataset.width = option.width;
-                button.dataset.length = option.length;
-            } else {
-                button.textContent = `${option.width} x ${option.length}`;
-                button.dataset.width = option.width;
-                button.dataset.length = option.length;
-                if (option.name) button.dataset.name = option.name;
-            }
-            container.appendChild(button);
-        });
-        
-        // Add custom button for user-defined sizes
-        const customButton = document.createElement('button');
-        customButton.type = 'button';
-        customButton.id = `custom${type.charAt(0).toUpperCase() + type.slice(1)}SizeButton`;
-        customButton.className = `${type}-size-button`;
-        customButton.textContent = 'Custom';
-        container.appendChild(customButton);
-    }
+    // Size button creation is handled in a separate module
 
     // ===== Event Listeners =====
     // Function to set up all event listeners
