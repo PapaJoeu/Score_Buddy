@@ -16,9 +16,9 @@
                     <h2>Sheet Dimensions</h2>
                     <div class="button-grid" id="sheetButtonsContainer"></div>
                     <div class="input-group hidden" id="sheetDimensionsInputs">
-                        <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
+                        <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0" aria-label="Sheet Width">
                         <span>x</span>
-                        <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
+                        <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0" aria-label="Sheet Length">
                     </div>
                 </section>
 
@@ -26,9 +26,9 @@
                     <h2>Document Dimensions</h2>
                     <div class="button-grid" id="docButtonsContainer"></div>
                     <div class="input-group hidden" id="docDimensionsInputs">
-                        <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5">
+                        <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5" aria-label="Document Width">
                         <span>x</span>
-                        <input type="number" id="docLength" name="docLength" step="0.25" value="2">
+                        <input type="number" id="docLength" name="docLength" step="0.25" value="2" aria-label="Document Length">
                     </div>
                 </section>
 
@@ -51,7 +51,7 @@
                     <button type="button" id="rotateSheetButton">Rotate Sheet</button>
                     <button type="button" id="rotateDocsAndSheetButton">Rotate Docs and Sheet</button>
                 </div>
-                <canvas id="layoutCanvas"></canvas>
+                <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 <div class="button-grid">
                     <button type="button" id="calculateButton">Program Sequence</button>
                     <button type="button" id="scoreButton">Score Measurements</button>
@@ -73,9 +73,9 @@
                     </select>
                     <button type="button" id="calculateScoresButton">Calculate Scores</button>
                 </div>
-                <div id="layoutDetails" class="hidden"></div>
-                <div id="scorePositions"></div>
-                <div id="programSequence"></div>
+                <div id="layoutDetails" class="hidden" role="status" aria-live="polite"></div>
+                <div id="scorePositions" role="status" aria-live="polite"></div>
+                <div id="programSequence" role="status" aria-live="polite"></div>
             </section>
         </main>
     </div>
