@@ -15,8 +15,10 @@
     --canvas-score-color: magenta;
     --canvas-label-color: blue;
     --canvas-font-family: Arial, sans-serif;
-    /* Base font size in pixels used for canvas text */
+    /* Minimum font size in pixels for canvas text */
     --canvas-font-size: 12;
+    /* Percentage of the document box used for label text */
+    --canvas-label-scale: 0.2;
 }
 
 /* General Styles */

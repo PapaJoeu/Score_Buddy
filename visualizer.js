@@ -19,7 +19,8 @@ export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
 
 // Draw document labels on the canvas
 export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, styles) {
-    const fontSize = Math.max(8, styles.baseFontSize * scale);
+    const docSize = Math.min(layout.docWidth, layout.docLength) * scale;
+    const fontSize = Math.max(styles.baseFontSize, docSize * styles.labelScale);
     ctx.font = `${fontSize}px ${styles.fontFamily}`;
     ctx.fillStyle = styles.labelColor;
     ctx.textAlign = 'center';
@@ -48,7 +49,8 @@ export function drawLayout(canvas, layout, scorePositions = []) {
         scoreColor: rootStyle.getPropertyValue('--canvas-score-color').trim() || 'magenta',
         labelColor: rootStyle.getPropertyValue('--canvas-label-color').trim() || 'blue',
         fontFamily: rootStyle.getPropertyValue('--canvas-font-family').trim() || 'Arial',
-        baseFontSize: parseFloat(rootStyle.getPropertyValue('--canvas-font-size')) || 12
+        baseFontSize: parseFloat(rootStyle.getPropertyValue('--canvas-font-size')) || 12,
+        labelScale: parseFloat(rootStyle.getPropertyValue('--canvas-label-scale')) || 0.2
     };
     
     // Set canvas size to match its display size
