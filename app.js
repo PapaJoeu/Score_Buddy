@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sheetInputs: document.getElementById('sheetDimensionsInputs'),
         sheetWidth: document.getElementById('sheetWidth'),
         sheetLength: document.getElementById('sheetLength'),
+        sheetMargin: document.getElementById('sheetMargin'),
         
         // Document elements
         docButtons: document.getElementById('docButtonsContainer'),
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.scoreButton.addEventListener('click', showScoreOptions);
         elements.miscDataButton.addEventListener('click', toggleMiscData);
         elements.calculateScoresButton.addEventListener('click', calculateScores);
+        elements.sheetMargin.addEventListener('input', calculateLayout);
     }
 
     // ===== Event Handlers =====
@@ -150,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const docLength = parseFloat(elements.docLength.value);
         const gutterWidth = parseFloat(elements.gutterWidth.value);
         const gutterLength = parseFloat(elements.gutterLength.value);
+        const sheetMargin = parseFloat(elements.sheetMargin.value);
 
         return calcDetails({
             sheetWidth,
@@ -157,7 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
             docWidth,
             docLength,
             gutterWidth,
-            gutterLength
+            gutterLength,
+            sheetMargin
         });
     }
 
@@ -193,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.docLength.value = "2.0";
         elements.gutterWidth.value = "0.125";
         elements.gutterLength.value = "0.125";
+        elements.sheetMargin.value = "0.125";
     }
 
     // Function to select default sizes for sheet, doc, and gutter

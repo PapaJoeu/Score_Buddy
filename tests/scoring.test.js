@@ -10,7 +10,8 @@ const assert = require('assert');
     docWidth: 3,
     docLength: 4,
     gutterWidth: 0.5,
-    gutterLength: 0.25
+    gutterLength: 0.25,
+    sheetMargin: 0.125
   });
 
   // Verify bifold score positions with margins

@@ -68,6 +68,17 @@ export function drawLayout(canvas, layout, scorePositions = []) {
         Math.round(layout.sheetLength * scale)
     );
 
+    // Draw sheet margin boundary
+    if (layout.sheetMargin > 0) {
+        ctx.strokeStyle = 'orange';
+        ctx.strokeRect(
+            Math.round(offsetX + layout.sheetMargin * scale),
+            Math.round(offsetY + layout.sheetMargin * scale),
+            Math.round((layout.sheetWidth - 2 * layout.sheetMargin) * scale),
+            Math.round((layout.sheetLength - 2 * layout.sheetMargin) * scale)
+        );
+    }
+
     // Draw documents
     for (let i = 0; i < layout.docsAcross; i++) {
         for (let j = 0; j < layout.docsDown; j++) {

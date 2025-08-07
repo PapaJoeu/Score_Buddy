@@ -2,6 +2,7 @@
 // Functions related to scoring positions and other scoring utilities
 
 export function calculateScorePositions(layout, { foldType = 'bifold', scoredWithMargins = false } = {}) {
+    // layout.topMargin already includes any sheet margin
     const marginOffset = scoredWithMargins ? layout.topMargin : 0;
     let scorePositions = [];
     for (let i = 0; i < layout.docsDown; i++) {

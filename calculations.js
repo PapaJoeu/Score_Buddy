@@ -1,14 +1,19 @@
-export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docLength, gutterWidth, gutterLength }) {
-    const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
-    const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
+export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docLength, gutterWidth, gutterLength, sheetMargin = 0.125 }) {
+    const usableWidth = Math.max(0, sheetWidth - 2 * sheetMargin);
+    const usableLength = Math.max(0, sheetLength - 2 * sheetMargin);
+
+    const docsAcross = Math.floor(usableWidth / (docWidth + gutterWidth));
+    const docsDown = Math.floor(usableLength / (docLength + gutterLength));
     const totalGutterWidth = (docsAcross - 1) * gutterWidth;
     const totalGutterLength = (docsDown - 1) * gutterLength;
     const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
     const imposedSpaceLength = (docLength * docsDown) + totalGutterLength;
     const gutterSpaceWidth = totalGutterWidth;
     const gutterSpaceLength = totalGutterLength;
-    const topMargin = (sheetLength - imposedSpaceLength) / 2;
-    const leftMargin = (sheetWidth - imposedSpaceWidth) / 2;
+
+    const topMargin = sheetMargin + (usableLength - imposedSpaceLength) / 2;
+    const leftMargin = sheetMargin + (usableWidth - imposedSpaceWidth) / 2;
+
     return {
         sheetWidth,
         sheetLength,
@@ -16,6 +21,9 @@ export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docL
         docLength,
         gutterWidth,
         gutterLength,
+        sheetMargin,
+        usableWidth,
+        usableLength,
         docsAcross,
         docsDown,
         imposedSpaceWidth,
