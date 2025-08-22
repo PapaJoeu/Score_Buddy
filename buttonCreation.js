@@ -6,7 +6,8 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
     SIZE_OPTIONS[type].forEach(option => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = `${type}-size-button`;
+        button.classList.add('btn', 'btn-secondary', `${type}-size-button`);
+        button.dataset.type = type;
         if (option.name) {
             button.innerHTML = `${option.name}<br>${option.width} x ${option.length}`;
             button.dataset.name = option.name;
@@ -22,7 +23,8 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
     const customButton = document.createElement('button');
     customButton.type = 'button';
     customButton.id = `custom${type.charAt(0).toUpperCase() + type.slice(1)}SizeButton`;
-    customButton.className = `${type}-size-button`;
+    customButton.classList.add('btn', 'btn-secondary', `${type}-size-button`);
+    customButton.dataset.type = type;
     customButton.textContent = 'Custom';
     container.appendChild(customButton);
 }

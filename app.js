@@ -107,32 +107,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Event Handlers =====
     // Function to handle clicks on size buttons
     function handleSizeButtonClick(event) {
-        if (event.target.tagName === 'BUTTON') {
-            const type = event.target.className.split('-')[0]; // 'sheet', 'doc', 'gutter', or 'margin'
-            const inputs = elements[`${type}Inputs`];
-            const isCustom = event.target.id.includes('custom');
-
-            // Toggle active class for visual feedback
-            event.target.parentNode.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-
-            // Show/hide custom inputs based on button clicked
-            inputs.classList.toggle('hidden', !isCustom);
-
-            if (!isCustom) {
-                // Set input values from button data
-                if (type === 'gutter') {
-                    elements.gutterWidth.value = event.target.dataset.width;
-                    elements.gutterLength.value = event.target.dataset.length;
-                } else {
-                    elements[`${type}Width`].value = event.target.dataset.width;
-                    elements[`${type}Length`].value = event.target.dataset.length;
-                }
-            }
-
-            calculateLayout();
+        const button = event.target.closest('button');
+        if (!button) {
+            return;
         }
+        const type = button.dataset.type; // 'sheet', 'doc', 'gutter', or 'margin'
+        const inputs = elements[`${type}Inputs`];
+        const isCustom = button.id.includes('custom');
+
+        // Toggle active class for visual feedback
+        button.parentNode.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Show/hide custom inputs based on button clicked
+        inputs.classList.toggle('hidden', !isCustom);
+
+        if (!isCustom) {
+            // Set input values from button data
+            if (type === 'gutter') {
+                elements.gutterWidth.value = button.dataset.width;
+                elements.gutterLength.value = button.dataset.length;
+            } else {
+                elements[`${type}Width`].value = button.dataset.width;
+                elements[`${type}Length`].value = button.dataset.length;
+            }
+        }
+
+        calculateLayout();
     }
 
     // ===== Size Manipulation =====
