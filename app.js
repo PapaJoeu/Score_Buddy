@@ -58,7 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreOptions: document.getElementById('scoreOptions'),
         scoredWithMargins: document.getElementById('scoredWithMargins'),
         foldType: document.getElementById('foldType'),
-        calculateScoresButton: document.getElementById('calculateScoresButton')
+        calculateScoresButton: document.getElementById('calculateScoresButton'),
+        themeToggle: document.getElementById('themeToggle')
     };
 
     // Zoom state for canvas
@@ -112,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.scoreButton.addEventListener('click', showScoreOptions);
         elements.miscDataButton.addEventListener('click', toggleMiscData);
         elements.calculateScoresButton.addEventListener('click', calculateScores);
+        elements.themeToggle.addEventListener('click', toggleTheme);
     }
 
     // ===== Event Handlers =====
@@ -269,6 +271,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show/hide score options
     function showScoreOptions() {
         elements.scoreOptions.classList.toggle('hidden');
+    }
+
+    // Function to toggle between light and dark themes
+    function toggleTheme() {
+        const root = document.documentElement;
+        if (root.getAttribute('data-theme') === 'dark') {
+            root.removeAttribute('data-theme');
+        } else {
+            root.setAttribute('data-theme', 'dark');
+        }
     }
 
 // ===== Scoring =====
