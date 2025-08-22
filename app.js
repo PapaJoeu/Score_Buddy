@@ -221,38 +221,32 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.sheetWidth.value = "12.0";
         elements.sheetLength.value = "18.0";
         elements.docWidth.value = "3.5";
-        elements.docLength.value = "2.0";
+        elements.docLength.value = "4.0";
         elements.gutterWidth.value = "0.125";
         elements.gutterLength.value = "0.125";
         elements.marginWidth.value = "0.25";
         elements.marginLength.value = "0.25";
     }
 
-    // Function to select default sizes for sheet, doc, and gutter
+    // Function to select default sizes for sheet, doc, gutter, and margin
     function selectDefaultSizes() {
         const defaultSelections = {
-            sheet: '12 x 18',
-            doc: '3.5 x 2',
-            gutter: '0.125 x 0.125',
-            margin: '0.25 x 0.25'
+            sheet: { width: 12, length: 18 },
+            doc: { width: 3.5, length: 4 },
+            gutter: { width: 0.125, length: 0.125 },
+            margin: { width: 0.25, length: 0.25 }
         };
 
-        Object.entries(defaultSelections).forEach(([type, value]) => {
+        Object.entries(defaultSelections).forEach(([type, { width, length }]) => {
             const container = elements[`${type}Buttons`];
-            const button = Array.from(container.children).find(btn => btn.textContent === value);
+            const button = Array.from(container.children).find(btn =>
+                parseFloat(btn.dataset.width) === width && parseFloat(btn.dataset.length) === length
+            );
             if (button) {
                 button.click();
             } else {
-                // If the default button is not found, set the input values directly
-                if (type === 'gutter') {
-                    const [width, length] = value.split(' x ');
-                    elements.gutterWidth.value = width;
-                    elements.gutterLength.value = length;
-                } else {
-                    const [width, length] = value.split(' x ');
-                    elements[`${type}Width`].value = width;
-                    elements[`${type}Length`].value = length;
-                }
+                elements[`${type}Width`].value = width;
+                elements[`${type}Length`].value = length;
             }
         });
     }
