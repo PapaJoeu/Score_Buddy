@@ -10,7 +10,8 @@
  * Theme colors
  * --doc-color: RGB components for document outline
  * --margin-color: RGB components for margin areas
- * --printable-color: RGB components for non-printable areas and scores
+ * --printable-color: RGB components for non-printable areas
+ * --score-color: RGB components for score lines
  */
 
 :root {
@@ -30,6 +31,7 @@
     --doc-color: 0, 0, 0;
     --margin-color: 255, 0, 0;
     --printable-color: 255, 0, 255;
+    --score-color: var(--printable-color);
 }
 
 [data-theme="dark"] {
@@ -43,6 +45,7 @@
     --doc-color: 0, 0, 0;
     --margin-color: 255, 0, 0;
     --printable-color: 255, 0, 255;
+    --score-color: var(--printable-color);
 }
 
 /* General Styles */
@@ -456,5 +459,5 @@ tbody tr:nth-child(even) {
 
 .legend-line.score {
     border-top-style: dashed;
-    border-color: rgb(var(--printable-color));
+    border-color: rgb(var(--score-color));
 }

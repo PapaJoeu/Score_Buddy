@@ -1,4 +1,5 @@
 // visualizer.js
+import { getColorTokens } from './colorConfig.js';
 
 // Calculate the scale for an adaptive layout
 export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
@@ -19,8 +20,9 @@ export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
 
 // Draw document labels on the canvas
 export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
+    const colors = getColorTokens();
     ctx.font = '12px Arial';
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = colors.label;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
@@ -38,6 +40,7 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
 // Draw the layout on the canvas
 export function drawLayout(canvas, layout, scorePositions = [], marginData = {}, zoom = 1) {
     const ctx = canvas.getContext('2d');
+    const colors = getColorTokens();
 
     const container = canvas.parentElement;
     if (container && container.style) {
@@ -62,7 +65,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     ctx.translate(0.5, 0.5);
 
     // Draw sheet
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = colors.document;
     ctx.strokeRect(
         Math.round(offsetX),
         Math.round(offsetY),
@@ -74,7 +77,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     const marginWidth = marginData.marginWidth ?? 0;
     const marginLength = marginData.marginLength ?? 0;
     if (marginWidth > 0 || marginLength > 0) {
-        ctx.fillStyle = 'rgba(255, 0, 255, 0.25)';
+        ctx.fillStyle = colors.printableFill;
 
         // Top margin
         ctx.fillRect(
@@ -109,7 +112,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
         );
 
         // Outline printable area
-        ctx.strokeStyle = 'magenta';
+        ctx.strokeStyle = colors.score;
         ctx.strokeRect(
             Math.round(offsetX + marginWidth * scale),
             Math.round(offsetY + marginLength * scale),
@@ -118,7 +121,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
         );
 
         // Reset stroke for documents
-        ctx.strokeStyle = 'black';
+        ctx.strokeStyle = colors.document;
     }
 
     // Draw documents
@@ -136,7 +139,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     }
 
     // Draw margins
-    ctx.strokeStyle = 'red';
+    ctx.strokeStyle = colors.margin;
     ctx.strokeRect(
         Math.round(offsetX + layout.leftMargin * scale),
         Math.round(offsetY + layout.topMargin * scale),
@@ -146,7 +149,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
 
     // Draw score lines respecting margins and gutters
     if (scorePositions.length > 0) {
-        ctx.strokeStyle = 'magenta';
+        ctx.strokeStyle = colors.score;
         ctx.setLineDash([5, 5]);
         scorePositions.forEach(pos => {
             const y = offsetY + pos.y * scale;

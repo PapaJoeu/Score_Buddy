@@ -289,6 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             root.setAttribute('data-theme', 'dark');
         }
+        const layout = calculateLayoutDetails();
+        drawLayoutWrapper(layout, elements.showScores.checked ? lastScorePositions : []);
     }
 
     // Show or hide custom score inputs based on fold type
