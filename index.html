@@ -114,8 +114,13 @@
             </section>
 
             <aside class="data-column">
+                <!-- Program Sequence output card -->
+                <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
+
+                <!-- Score options card now contains score positions -->
                 <section id="scoreOptions" class="card data-card">
                     <h2>Scoring</h2>
+                    <!-- Score options controls -->
                     <div class="form-grid">
                         <label for="showScores" class="checkbox-label">
                             <input type="checkbox" id="showScores"> Display scores on visualizer
@@ -133,9 +138,9 @@
                         </div>
                         <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
                     </div>
+                    <!-- Nested container for score position output -->
+                    <div id="scorePositions" role="status" aria-live="polite"></div>
                 </section>
-                <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
-                <section id="scorePositions" class="card data-card" role="status" aria-live="polite"></section>
             </aside>
         </main>
     </div>
