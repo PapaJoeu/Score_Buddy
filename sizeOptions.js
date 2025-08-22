@@ -24,7 +24,7 @@ export const SIZE_OPTIONS = {
     gutter: [
         { width: 0.125, length: 0.125, name: "1/8" },
         { width: 0.25, length: 0.25, name: "1/4" },
-        { width: 0, length: 0 },
+        { width: 0, length: 0, name: "No Gutter" },
         { width: 0.3125, length: 0.17, name: "Duplo 25 UP" }
 
     ],
