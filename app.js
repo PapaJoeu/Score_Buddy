@@ -181,7 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Drawing =====
     // Wrapper function to draw layout using the imported drawLayout function
     function drawLayoutWrapper(layout, scorePositions = []) {
-        drawLayout(elements.canvas, layout, scorePositions);
+        const marginData = {
+            marginWidth: layout.marginWidth,
+            marginLength: layout.marginLength
+        };
+        drawLayout(elements.canvas, layout, scorePositions, marginData);
     }
 
     // ===== Display Functions =====

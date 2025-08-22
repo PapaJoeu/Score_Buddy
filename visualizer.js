@@ -36,7 +36,7 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
 }
 
 // Draw the layout on the canvas
-export function drawLayout(canvas, layout, scorePositions = []) {
+export function drawLayout(canvas, layout, scorePositions = [], marginData = {}) {
     const ctx = canvas.getContext('2d');
     
     // Set canvas size to match its display size
@@ -67,6 +67,57 @@ export function drawLayout(canvas, layout, scorePositions = []) {
         Math.round(layout.sheetWidth * scale),
         Math.round(layout.sheetLength * scale)
     );
+
+    // Draw printable area overlay before documents
+    const marginWidth = marginData.marginWidth ?? 0;
+    const marginLength = marginData.marginLength ?? 0;
+    if (marginWidth > 0 || marginLength > 0) {
+        ctx.fillStyle = 'rgba(255, 0, 255, 0.25)';
+
+        // Top margin
+        ctx.fillRect(
+            Math.round(offsetX),
+            Math.round(offsetY),
+            Math.round(layout.sheetWidth * scale),
+            Math.round(marginLength * scale)
+        );
+
+        // Bottom margin
+        ctx.fillRect(
+            Math.round(offsetX),
+            Math.round(offsetY + (marginLength + layout.usableSheetLength) * scale),
+            Math.round(layout.sheetWidth * scale),
+            Math.round(marginLength * scale)
+        );
+
+        // Left margin
+        ctx.fillRect(
+            Math.round(offsetX),
+            Math.round(offsetY + marginLength * scale),
+            Math.round(marginWidth * scale),
+            Math.round(layout.usableSheetLength * scale)
+        );
+
+        // Right margin
+        ctx.fillRect(
+            Math.round(offsetX + (marginWidth + layout.usableSheetWidth) * scale),
+            Math.round(offsetY + marginLength * scale),
+            Math.round(marginWidth * scale),
+            Math.round(layout.usableSheetLength * scale)
+        );
+
+        // Outline printable area
+        ctx.strokeStyle = 'magenta';
+        ctx.strokeRect(
+            Math.round(offsetX + marginWidth * scale),
+            Math.round(offsetY + marginLength * scale),
+            Math.round(layout.usableSheetWidth * scale),
+            Math.round(layout.usableSheetLength * scale)
+        );
+
+        // Reset stroke for documents
+        ctx.strokeStyle = 'black';
+    }
 
     // Draw documents
     for (let i = 0; i < layout.docsAcross; i++) {
