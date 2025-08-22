@@ -19,6 +19,7 @@ export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
 
 // Draw document labels on the canvas
 export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
+    ctx.font = '12px Arial';
     ctx.fillStyle = 'blue';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -28,20 +29,7 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
         for (let j = 0; j < layout.docsDown; j++) {
             const x = offsetX + (layout.leftMargin + (i + 0.5) * (layout.docWidth + layout.gutterWidth)) * scale;
             const y = offsetY + (layout.topMargin + (j + 0.5) * (layout.docLength + layout.gutterLength)) * scale;
-
-            const desiredWidth = layout.docWidth * scale * 0.8;
-            const numberStr = docNumber.toString();
-            ctx.font = '100px Arial';
-            const measuredWidth = ctx.measureText(numberStr).width;
-            const numberFontSize = (desiredWidth / measuredWidth) * 100;
-            const subFontSize = numberFontSize * 0.8;
-
-            ctx.font = `${numberFontSize}px Arial`;
-            ctx.fillText(numberStr, x, y - subFontSize / 2);
-
-            ctx.font = `${subFontSize}px Arial`;
-            ctx.fillText(`${layout.docWidth}x${layout.docLength}`, x, y + numberFontSize / 2);
-
+            ctx.fillText(docNumber.toString(), x, y);
             docNumber++;
         }
     }
