@@ -124,16 +124,59 @@ h2 {
     margin-bottom: 16px;
 }
 
-button {
-    padding: 8px 16px;
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 0 16px;
+    height: 40px;
     cursor: pointer;
     text-align: center;
-    width: 100%;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: var(--ink);
+    font: inherit;
 }
 
-button:active, button.active {
+.btn .icon {
+    line-height: 1;
+}
+
+.btn-primary {
     background-color: var(--blue);
     color: #fff;
+    border-color: var(--blue);
+}
+
+.btn-secondary {
+    background-color: var(--card);
+    border-color: var(--border);
+}
+
+.btn-tertiary {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn:hover:not([disabled]) {
+    filter: brightness(0.95);
+}
+
+.btn:active:not([disabled]), .btn.active {
+    filter: brightness(0.9);
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+}
+
+.btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* Form Styles */

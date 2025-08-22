@@ -60,15 +60,24 @@
             <section class="visualizer-column card">
                 <h2>Layout Visualizer</h2>
                 <div class="button-grid">
-                    <button type="button" id="rotateDocsButton">Rotate Docs</button>
-                    <button type="button" id="rotateSheetButton">Rotate Sheet</button>
-                    <button type="button" id="rotateDocsAndSheetButton">Rotate Docs and Sheet</button>
+                    <button type="button" id="rotateDocsButton" class="btn btn-tertiary">
+                        <span class="icon" aria-hidden="true">↻</span>
+                        <span class="label">Rotate Docs</span>
+                    </button>
+                    <button type="button" id="rotateSheetButton" class="btn btn-tertiary">
+                        <span class="icon" aria-hidden="true">↻</span>
+                        <span class="label">Rotate Sheet</span>
+                    </button>
+                    <button type="button" id="rotateDocsAndSheetButton" class="btn btn-tertiary">
+                        <span class="icon" aria-hidden="true">↻</span>
+                        <span class="label">Rotate Docs and Sheet</span>
+                    </button>
                 </div>
                 <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 <div class="button-grid">
-                    <button type="button" id="calculateButton">Program Sequence</button>
-                    <button type="button" id="scoreButton">Score Measurements</button>
-                    <button type="button" id="miscDataButton">Misc Data</button>
+                    <button type="button" id="calculateButton" class="btn btn-primary">Program Sequence</button>
+                    <button type="button" id="scoreButton" class="btn btn-secondary">Score Measurements</button>
+                    <button type="button" id="miscDataButton" class="btn btn-secondary">Misc Data</button>
                 </div>
             </section>
 
@@ -84,7 +93,7 @@
                         <option value="bifold">Bifold</option>
                         <option value="trifold">Trifold</option>
                     </select>
-                    <button type="button" id="calculateScoresButton">Calculate Scores</button>
+                    <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
                 </div>
                 <div id="layoutDetails" class="hidden" role="status" aria-live="polite"></div>
                 <div id="scorePositions" role="status" aria-live="polite"></div>
