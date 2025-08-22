@@ -36,19 +36,22 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
 }
 
 // Draw the layout on the canvas
-export function drawLayout(canvas, layout, scorePositions = [], marginData = {}) {
+export function drawLayout(canvas, layout, scorePositions = [], marginData = {}, zoom = 1) {
     const ctx = canvas.getContext('2d');
 
-    // Set canvas height to 80% of the viewport height
-    canvas.height = window.innerHeight * 0.8;
+    const container = canvas.parentElement;
+    if (container && container.style) {
+        container.style.setProperty('--sheet-aspect', `${layout.sheetWidth} / ${layout.sheetLength}`);
+    }
 
-    // Scale based on sheet length to fill the canvas height
-    const scale = canvas.height / layout.sheetLength;
+    const width = container ? container.clientWidth : canvas.width;
+    const height = container ? container.clientHeight : canvas.height;
+    canvas.width = width;
+    canvas.height = height;
 
-    // Set canvas width according to the scale
-    canvas.width = layout.sheetWidth * scale;
+    const baseScale = Math.min(width / layout.sheetWidth, height / layout.sheetLength) * 0.9;
+    const scale = baseScale * zoom;
 
-    // Calculate offsets to center the sheet within the canvas
     const offsetX = (canvas.width - layout.sheetWidth * scale) / 2;
     const offsetY = (canvas.height - layout.sheetLength * scale) / 2;
 
