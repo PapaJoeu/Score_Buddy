@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
         layoutTitle: document.getElementById('layoutTitle'),
         wasteLegend: document.getElementById('wasteLegend'),
         showScores: document.getElementById('showScores'),
+        showDocNumbers: document.getElementById('showDocNumbers'),
+        showPrintableArea: document.getElementById('showPrintableArea'),
+        showMargins: document.getElementById('showMargins'),
         foldType: document.getElementById('foldType'),
         customScoreInputs: document.getElementById('customScoreInputs'),
         customScores: document.getElementById('customScores'),
@@ -115,9 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         elements.calculateScoresButton.addEventListener('click', calculateScores);
         elements.foldType.addEventListener('change', toggleCustomInputs);
-        elements.showScores.addEventListener('change', () => {
-            const layout = calculateLayoutDetails();
-            drawLayoutWrapper(layout, elements.showScores.checked ? lastScorePositions : []);
+        ['showScores', 'showDocNumbers', 'showPrintableArea', 'showMargins'].forEach(id => {
+            elements[id].addEventListener('change', () => {
+                const layout = calculateLayoutDetails();
+                drawLayoutWrapper(layout, elements.showScores.checked ? lastScorePositions : []);
+            });
         });
         elements.themeToggle.addEventListener('click', toggleTheme);
     }
@@ -211,7 +216,12 @@ document.addEventListener('DOMContentLoaded', () => {
             marginWidth: layout.marginWidth,
             marginLength: layout.marginLength
         };
-        drawLayout(elements.canvas, layout, scorePositions, marginData, zoomFactor);
+        const options = {
+            showDocNumbers: elements.showDocNumbers.checked,
+            showPrintableArea: elements.showPrintableArea.checked,
+            showMargins: elements.showMargins.checked
+        };
+        drawLayout(elements.canvas, layout, scorePositions, marginData, zoomFactor, options);
     }
 
     // ===== Display Functions =====
