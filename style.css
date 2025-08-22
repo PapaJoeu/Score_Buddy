@@ -74,6 +74,11 @@ body {
     overflow: auto;
 }
 
+#programSequence {
+    max-height: none;
+    overflow: visible;
+}
+
 .card-header {
     display: flex;
     justify-content: space-between;
