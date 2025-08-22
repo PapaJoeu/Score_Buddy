@@ -198,15 +198,15 @@ h2 {
 
 /* Button Styles */
 .button-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     margin-bottom: 16px;
 }
 
-.button-grid .btn {
-    flex: 0 0 auto;
-}
+.button-grid .btn { width: 100%; }
+
+.button-grid .custom-size-button { grid-column: 1 / -1; }
 
 /* Toolbar for canvas controls */
 .toolbar {
