@@ -23,5 +23,10 @@ export const SIZE_OPTIONS = {
     gutter: [
         { width: 0.125, length: 0.125 },
         { width: 0.25, length: 0.25 }
+    ],
+    margin: [
+        { width: 0.25, length: 0.25 },
+        { width: 0.5, length: 0.5 },
+        { width: 0, length: 0 }
     ]
 };
