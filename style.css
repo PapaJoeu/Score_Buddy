@@ -237,21 +237,12 @@ input, select {
     background-color: var(--card);
 }
 
-/* Margin Section Styles */
-#marginButtonsContainer {
-    margin-bottom: 8px;
-}
-
-#marginDimensionsInputs {
-    display: flex;
-    flex-wrap: wrap;
+.form-grid {
+    display: grid;
+    grid-template-columns: minmax(120px, auto) 1fr;
+    column-gap: 8px;
+    row-gap: 16px;
     align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-#marginDimensionsInputs label {
-    margin-right: 8px;
 }
 
 /* Canvas Styles */

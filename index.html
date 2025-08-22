@@ -15,42 +15,44 @@
                 <form>
                     <section class="dimensions-section card">
                         <h2>Sheet Dimensions</h2>
-                        <div class="button-grid" id="sheetButtonsContainer"></div>
-                        <div class="input-group hidden" id="sheetDimensionsInputs">
-                            <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0" aria-label="Sheet Width">
-                            <span>x</span>
-                            <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0" aria-label="Sheet Length">
+                        <div class="button-grid" id="sheetButtonsContainer" role="toolbar" aria-label="Sheet size presets"></div>
+                        <div class="input-group hidden form-grid" id="sheetDimensionsInputs">
+                            <label for="sheetWidth">Width (in)</label>
+                            <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
+                            <label for="sheetLength">Length (in)</label>
+                            <input type="number" id="sheetLength" name="sheetLength" step="0.25" value="18.0">
                         </div>
                     </section>
 
                     <section class="dimensions-section card">
                         <h2>Document Dimensions</h2>
-                        <div class="button-grid" id="docButtonsContainer"></div>
-                        <div class="input-group hidden" id="docDimensionsInputs">
-                            <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5" aria-label="Document Width">
-                            <span>x</span>
-                            <input type="number" id="docLength" name="docLength" step="0.25" value="4" aria-label="Document Length">
+                        <div class="button-grid" id="docButtonsContainer" role="toolbar" aria-label="Document size presets"></div>
+                        <div class="input-group hidden form-grid" id="docDimensionsInputs">
+                            <label for="docWidth">Width (in)</label>
+                            <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5">
+                            <label for="docLength">Length (in)</label>
+                            <input type="number" id="docLength" name="docLength" step="0.25" value="4">
                         </div>
                     </section>
 
                     <section class="dimensions-section card">
                         <h2>Gutter Sizes</h2>
-                        <div class="button-grid" id="gutterButtonsContainer"></div>
-                        <div class="input-group hidden" id="gutterDimensionsInputs">
-                            <label for="gutterWidth">Gutter Width:</label>
+                        <div class="button-grid" id="gutterButtonsContainer" role="toolbar" aria-label="Gutter presets"></div>
+                        <div class="input-group hidden form-grid" id="gutterDimensionsInputs">
+                            <label for="gutterWidth">Gutter Width (in)</label>
                             <input type="number" id="gutterWidth" name="gutterWidth" step="0.125" value="0.125">
-                            <label for="gutterLength">Gutter Length:</label>
+                            <label for="gutterLength">Gutter Length (in)</label>
                             <input type="number" id="gutterLength" name="gutterLength" step="0.125" value="0.125">
                         </div>
                     </section>
 
                     <section class="dimensions-section card">
                         <h2>Sheet Margins</h2>
-                        <div class="button-grid" id="marginButtonsContainer"></div>
-                        <div class="input-group hidden" id="marginDimensionsInputs">
-                            <label for="marginWidth">Margin Width:</label>
+                        <div class="button-grid" id="marginButtonsContainer" role="toolbar" aria-label="Margin presets"></div>
+                        <div class="input-group hidden form-grid" id="marginDimensionsInputs">
+                            <label for="marginWidth">Margin Width (in)</label>
                             <input type="number" id="marginWidth" name="marginWidth" step="0.125" value="0.25">
-                            <label for="marginLength">Margin Length:</label>
+                            <label for="marginLength">Margin Length (in)</label>
                             <input type="number" id="marginLength" name="marginLength" step="0.125" value="0.25">
                         </div>
                     </section>
@@ -59,7 +61,7 @@
 
             <section class="visualizer-column card">
                 <h2>Layout Visualizer</h2>
-                <div class="toolbar">
+                <div class="toolbar" role="toolbar" aria-label="Canvas controls">
                     <button type="button" id="fitSheetButton" class="btn btn-tertiary" aria-label="Fit sheet">
                         <span class="icon" aria-hidden="true">⤢</span>
                     </button>
@@ -82,7 +84,7 @@
                 <div class="canvas-wrapper">
                     <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 </div>
-                <div class="button-grid">
+                <div class="button-grid" role="toolbar" aria-label="Data views">
                     <button type="button" id="calculateButton" class="btn btn-primary">Program Sequence</button>
                     <button type="button" id="scoreButton" class="btn btn-secondary">Score Measurements</button>
                     <button type="button" id="miscDataButton" class="btn btn-secondary">Misc Data</button>
@@ -90,7 +92,7 @@
             </section>
 
             <aside class="data-column">
-                <div id="scoreOptions" class="hidden">
+                <div id="scoreOptions" class="hidden form-grid">
                     <label for="scoredWithMargins">Trim The Margins?</label>
                     <select id="scoredWithMargins">
                         <option value="no">Trim The Margins Then Score</option>
