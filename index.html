@@ -59,29 +59,21 @@
 
             <section class="visualizer-column card">
                 <h2>Layout Visualizer</h2>
-                <div class="toolbar">
-                    <button type="button" id="fitSheetButton" class="btn btn-tertiary" aria-label="Fit sheet">
-                        <span class="icon" aria-hidden="true">⤧</span>
-                    </button>
-                    <button type="button" id="zoomInButton" class="btn btn-tertiary" aria-label="Zoom in">
-                        <span class="icon" aria-hidden="true">+</span>
-                    </button>
-                    <button type="button" id="zoomOutButton" class="btn btn-tertiary" aria-label="Zoom out">
-                        <span class="icon" aria-hidden="true">−</span>
-                    </button>
-                    <button type="button" id="resetViewButton" class="btn btn-tertiary" aria-label="Reset view">
-                        <span class="icon" aria-hidden="true">⟲</span>
-                    </button>
-                    <button type="button" id="rotateDocButton" class="btn btn-tertiary" aria-label="Rotate document">
+                <div class="button-grid">
+                    <button type="button" id="rotateDocsButton" class="btn btn-tertiary">
                         <span class="icon" aria-hidden="true">↻</span>
+                        <span class="label">Rotate Docs</span>
                     </button>
-                    <button type="button" id="rotateSheetButton" class="btn btn-tertiary" aria-label="Rotate sheet">
-                        <span class="icon" aria-hidden="true">⟳</span>
+                    <button type="button" id="rotateSheetButton" class="btn btn-tertiary">
+                        <span class="icon" aria-hidden="true">↻</span>
+                        <span class="label">Rotate Sheet</span>
+                    </button>
+                    <button type="button" id="rotateDocsAndSheetButton" class="btn btn-tertiary">
+                        <span class="icon" aria-hidden="true">↻</span>
+                        <span class="label">Rotate Docs and Sheet</span>
                     </button>
                 </div>
-                <div id="canvasWrapper" class="canvas-wrapper">
-                    <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
-                </div>
+                <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 <div class="button-grid">
                     <button type="button" id="calculateButton" class="btn btn-primary">Program Sequence</button>
                     <button type="button" id="scoreButton" class="btn btn-secondary">Score Measurements</button>
