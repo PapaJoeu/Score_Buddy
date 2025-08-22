@@ -62,28 +62,52 @@
             <section class="visualizer-column card">
                 <h2>Layout Visualizer</h2>
                 <div class="toolbar" role="toolbar" aria-label="Canvas controls">
-                    <button type="button" id="fitSheetButton" class="btn btn-tertiary" aria-label="Fit sheet">
+                    <button type="button" id="fitSheetButton" class="btn btn-tertiary" aria-label="Fit sheet" aria-describedby="tip-fit">
                         <span class="icon" aria-hidden="true">⤢</span>
+                        <span role="tooltip" id="tip-fit" class="tooltip">Fit sheet</span>
                     </button>
-                    <button type="button" id="zoomOutButton" class="btn btn-tertiary" aria-label="Zoom out">
+                    <button type="button" id="zoomOutButton" class="btn btn-tertiary" aria-label="Zoom out" aria-describedby="tip-zoom-out">
                         <span class="icon" aria-hidden="true">−</span>
+                        <span role="tooltip" id="tip-zoom-out" class="tooltip">Zoom out</span>
                     </button>
-                    <button type="button" id="zoomInButton" class="btn btn-tertiary" aria-label="Zoom in">
+                    <button type="button" id="zoomInButton" class="btn btn-tertiary" aria-label="Zoom in" aria-describedby="tip-zoom-in">
                         <span class="icon" aria-hidden="true">+</span>
+                        <span role="tooltip" id="tip-zoom-in" class="tooltip">Zoom in</span>
                     </button>
-                    <button type="button" id="resetViewButton" class="btn btn-tertiary" aria-label="Reset view">
+                    <button type="button" id="resetViewButton" class="btn btn-tertiary" aria-label="Reset view" aria-describedby="tip-reset">
                         <span class="icon" aria-hidden="true">⟲</span>
+                        <span role="tooltip" id="tip-reset" class="tooltip">Reset view</span>
                     </button>
-                    <button type="button" id="rotateDocsButton" class="btn btn-tertiary" aria-label="Rotate documents">
+                    <button type="button" id="rotateDocsButton" class="btn btn-tertiary" aria-label="Rotate documents" aria-describedby="tip-rotate-docs">
                         <span class="icon" aria-hidden="true">↻</span>
+                        <span role="tooltip" id="tip-rotate-docs" class="tooltip">Rotate documents</span>
                     </button>
-                    <button type="button" id="rotateSheetButton" class="btn btn-tertiary" aria-label="Rotate sheet">
+                    <button type="button" id="rotateSheetButton" class="btn btn-tertiary" aria-label="Rotate sheet" aria-describedby="tip-rotate-sheet">
                         <span class="icon" aria-hidden="true">↻</span>
+                        <span role="tooltip" id="tip-rotate-sheet" class="tooltip">Rotate sheet</span>
                     </button>
                 </div>
                 <div class="canvas-wrapper">
                     <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 </div>
+                <ul class="legend" aria-label="Layout legend">
+                    <li class="legend-item">
+                        <span class="legend-swatch doc" aria-hidden="true"></span>
+                        <span>Document</span>
+                    </li>
+                    <li class="legend-item">
+                        <span class="legend-swatch margin" aria-hidden="true"></span>
+                        <span>Margins</span>
+                    </li>
+                    <li class="legend-item">
+                        <span class="legend-swatch printable" aria-hidden="true"></span>
+                        <span>Printable Area</span>
+                    </li>
+                    <li class="legend-item">
+                        <span class="legend-line score" aria-hidden="true"></span>
+                        <span>Score Line</span>
+                    </li>
+                </ul>
                 <div class="button-grid" role="toolbar" aria-label="Data views">
                     <button type="button" id="calculateButton" class="btn btn-primary">Program Sequence</button>
                     <button type="button" id="scoreButton" class="btn btn-secondary">Score Measurements</button>
