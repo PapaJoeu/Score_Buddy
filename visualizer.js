@@ -38,18 +38,17 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
 // Draw the layout on the canvas
 export function drawLayout(canvas, layout, scorePositions = [], marginData = {}) {
     const ctx = canvas.getContext('2d');
-    
-    // Set canvas size to match its display size
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-    
-    // Calculate scale to make sheet width 80% of canvas width
-    const scale = (canvas.width * 0.8) / layout.sheetWidth;
 
-    // Scale the canvas height to match the sheet aspect ratio
-    canvas.height = layout.sheetLength * scale * 1.1; // Add 10% for padding
+    // Set canvas height to 80% of the viewport height
+    canvas.height = window.innerHeight * 0.8;
 
-    // Calculate offsets to center the sheet
+    // Scale based on sheet length to fill the canvas height
+    const scale = canvas.height / layout.sheetLength;
+
+    // Set canvas width according to the scale
+    canvas.width = layout.sheetWidth * scale;
+
+    // Calculate offsets to center the sheet within the canvas
     const offsetX = (canvas.width - layout.sheetWidth * scale) / 2;
     const offsetY = (canvas.height - layout.sheetLength * scale) / 2;
 
