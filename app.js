@@ -4,7 +4,7 @@
 import { drawLayout } from './visualizer.js';
 import { calculateLayoutDetails as calcDetails, calculateSequence as calcSequence } from './calculations.js';
 import { calculateScorePositions } from './scoring.js';
-import { renderProgramSequence, renderLayoutDetails, renderScorePositions } from './display.js';
+import { renderProgramSequence, renderScorePositions } from './display.js';
 
 // Import the SIZE_OPTIONS object from the sizeOptions module
 import { SIZE_OPTIONS } from './sizeOptions.js';
@@ -50,8 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
         rotateDocsButton: document.getElementById('rotateDocsButton'),
         rotateSheetButton: document.getElementById('rotateSheetButton'),
         programSequence: document.getElementById('programSequence'),
-        layoutDetails: document.getElementById('layoutDetails'),
         scorePositions: document.getElementById('scorePositions'),
+        layoutTitle: document.getElementById('layoutTitle'),
+        wasteLegend: document.getElementById('wasteLegend'),
         showScores: document.getElementById('showScores'),
         foldType: document.getElementById('foldType'),
         customScoreInputs: document.getElementById('customScoreInputs'),
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const layout = calculateLayoutDetails();
         drawLayoutWrapper(layout, elements.showScores.checked ? lastScorePositions : []);
         displayProgramSequence(layout);
-        displayLayoutDetails(layout);
+        updateLayoutInfo(layout);
         if (lastScorePositions.length > 0) {
             lastScorePositions = [];
             displayScorePositions([]);
@@ -220,9 +221,17 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProgramSequence(sequence, elements.programSequence);
     }
 
-    // Function to display layout details
-    function displayLayoutDetails(layout) {
-        renderLayoutDetails(layout, elements.layoutDetails);
+    // Update title and waste information on the visualizer
+    function updateLayoutInfo(layout) {
+        const nUp = layout.docsAcross * layout.docsDown;
+        const docWidth = parseFloat(layout.docWidth.toFixed(2));
+        const docLength = parseFloat(layout.docLength.toFixed(2));
+        const sheetWidth = parseFloat(layout.sheetWidth.toFixed(2));
+        const sheetLength = parseFloat(layout.sheetLength.toFixed(2));
+        elements.layoutTitle.innerHTML = `<li class="legend-item">${docWidth} x ${docLength} ${nUp}-up on ${sheetWidth} x ${sheetLength}</li>`;
+        const areaUsed = (layout.docWidth * layout.docLength * nUp) / (layout.sheetWidth * layout.sheetLength);
+        const waste = (100 - areaUsed * 100).toFixed(2);
+        elements.wasteLegend.textContent = `Waste: ${waste}%`;
     }
 
     // Function to display score positions
