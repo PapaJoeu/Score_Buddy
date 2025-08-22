@@ -26,9 +26,10 @@ export function renderProgramSequence(sequence, container) {
 }
 
 export function renderScorePositions(scorePositions, container) {
+    // Render score measurements into the nested #scorePositions div
     container.innerHTML = `
-        <div class="card-header">
-            <h2>Score Measurements</h2>
+        <div class="score-header">
+            <h3>Score Measurements</h3>
             <button type="button" class="copy-btn" aria-label="Copy Score Measurements">Copy</button>
         </div>
         <table>

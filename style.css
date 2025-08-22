@@ -80,6 +80,18 @@ body {
     align-items: center;
 }
 
+/* Sub-header within #scoreOptions for score measurements */
+#scoreOptions .score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+}
+
+#scoreOptions h3 {
+    margin: 0;
+}
+
 .copy-btn {
     height: 40px;
     padding: 0 8px;
