@@ -4,6 +4,8 @@ const assert = require('assert');
   const { calculateLayoutDetails } = await import('../calculations.js');
   const { drawLayout } = await import('../visualizer.js');
 
+  global.window = { innerHeight: 1000 };
+
   const layout = calculateLayoutDetails({
     sheetWidth: 12,
     sheetLength: 18,
@@ -36,8 +38,6 @@ const assert = require('assert');
   };
 
   const canvas = {
-    offsetWidth: 200,
-    offsetHeight: 200,
     width: 0,
     height: 0,
     getContext: () => ctx
@@ -45,7 +45,7 @@ const assert = require('assert');
 
   drawLayout(canvas, layout, [], { marginWidth: layout.marginWidth, marginLength: layout.marginLength });
 
-  const scale = (canvas.offsetWidth * 0.8) / layout.sheetWidth;
+  const scale = (window.innerHeight * 0.8) / layout.sheetLength;
   const expectedWidth = Math.round(layout.usableSheetWidth * scale);
   const expectedHeight = Math.round(layout.usableSheetLength * scale);
 
