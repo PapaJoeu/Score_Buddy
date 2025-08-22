@@ -5,6 +5,9 @@
 // Thicker paper stocks may require a larger allowance to prevent overlapping folds.
 export const FOLD_ALLOWANCE = 0.05;
 
+// Supported fold types for calculating score positions
+const SUPPORTED_FOLD_TYPES = ['bifold', 'trifold', 'gatefold', 'custom'];
+
 /**
  * Calculate score line positions for a given layout and fold type.
  * @param {Object} layout - Layout details produced by calculateLayoutDetails.
@@ -19,6 +22,17 @@ export function calculateScorePositions(
     customPositions = [],
     allowance = FOLD_ALLOWANCE
 ) {
+    if (!SUPPORTED_FOLD_TYPES.includes(foldType)) {
+        throw new Error(`Unsupported fold type: ${foldType}`);
+    }
+
+    // Filter and sort custom positions when using the 'custom' fold type
+    const processedCustomPositions = foldType === 'custom'
+        ? customPositions
+              .filter(pos => typeof pos === 'number' && pos >= 0 && pos <= layout.docLength)
+              .sort((a, b) => a - b)
+        : [];
+
     const marginOffset = layout.topMargin;
     const scorePositions = [];
     for (let i = 0; i < layout.docsDown; i++) {
@@ -32,7 +46,7 @@ export function calculateScorePositions(
             scorePositions.push({ y: (layout.docLength / 4) + base });
             scorePositions.push({ y: (3 * layout.docLength / 4) - allowance + base });
         } else if (foldType === 'custom') {
-            customPositions.forEach(pos => {
+            processedCustomPositions.forEach(pos => {
                 scorePositions.push({ y: pos + base });
             });
         }
