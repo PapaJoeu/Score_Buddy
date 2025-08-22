@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         programSequence: document.getElementById('programSequence'),
         layoutDetails: document.getElementById('layoutDetails'),
         scorePositions: document.getElementById('scorePositions'),
-        scoreOptions: document.getElementById('scoreOptions'),
-        scoredWithMargins: document.getElementById('scoredWithMargins'),
+        scoring: document.getElementById('scoring'),
+        showScores: document.getElementById('showScores'),
         foldType: document.getElementById('foldType'),
         calculateScoresButton: document.getElementById('calculateScoresButton'),
         themeToggle: document.getElementById('themeToggle')
@@ -111,6 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
             elements[id].addEventListener('input', calculateLayout);
         });
         elements.calculateScoresButton.addEventListener('click', calculateScores);
+        elements.showScores.addEventListener('change', () => {
+            const layout = calculateLayoutDetails();
+            drawLayoutWrapper(layout, elements.showScores.checked ? currentScorePositions : []);
+        });
         elements.themeToggle.addEventListener('click', toggleTheme);
     }
 
@@ -162,9 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Layout Calculation =====
     // Main function to calculate and display layout
+    let currentScorePositions = [];
+
     function calculateLayout() {
         const layout = calculateLayoutDetails();
-        drawLayoutWrapper(layout);
+        drawLayoutWrapper(layout, elements.showScores.checked ? currentScorePositions : []);
         displayProgramSequence(layout);
         displayLayoutDetails(layout);
     }
@@ -274,15 +280,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== Scoring =====
     // Function to calculate and display scores
     function calculateScores() {
-        const scoredWithMargins = elements.scoredWithMargins.value === 'yes';
         const foldType = elements.foldType.value;
         const layout = calculateLayoutDetails();
 
-        const scorePositions = calculateScorePositions(layout, { foldType, scoredWithMargins });
+        const scorePositions = calculateScorePositions(layout, { foldType });
 
-        // Draw the layout with score positions
-        drawLayoutWrapper(layout, scorePositions);
-        // Display the calculated score positions
+        currentScorePositions = scorePositions;
+        drawLayoutWrapper(layout, elements.showScores.checked ? scorePositions : []);
         displayScorePositions(scorePositions);
     }
 
