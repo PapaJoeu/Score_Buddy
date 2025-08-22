@@ -81,7 +81,7 @@
                 </div>
             </section>
 
-            <aside class="data-column card">
+            <aside class="data-column">
                 <div id="scoreOptions" class="hidden">
                     <label for="scoredWithMargins">Trim The Margins?</label>
                     <select id="scoredWithMargins">
@@ -95,9 +95,9 @@
                     </select>
                     <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
                 </div>
-                <div id="layoutDetails" class="hidden" role="status" aria-live="polite"></div>
-                <div id="scorePositions" role="status" aria-live="polite"></div>
-                <div id="programSequence" role="status" aria-live="polite"></div>
+                <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
+                <section id="scorePositions" class="card data-card" role="status" aria-live="polite"></section>
+                <section id="layoutDetails" class="card data-card hidden" role="status" aria-live="polite"></section>
             </aside>
         </main>
     </div>
