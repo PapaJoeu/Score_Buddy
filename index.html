@@ -109,30 +109,28 @@
                         <span>Score Line</span>
                     </li>
                 </ul>
-                <div class="button-grid" role="toolbar" aria-label="Data views">
-                    <button type="button" id="calculateButton" class="btn btn-primary">Program Sequence</button>
-                    <button type="button" id="scoreButton" class="btn btn-secondary">Score Measurements</button>
-                    <button type="button" id="miscDataButton" class="btn btn-secondary">Misc Data</button>
-                </div>
             </section>
 
             <aside class="data-column">
-                <div id="scoreOptions" class="hidden form-grid">
-                    <label for="scoredWithMargins">Trim The Margins?</label>
-                    <select id="scoredWithMargins">
-                        <option value="no">Trim The Margins Then Score</option>
-                        <option value="yes">Score Without Trimming</option>
-                    </select>
-                    <label for="foldType">Fold Type:</label>
-                    <select id="foldType">
-                        <option value="bifold">Bifold</option>
-                        <option value="trifold">Trifold</option>
-                    </select>
-                    <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
-                </div>
+                <section id="scoreOptions" class="card data-card">
+                    <h2>Score Options</h2>
+                    <div class="form-grid">
+                        <label for="scoredWithMargins">Trim The Margins?</label>
+                        <select id="scoredWithMargins">
+                            <option value="no">Trim The Margins Then Score</option>
+                            <option value="yes">Score Without Trimming</option>
+                        </select>
+                        <label for="foldType">Fold Type:</label>
+                        <select id="foldType">
+                            <option value="bifold">Bifold</option>
+                            <option value="trifold">Trifold</option>
+                        </select>
+                        <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
+                    </div>
+                </section>
                 <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
                 <section id="scorePositions" class="card data-card" role="status" aria-live="polite"></section>
-                <section id="layoutDetails" class="card data-card hidden" role="status" aria-live="polite"></section>
+                <section id="layoutDetails" class="card data-card" role="status" aria-live="polite"></section>
             </aside>
         </main>
     </div>

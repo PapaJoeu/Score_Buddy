@@ -49,9 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         resetViewButton: document.getElementById('resetViewButton'),
         rotateDocsButton: document.getElementById('rotateDocsButton'),
         rotateSheetButton: document.getElementById('rotateSheetButton'),
-        calculateButton: document.getElementById('calculateButton'),
-        scoreButton: document.getElementById('scoreButton'),
-        miscDataButton: document.getElementById('miscDataButton'),
         programSequence: document.getElementById('programSequence'),
         layoutDetails: document.getElementById('layoutDetails'),
         scorePositions: document.getElementById('scorePositions'),
@@ -109,9 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.resetViewButton.addEventListener('click', () => { zoomFactor = 1; calculateLayout(); });
         elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc'));
         elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet'));
-        elements.calculateButton.addEventListener('click', calculateLayout);
-        elements.scoreButton.addEventListener('click', showScoreOptions);
-        elements.miscDataButton.addEventListener('click', toggleMiscData);
+        const inputIds = ['sheetWidth', 'sheetLength', 'docWidth', 'docLength', 'gutterWidth', 'gutterLength', 'marginWidth', 'marginLength'];
+        inputIds.forEach(id => {
+            elements[id].addEventListener('input', calculateLayout);
+        });
         elements.calculateScoresButton.addEventListener('click', calculateScores);
         elements.themeToggle.addEventListener('click', toggleTheme);
     }
@@ -263,16 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== UI Toggles =====
-    // Function to toggle display of miscellaneous data
-    function toggleMiscData() {
-        elements.layoutDetails.classList.toggle('hidden');
-    }
-
-    // Function to show/hide score options
-    function showScoreOptions() {
-        elements.scoreOptions.classList.toggle('hidden');
-    }
-
     // Function to toggle between light and dark themes
     function toggleTheme() {
         const root = document.documentElement;
