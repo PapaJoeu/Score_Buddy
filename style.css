@@ -32,17 +32,24 @@ body {
 
 /* Layout */
 .layout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
-.main-column {
-    flex: 2 1 60%;
+@media (min-width: 1024px) {
+    .layout {
+        grid-template-columns: 3fr 2fr;
+    }
 }
 
 .tools-column {
-    flex: 1 1 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 /* Typography */
