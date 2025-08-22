@@ -30,6 +30,21 @@ body {
     box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #808080;
 }
 
+/* Layout */
+.layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.main-column {
+    flex: 2 1 60%;
+}
+
+.tools-column {
+    flex: 1 1 40%;
+}
+
 /* Typography */
 h1 {
     font-size: 16px;
