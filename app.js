@@ -131,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const widthInput = elements[`${type}Width`];
         const lengthInput = elements[`${type}Length`];
         [widthInput.value, lengthInput.value] = [lengthInput.value, widthInput.value];
+        if (type === 'sheet') {
+            [elements.marginWidth.value, elements.marginLength.value] = [elements.marginLength.value, elements.marginWidth.value];
+        }
         if (shouldCalculate) {
             calculateLayout();
         }
