@@ -113,18 +113,22 @@
 
             <aside class="data-column">
                 <section id="scoreOptions" class="card data-card">
-                    <h2>Score Options</h2>
+                    <h2>Scoring</h2>
                     <div class="form-grid">
-                        <label for="scoredWithMargins">Trim The Margins?</label>
-                        <select id="scoredWithMargins">
-                            <option value="no">Trim The Margins Then Score</option>
-                            <option value="yes">Score Without Trimming</option>
-                        </select>
-                        <label for="foldType">Fold Type:</label>
+                        <label for="showScores" class="checkbox-label">
+                            <input type="checkbox" id="showScores"> Display scores on visualizer
+                        </label>
+                        <label for="foldType">Score Type:</label>
                         <select id="foldType">
                             <option value="bifold">Bifold</option>
                             <option value="trifold">Trifold</option>
+                            <option value="gatefold">Gatefold</option>
+                            <option value="custom">Custom</option>
                         </select>
+                        <div id="customScoreInputs" class="hidden">
+                            <label for="customScores">Custom Positions (in, comma-separated)</label>
+                            <input type="text" id="customScores" placeholder="e.g., 2,4.5">
+                        </div>
                         <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
                     </div>
                 </section>

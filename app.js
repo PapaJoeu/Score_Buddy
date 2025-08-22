@@ -52,9 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         programSequence: document.getElementById('programSequence'),
         layoutDetails: document.getElementById('layoutDetails'),
         scorePositions: document.getElementById('scorePositions'),
-        scoreOptions: document.getElementById('scoreOptions'),
-        scoredWithMargins: document.getElementById('scoredWithMargins'),
+        showScores: document.getElementById('showScores'),
         foldType: document.getElementById('foldType'),
+        customScoreInputs: document.getElementById('customScoreInputs'),
+        customScores: document.getElementById('customScores'),
         calculateScoresButton: document.getElementById('calculateScoresButton'),
         themeToggle: document.getElementById('themeToggle')
     };
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Zoom state for canvas
     let zoomFactor = 1;
     const ZOOM_STEP = 1.1;
+    let lastScorePositions = [];
 
     // ===== Initialization =====
     // Function to initialize the application
@@ -111,6 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
             elements[id].addEventListener('input', calculateLayout);
         });
         elements.calculateScoresButton.addEventListener('click', calculateScores);
+        elements.foldType.addEventListener('change', toggleCustomInputs);
+        elements.showScores.addEventListener('change', () => {
+            const layout = calculateLayoutDetails();
+            drawLayoutWrapper(layout, elements.showScores.checked ? lastScorePositions : []);
+        });
         elements.themeToggle.addEventListener('click', toggleTheme);
     }
 
@@ -164,9 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Main function to calculate and display layout
     function calculateLayout() {
         const layout = calculateLayoutDetails();
-        drawLayoutWrapper(layout);
+        drawLayoutWrapper(layout, elements.showScores.checked ? lastScorePositions : []);
         displayProgramSequence(layout);
         displayLayoutDetails(layout);
+        if (lastScorePositions.length > 0) {
+            lastScorePositions = [];
+            displayScorePositions([]);
+        }
     }
 
     // Function to calculate detailed layout information
@@ -271,23 +282,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Show or hide custom score inputs based on fold type
+    function toggleCustomInputs() {
+        if (elements.foldType.value === 'custom') {
+            elements.customScoreInputs.classList.remove('hidden');
+        } else {
+            elements.customScoreInputs.classList.add('hidden');
+        }
+    }
+
 // ===== Scoring =====
     // Function to calculate and display scores
     function calculateScores() {
-        const scoredWithMargins = elements.scoredWithMargins.value === 'yes';
         const foldType = elements.foldType.value;
         const layout = calculateLayoutDetails();
 
-        const scorePositions = calculateScorePositions(layout, { foldType, scoredWithMargins });
+        let custom = [];
+        if (foldType === 'custom') {
+            custom = elements.customScores.value
+                .split(',')
+                .map(n => parseFloat(n.trim()))
+                .filter(n => !isNaN(n));
+        }
 
-        // Draw the layout with score positions
-        drawLayoutWrapper(layout, scorePositions);
+        const scorePositions = calculateScorePositions(layout, foldType, custom);
+        lastScorePositions = scorePositions;
+
+        // Draw the layout with score positions if requested
+        drawLayoutWrapper(layout, elements.showScores.checked ? scorePositions : []);
         // Display the calculated score positions
         displayScorePositions(scorePositions);
     }
 
     // ===== Initialize the application =====
     init();
+    toggleCustomInputs();
 });
 
 // Additional comments on the overall structure and flow of the application:

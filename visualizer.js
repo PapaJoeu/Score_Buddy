@@ -150,8 +150,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
         ctx.strokeStyle = 'magenta';
         ctx.setLineDash([5, 5]);
         scorePositions.forEach(pos => {
-            // Adjust y position based on whether margins are included
-            const y = offsetY + (pos.scoredWithMargins ? pos.y : pos.y + layout.topMargin) * scale;
+            const y = offsetY + pos.y * scale;
             ctx.beginPath();
             ctx.moveTo(offsetX, Math.round(y));
             ctx.lineTo(offsetX + layout.sheetWidth * scale, Math.round(y));
