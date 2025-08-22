@@ -43,9 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas: document.getElementById('layoutCanvas'),
         
         // Other buttons and inputs
+        fitSheetButton: document.getElementById('fitSheetButton'),
+        zoomOutButton: document.getElementById('zoomOutButton'),
+        zoomInButton: document.getElementById('zoomInButton'),
+        resetViewButton: document.getElementById('resetViewButton'),
         rotateDocsButton: document.getElementById('rotateDocsButton'),
         rotateSheetButton: document.getElementById('rotateSheetButton'),
-        rotateDocsAndSheetButton: document.getElementById('rotateDocsAndSheetButton'),
         calculateButton: document.getElementById('calculateButton'),
         scoreButton: document.getElementById('scoreButton'),
         miscDataButton: document.getElementById('miscDataButton'),
@@ -57,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         foldType: document.getElementById('foldType'),
         calculateScoresButton: document.getElementById('calculateScoresButton')
     };
+
+    // Zoom state for canvas
+    let zoomFactor = 1;
+    const ZOOM_STEP = 1.1;
 
     // ===== Initialization =====
     // Function to initialize the application
@@ -95,9 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 calculateLayout();
             });
         });
+        elements.fitSheetButton.addEventListener('click', () => { zoomFactor = 1; calculateLayout(); });
+        elements.zoomOutButton.addEventListener('click', () => { zoomFactor /= ZOOM_STEP; calculateLayout(); });
+        elements.zoomInButton.addEventListener('click', () => { zoomFactor *= ZOOM_STEP; calculateLayout(); });
+        elements.resetViewButton.addEventListener('click', () => { zoomFactor = 1; calculateLayout(); });
         elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc'));
         elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet'));
-        elements.rotateDocsAndSheetButton.addEventListener('click', rotateDocsAndSheet);
         elements.calculateButton.addEventListener('click', calculateLayout);
         elements.scoreButton.addEventListener('click', showScoreOptions);
         elements.miscDataButton.addEventListener('click', toggleMiscData);
@@ -150,13 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to rotate both document and sheet dimensions
-    function rotateDocsAndSheet() {
-        rotateSize('doc', false);
-        rotateSize('sheet', false);
-        calculateLayout();
-    }
-
     // ===== Layout Calculation =====
     // Main function to calculate and display layout
     function calculateLayout() {
@@ -196,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             marginWidth: layout.marginWidth,
             marginLength: layout.marginLength
         };
-        drawLayout(elements.canvas, layout, scorePositions, marginData);
+        drawLayout(elements.canvas, layout, scorePositions, marginData, zoomFactor);
     }
 
     // ===== Display Functions =====

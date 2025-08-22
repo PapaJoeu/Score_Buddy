@@ -4,8 +4,6 @@ const assert = require('assert');
   const { calculateLayoutDetails } = await import('../calculations.js');
   const { drawLayout } = await import('../visualizer.js');
 
-  global.window = { innerHeight: 1000 };
-
   const layout = calculateLayoutDetails({
     sheetWidth: 12,
     sheetLength: 18,
@@ -37,15 +35,22 @@ const assert = require('assert');
     fillRect(x, y, w, h) { this.fillRectCalls.push({ x, y, w, h }); }
   };
 
+  const container = {
+    clientWidth: 400,
+    clientHeight: 600,
+    style: { setProperty() {} }
+  };
+
   const canvas = {
     width: 0,
     height: 0,
+    parentElement: container,
     getContext: () => ctx
   };
 
   drawLayout(canvas, layout, [], { marginWidth: layout.marginWidth, marginLength: layout.marginLength });
 
-  const scale = (window.innerHeight * 0.8) / layout.sheetLength;
+  const scale = (container.clientHeight / layout.sheetLength) * 0.9;
   const expectedWidth = Math.round(layout.usableSheetWidth * scale);
   const expectedHeight = Math.round(layout.usableSheetLength * scale);
 
