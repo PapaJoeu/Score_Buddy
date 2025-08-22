@@ -142,14 +142,14 @@ h1 {
     text-align: center;
     margin: 0 0 16px 0;
     padding: 8px;
-    background-color: var(--blue);
-    color: #fff;
+    background-color: var(--card);
+    color: var(--ink);
 }
 
 h2 {
     font-size: 20px;
     margin: 16px 0 8px 0;
-    color: var(--blue);
+    color: var(--ink);
 }
 
 /* Button Styles */
@@ -278,8 +278,8 @@ td {
 }
 
 th {
-    background-color: var(--blue);
-    color: #fff;
+    background-color: var(--bg);
+    color: var(--ink);
     position: sticky;
     top: 0;
     text-align: left;
