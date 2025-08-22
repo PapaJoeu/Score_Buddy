@@ -144,17 +144,20 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
         Math.round(layout.imposedSpaceLength * scale)
     );
 
-    // Draw score lines
-    // TODO: Add support for different gutter width or length values in calculating the score positions
+    // Draw score lines respecting margins and gutters
     if (scorePositions.length > 0) {
         ctx.strokeStyle = 'magenta';
         ctx.setLineDash([5, 5]);
         scorePositions.forEach(pos => {
             const y = offsetY + pos.y * scale;
-            ctx.beginPath();
-            ctx.moveTo(offsetX, Math.round(y));
-            ctx.lineTo(offsetX + layout.sheetWidth * scale, Math.round(y));
-            ctx.stroke();
+            for (let i = 0; i < layout.docsAcross; i++) {
+                const startX = offsetX + (layout.leftMargin + i * (layout.docWidth + layout.gutterWidth)) * scale;
+                const endX = startX + layout.docWidth * scale;
+                ctx.beginPath();
+                ctx.moveTo(Math.round(startX), Math.round(y));
+                ctx.lineTo(Math.round(endX), Math.round(y));
+                ctx.stroke();
+            }
         });
         ctx.setLineDash([]);
     }
