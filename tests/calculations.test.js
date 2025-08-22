@@ -51,6 +51,21 @@ const assert = require('assert');
   const usableSequence = calculateSequence(usableLayout);
   assert.deepStrictEqual(usableSequence, expectedUsableSequence, 'Usable sheet sequence incorrect');
 
+  // Verify default margins produce matching usable dimensions
+  const noMarginLayout = calculateLayoutDetails({
+    sheetWidth: 10,
+    sheetLength: 20,
+    docWidth: 2,
+    docLength: 3,
+    gutterWidth: 0,
+    gutterLength: 0
+  });
+
+  assert.strictEqual(noMarginLayout.marginWidth, 0, 'Default marginWidth incorrect');
+  assert.strictEqual(noMarginLayout.marginLength, 0, 'Default marginLength incorrect');
+  assert.strictEqual(noMarginLayout.usableSheetWidth, 10, 'usableSheetWidth with zero margins incorrect');
+  assert.strictEqual(noMarginLayout.usableSheetLength, 20, 'usableSheetLength with zero margins incorrect');
+
 
   console.log('All calculations tests passed');
 })();
