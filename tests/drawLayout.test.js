@@ -26,6 +26,7 @@ const assert = require('assert');
     translate() {},
     setLineDash() {},
     fillText() {},
+    measureText(text) { return { width: text.length * 100 }; },
     font: '',
     fillStyle: '',
     textAlign: '',

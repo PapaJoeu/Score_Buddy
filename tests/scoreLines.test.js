@@ -29,6 +29,7 @@ const assert = require('assert');
     strokeRect() {},
     fillRect() {},
     fillText() {},
+    measureText(text) { return { width: text.length * 100 }; },
     font: '',
     fillStyle: '',
     textAlign: '',
