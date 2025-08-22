@@ -8,7 +8,7 @@ import { renderProgramSequence, renderLayoutDetails, renderScorePositions } from
 
 // Import the SIZE_OPTIONS object from the sizeOptions module
 import { SIZE_OPTIONS } from './sizeOptions.js';
-import { createSizeButtons } from './buttonCreation.js';
+import { createSizeButtons, createButtonsForType } from './buttonCreation.js';
 
 // Wait for the DOM to be fully loaded before executing the script
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,20 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
         marginInputs: document.getElementById('marginDimensionsInputs'),
         marginWidth: document.getElementById('marginWidth'),
         marginLength: document.getElementById('marginLength'),
-
+        
         // Canvas element
         canvas: document.getElementById('layoutCanvas'),
-        canvasWrapper: document.getElementById('canvasWrapper'),
-
-        // Toolbar buttons
-        fitSheetButton: document.getElementById('fitSheetButton'),
-        zoomInButton: document.getElementById('zoomInButton'),
-        zoomOutButton: document.getElementById('zoomOutButton'),
-        resetViewButton: document.getElementById('resetViewButton'),
-        rotateDocButton: document.getElementById('rotateDocButton'),
-        rotateSheetButton: document.getElementById('rotateSheetButton'),
-
+        
         // Other buttons and inputs
+        rotateDocsButton: document.getElementById('rotateDocsButton'),
+        rotateSheetButton: document.getElementById('rotateSheetButton'),
+        rotateDocsAndSheetButton: document.getElementById('rotateDocsAndSheetButton'),
         calculateButton: document.getElementById('calculateButton'),
         scoreButton: document.getElementById('scoreButton'),
         miscDataButton: document.getElementById('miscDataButton'),
@@ -63,8 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         foldType: document.getElementById('foldType'),
         calculateScoresButton: document.getElementById('calculateScoresButton')
     };
-
-    let zoomLevel = 1;
 
     // ===== Initialization =====
     // Function to initialize the application
@@ -103,12 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 calculateLayout();
             });
         });
-        elements.fitSheetButton.addEventListener('click', () => { zoomLevel = 1; calculateLayout(); });
-        elements.zoomInButton.addEventListener('click', () => { zoomLevel *= 1.1; calculateLayout(); });
-        elements.zoomOutButton.addEventListener('click', () => { zoomLevel /= 1.1; calculateLayout(); });
-        elements.resetViewButton.addEventListener('click', resetLayout);
-        elements.rotateDocButton.addEventListener('click', () => rotateSize('doc'));
+        elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc'));
         elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet'));
+        elements.rotateDocsAndSheetButton.addEventListener('click', rotateDocsAndSheet);
         elements.calculateButton.addEventListener('click', calculateLayout);
         elements.scoreButton.addEventListener('click', showScoreOptions);
         elements.miscDataButton.addEventListener('click', toggleMiscData);
@@ -161,10 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function resetLayout() {
-        zoomLevel = 1;
-        setDefaultValues();
-        selectDefaultSizes();
+    // Function to rotate both document and sheet dimensions
+    function rotateDocsAndSheet() {
+        rotateSize('doc', false);
+        rotateSize('sheet', false);
         calculateLayout();
     }
 
@@ -203,12 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Drawing =====
     // Wrapper function to draw layout using the imported drawLayout function
     function drawLayoutWrapper(layout, scorePositions = []) {
-        elements.canvasWrapper.style.aspectRatio = `${layout.sheetWidth} / ${layout.sheetLength}`;
         const marginData = {
             marginWidth: layout.marginWidth,
             marginLength: layout.marginLength
         };
-        drawLayout(elements.canvas, layout, scorePositions, marginData, zoomLevel);
+        drawLayout(elements.canvas, layout, scorePositions, marginData);
     }
 
     // ===== Display Functions =====
