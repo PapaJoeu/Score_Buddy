@@ -1,6 +1,8 @@
-export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docLength, gutterWidth, gutterLength }) {
-    const docsAcross = Math.floor(sheetWidth / (docWidth + gutterWidth));
-    const docsDown = Math.floor(sheetLength / (docLength + gutterLength));
+export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docLength, gutterWidth, gutterLength, marginWidth = 0, marginLength = 0 }) {
+    const usableSheetWidth = sheetWidth - 2 * marginWidth;
+    const usableSheetLength = sheetLength - 2 * marginLength;
+    const docsAcross = Math.floor(usableSheetWidth / (docWidth + gutterWidth));
+    const docsDown = Math.floor(usableSheetLength / (docLength + gutterLength));
     const totalGutterWidth = (docsAcross - 1) * gutterWidth;
     const totalGutterLength = (docsDown - 1) * gutterLength;
     const imposedSpaceWidth = (docWidth * docsAcross) + totalGutterWidth;
@@ -12,10 +14,14 @@ export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docL
     return {
         sheetWidth,
         sheetLength,
+        usableSheetWidth,
+        usableSheetLength,
         docWidth,
         docLength,
         gutterWidth,
         gutterLength,
+        marginWidth,
+        marginLength,
         docsAcross,
         docsDown,
         imposedSpaceWidth,
