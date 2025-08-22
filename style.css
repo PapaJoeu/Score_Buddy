@@ -56,7 +56,7 @@ body {
     flex-direction: column;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 0 24px 24px;
     gap: 24px;
 }
 
@@ -109,8 +109,6 @@ body {
 .inputs-column { grid-area: inputs; }
 .visualizer-column {
     grid-area: visualizer;
-    position: sticky;
-    top: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -166,6 +164,9 @@ h1 {
     padding: 8px;
     background-color: var(--card);
     color: var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 h2 {
