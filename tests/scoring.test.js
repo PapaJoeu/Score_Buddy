@@ -28,6 +28,13 @@ const assert = require('assert');
   assert.strictEqual(gatefoldScores.length, 8, 'Gatefold score count incorrect');
   assert.ok(Math.abs(gatefoldScores[0].y - 1.625) < 1e-9, 'First gatefold score incorrect');
 
+  // Verify allowance adjustment
+  const trifoldCustomAllowance = calculateScorePositions(layout, 'trifold', [], 0.1);
+  assert.ok(Math.abs(trifoldCustomAllowance[1].y - 3.191666666666666) < 1e-9, 'Trifold custom allowance incorrect');
+
+  const gatefoldCustomAllowance = calculateScorePositions(layout, 'gatefold', [], 0.1);
+  assert.ok(Math.abs(gatefoldCustomAllowance[1].y - 3.525) < 1e-9, 'Gatefold custom allowance incorrect');
+
   // Verify custom score positions
   const customScores = calculateScorePositions(layout, 'custom', [1, 2]);
   assert.strictEqual(customScores.length, 8, 'Custom score count incorrect');
