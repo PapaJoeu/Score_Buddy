@@ -7,16 +7,14 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = `${type}-size-button`;
-        if (type === 'gutter' || type === 'margin') {
-            button.textContent = `${option.width} x ${option.length}`;
-            button.dataset.width = option.width;
-            button.dataset.length = option.length;
+        if (option.name) {
+            button.innerHTML = `${option.name}<br>${option.width} x ${option.length}`;
+            button.dataset.name = option.name;
         } else {
             button.textContent = `${option.width} x ${option.length}`;
-            button.dataset.width = option.width;
-            button.dataset.length = option.length;
-            if (option.name) button.dataset.name = option.name;
         }
+        button.dataset.width = option.width;
+        button.dataset.length = option.length;
         container.appendChild(button);
     });
 
