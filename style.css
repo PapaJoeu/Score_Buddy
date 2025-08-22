@@ -130,7 +130,11 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.data-column { grid-area: data; }
+.data-column {
+    grid-area: data;
+    display: grid;
+    gap: 16px;
+}
 
 @media (min-width: 1200px) {
     .layout {
