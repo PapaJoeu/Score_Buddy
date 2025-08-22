@@ -8,12 +8,7 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
         button.type = 'button';
         button.classList.add('btn', 'btn-secondary', `${type}-size-button`);
         button.dataset.type = type;
-        if (option.name) {
-            button.innerHTML = `${option.name}<br>${option.width} x ${option.length}`;
-            button.dataset.name = option.name;
-        } else {
-            button.textContent = `${option.width} x ${option.length}`;
-        }
+        button.textContent = `${option.width} x ${option.length}`;
         button.dataset.width = option.width;
         button.dataset.length = option.length;
         container.appendChild(button);
