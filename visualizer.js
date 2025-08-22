@@ -38,9 +38,14 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
 }
 
 // Draw the layout on the canvas
-export function drawLayout(canvas, layout, scorePositions = [], marginData = {}, zoom = 1) {
+export function drawLayout(canvas, layout, scorePositions = [], marginData = {}, zoom = 1, options = {}) {
     const ctx = canvas.getContext('2d');
     const colors = getColorTokens();
+    const {
+        showDocNumbers = true,
+        showPrintableArea = true,
+        showMargins = true
+    } = options;
 
     const container = canvas.parentElement;
     if (container && container.style) {
@@ -76,7 +81,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     // Draw printable area overlay before documents
     const marginWidth = marginData.marginWidth ?? 0;
     const marginLength = marginData.marginLength ?? 0;
-    if (marginWidth > 0 || marginLength > 0) {
+    if (showPrintableArea && (marginWidth > 0 || marginLength > 0)) {
         ctx.fillStyle = colors.printableFill;
 
         // Top margin
@@ -139,13 +144,15 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     }
 
     // Draw margins
-    ctx.strokeStyle = colors.margin;
-    ctx.strokeRect(
-        Math.round(offsetX + layout.leftMargin * scale),
-        Math.round(offsetY + layout.topMargin * scale),
-        Math.round(layout.imposedSpaceWidth * scale),
-        Math.round(layout.imposedSpaceLength * scale)
-    );
+    if (showMargins) {
+        ctx.strokeStyle = colors.margin;
+        ctx.strokeRect(
+            Math.round(offsetX + layout.leftMargin * scale),
+            Math.round(offsetY + layout.topMargin * scale),
+            Math.round(layout.imposedSpaceWidth * scale),
+            Math.round(layout.imposedSpaceLength * scale)
+        );
+    }
 
     // Draw score lines respecting margins and gutters
     if (scorePositions.length > 0) {
@@ -167,5 +174,7 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
 
     ctx.translate(-0.5, -0.5);
     // Draw document labels
-    drawDocumentLabels(ctx, layout, scale, offsetX, offsetY);
+    if (showDocNumbers) {
+        drawDocumentLabels(ctx, layout, scale, offsetX, offsetY);
+    }
 }

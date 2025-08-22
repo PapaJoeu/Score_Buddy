@@ -91,6 +91,20 @@
                         <span role="tooltip" id="tip-rotate-sheet" class="tooltip">Rotate sheet</span>
                     </button>
                 </div>
+                <div class="visualizer-options">
+                    <label for="showScores" class="checkbox-label">
+                        <input type="checkbox" id="showScores"> Display scores
+                    </label>
+                    <label for="showDocNumbers" class="checkbox-label">
+                        <input type="checkbox" id="showDocNumbers" checked> Show document numbers
+                    </label>
+                    <label for="showPrintableArea" class="checkbox-label">
+                        <input type="checkbox" id="showPrintableArea" checked> Show printable area
+                    </label>
+                    <label for="showMargins" class="checkbox-label">
+                        <input type="checkbox" id="showMargins" checked> Show margins
+                    </label>
+                </div>
                 <div class="canvas-wrapper">
                     <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 </div>
@@ -124,9 +138,6 @@
                     <h2>Scoring</h2>
                     <!-- Score options controls -->
                     <div class="form-grid">
-                        <label for="showScores" class="checkbox-label">
-                            <input type="checkbox" id="showScores"> Display scores on visualizer
-                        </label>
                         <label for="foldType">Score Type:</label>
                         <select id="foldType">
                             <option value="bifold">Bifold</option>

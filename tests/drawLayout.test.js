@@ -1,5 +1,8 @@
 const assert = require('assert');
 
+(globalThis.document = { documentElement: {} });
+(globalThis.getComputedStyle = () => ({ getPropertyValue: () => '' }));
+
 (async () => {
   const { calculateLayoutDetails } = await import('../calculations.js');
   const { drawLayout } = await import('../visualizer.js');

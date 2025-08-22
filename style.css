@@ -226,6 +226,14 @@ h2 {
     margin-bottom: 16px;
 }
 
+.visualizer-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
 .toolbar .btn {
     position: relative;
     width: auto;
