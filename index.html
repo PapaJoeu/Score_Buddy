@@ -10,7 +10,8 @@
     <div class="container">
         <h1>Kev's Bitchin' Print Calculator</h1>
                 
-        <main>
+        <main class="layout">
+            <div class="main-column">
             <form>
                 <section class="dimensions-section">
                     <h2>Sheet Dimensions</h2>
@@ -54,7 +55,9 @@
                     </div>
                 </section>
             </form>
+            </div>
 
+            <aside class="tools-column">
             <section class="visualizer-section">
                 <h2>Layout Visualizer</h2>
                 <div class="button-grid">
@@ -88,6 +91,7 @@
                 <div id="scorePositions" role="status" aria-live="polite"></div>
                 <div id="programSequence" role="status" aria-live="polite"></div>
             </section>
+            </aside>
         </main>
     </div>
     <script type="module" src="app.js"></script>
