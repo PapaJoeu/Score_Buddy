@@ -32,6 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
         gutterInputs: document.getElementById('gutterDimensionsInputs'),
         gutterWidth: document.getElementById('gutterWidth'),
         gutterLength: document.getElementById('gutterLength'),
+
+        // Margin elements
+        marginButtons: document.getElementById('marginButtonsContainer'),
+        marginInputs: document.getElementById('marginDimensionsInputs'),
+        marginWidth: document.getElementById('marginWidth'),
+        marginLength: document.getElementById('marginLength'),
         
         // Canvas element
         canvas: document.getElementById('layoutCanvas'),
@@ -58,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         createSizeButtons({
             sheetButtons: elements.sheetButtons,
             docButtons: elements.docButtons,
-            gutterButtons: elements.gutterButtons
+            gutterButtons: elements.gutterButtons,
+            marginButtons: elements.marginButtons
         }, SIZE_OPTIONS);
         setupEventListeners();
         setDefaultValues();
@@ -75,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.sheetButtons.addEventListener('click', handleSizeButtonClick);
         elements.docButtons.addEventListener('click', handleSizeButtonClick);
         elements.gutterButtons.addEventListener('click', handleSizeButtonClick);
+        elements.marginButtons.addEventListener('click', handleSizeButtonClick);
+        elements.marginWidth.addEventListener('input', calculateLayout);
+        elements.marginLength.addEventListener('input', calculateLayout);
         elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc'));
         elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet'));
         elements.rotateDocsAndSheetButton.addEventListener('click', rotateDocsAndSheet);
@@ -88,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to handle clicks on size buttons
     function handleSizeButtonClick(event) {
         if (event.target.tagName === 'BUTTON') {
-            const type = event.target.className.split('-')[0]; // 'sheet', 'doc', or 'gutter'
+            const type = event.target.className.split('-')[0]; // 'sheet', 'doc', 'gutter', or 'margin'
             const inputs = elements[`${type}Inputs`];
             const isCustom = event.target.id.includes('custom');
 
@@ -150,6 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const docLength = parseFloat(elements.docLength.value);
         const gutterWidth = parseFloat(elements.gutterWidth.value);
         const gutterLength = parseFloat(elements.gutterLength.value);
+        const marginWidth = parseFloat(elements.marginWidth.value);
+        const marginLength = parseFloat(elements.marginLength.value);
 
         return calcDetails({
             sheetWidth,
@@ -157,7 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
             docWidth,
             docLength,
             gutterWidth,
-            gutterLength
+            gutterLength,
+            marginWidth,
+            marginLength
         });
     }
 
@@ -193,6 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.docLength.value = "2.0";
         elements.gutterWidth.value = "0.125";
         elements.gutterLength.value = "0.125";
+        elements.marginWidth.value = "0.25";
+        elements.marginLength.value = "0.25";
     }
 
     // Function to select default sizes for sheet, doc, and gutter
@@ -200,7 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const defaultSelections = {
             sheet: '12 x 18',
             doc: '3.5 x 2',
-            gutter: '0.125 x 0.125'
+            gutter: '0.125 x 0.125',
+            margin: '0.25 x 0.25'
         };
 
         Object.entries(defaultSelections).forEach(([type, value]) => {

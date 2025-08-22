@@ -7,7 +7,7 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = `${type}-size-button`;
-        if (type === 'gutter') {
+        if (type === 'gutter' || type === 'margin') {
             button.textContent = `${option.width} x ${option.length}`;
             button.dataset.width = option.width;
             button.dataset.length = option.length;
@@ -34,5 +34,6 @@ export function createSizeButtons(containers, SIZE_OPTIONS) {
     createButtonsForType('sheet', containers.sheetButtons, SIZE_OPTIONS);
     createButtonsForType('doc', containers.docButtons, SIZE_OPTIONS);
     createButtonsForType('gutter', containers.gutterButtons, SIZE_OPTIONS);
+    createButtonsForType('margin', containers.marginButtons, SIZE_OPTIONS);
 }
 
