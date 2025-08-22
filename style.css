@@ -6,6 +6,11 @@
  * --border: subtle border color
  * --blue: accent color
  * --font-family: base font stack
+ *
+ * Theme colors
+ * --doc-color: RGB components for document outline
+ * --margin-color: RGB components for margin areas
+ * --printable-color: RGB components for non-printable areas and scores
  */
 
 :root {
@@ -20,6 +25,11 @@
     --border: #808080;
     --blue: #000080;
     --font-family: 'Tahoma', 'Verdana', sans-serif;
+
+    /* Theme colors */
+    --doc-color: 0, 0, 0;
+    --margin-color: 255, 0, 0;
+    --printable-color: 255, 0, 255;
 }
 
 [data-theme="dark"] {
@@ -28,6 +38,11 @@
     --ink: #FFFFFF;
     --border: #808080;
     --blue: #000080;
+
+    /* Theme colors */
+    --doc-color: 0, 0, 0;
+    --margin-color: 255, 0, 0;
+    --printable-color: 255, 0, 255;
 }
 
 /* General Styles */
@@ -388,11 +403,11 @@ tbody tr:nth-child(even) {
 
 /* Canvas area overlays */
 .printable-area-overlay {
-    background-color: rgba(0, 255, 0, 0.25);
+    background-color: rgba(var(--printable-color), 0.25);
 }
 
 .margin-area-overlay {
-    background-color: rgba(255, 0, 0, 0.25);
+    background-color: rgba(var(--margin-color), 0.25);
 }
 
 /* Legend styles */
@@ -419,17 +434,18 @@ tbody tr:nth-child(even) {
     border: 2px solid;
 }
 
+
 .legend-swatch.doc {
-    border-color: black;
+    border-color: rgb(var(--doc-color));
 }
 
 .legend-swatch.margin {
-    border-color: red;
+    border-color: rgb(var(--margin-color));
 }
 
 .legend-swatch.printable {
-    border-color: magenta;
-    background-color: rgba(255, 0, 255, 0.25);
+    border-color: rgb(var(--printable-color));
+    background-color: rgba(var(--printable-color), 0.25);
 }
 
 .legend-line {
@@ -440,5 +456,5 @@ tbody tr:nth-child(even) {
 
 .legend-line.score {
     border-top-style: dashed;
-    border-color: magenta;
+    border-color: rgb(var(--printable-color));
 }
