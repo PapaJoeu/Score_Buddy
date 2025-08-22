@@ -40,5 +40,17 @@ const assert = require('assert');
   assert.strictEqual(customScores.length, 8, 'Custom score count incorrect');
   assert.strictEqual(customScores[0].y, 1.625, 'First custom score incorrect');
 
+  // Verify filtering of out-of-range custom positions
+  const filteredCustomScores = calculateScorePositions(layout, 'custom', [-1, 2, 4, 5, 'a']);
+  assert.strictEqual(filteredCustomScores.length, 8, 'Filtered custom score count incorrect');
+  assert.strictEqual(filteredCustomScores[0].y, layout.topMargin + 2, 'Filtered custom first score incorrect');
+  assert.strictEqual(filteredCustomScores[1].y, layout.topMargin + 4, 'Filtered custom second score incorrect');
+
+  // Verify invalid fold type handling
+  assert.throws(
+    () => calculateScorePositions(layout, 'invalid'),
+    /Unsupported fold type/
+  );
+
   console.log('All scoring tests passed');
 })();
