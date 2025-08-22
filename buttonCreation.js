@@ -19,6 +19,7 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
     customButton.type = 'button';
     customButton.id = `custom${type.charAt(0).toUpperCase() + type.slice(1)}SizeButton`;
     customButton.classList.add('btn', 'btn-secondary', `${type}-size-button`);
+    customButton.classList.add('custom-size-button');
     customButton.dataset.type = type;
     customButton.textContent = 'Custom';
     container.appendChild(customButton);
