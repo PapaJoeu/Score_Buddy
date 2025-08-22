@@ -47,6 +47,30 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.data-card {
+    max-height: 480px;
+    overflow: auto;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-btn {
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    border-radius: 4px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.copy-btn:hover:not([disabled]) {
+    filter: brightness(0.95);
+}
+
 /* Layout */
 .layout {
     display: grid;
@@ -244,20 +268,28 @@ table {
     margin-top: 16px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid var(--border);
     padding: 8px;
-    text-align: left;
     font-size: 14px;
 }
 
 th {
     background-color: var(--blue);
     color: #fff;
+    position: sticky;
+    top: 0;
+    text-align: left;
 }
 
 td {
     font-family: monospace;
+    text-align: right;
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--bg);
 }
 
 /* Utility Classes */
