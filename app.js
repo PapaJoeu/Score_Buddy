@@ -83,8 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.docButtons.addEventListener('click', handleSizeButtonClick);
         elements.gutterButtons.addEventListener('click', handleSizeButtonClick);
         elements.marginButtons.addEventListener('click', handleSizeButtonClick);
-        elements.marginWidth.addEventListener('input', calculateLayout);
-        elements.marginLength.addEventListener('input', calculateLayout);
+
+        // Bind inputs for custom margin values to mimic gutter behaviour
+        const customMarginButton = document.getElementById('customMarginSizeButton');
+        ['marginWidth', 'marginLength'].forEach(id => {
+            elements[id].addEventListener('input', () => {
+                // Activate custom button and reveal inputs when typing custom values
+                elements.marginButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                customMarginButton.classList.add('active');
+                elements.marginInputs.classList.remove('hidden');
+                calculateLayout();
+            });
+        });
         elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc'));
         elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet'));
         elements.rotateDocsAndSheetButton.addEventListener('click', rotateDocsAndSheet);
