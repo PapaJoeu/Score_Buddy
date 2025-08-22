@@ -41,10 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Canvas element
         canvas: document.getElementById('layoutCanvas'),
-        
-        // Other buttons and inputs
-        rotateDocsButton: document.getElementById('rotateDocsButton'),
-        rotateSheetButton: document.getElementById('rotateSheetButton'),
+        canvasContainer: document.getElementById('canvasContainer'),
+
+        // Toolbar buttons and other inputs
+        fitSheetButton: document.getElementById('fitSheetButton'),
+        zoomInButton: document.getElementById('zoomInButton'),
+        zoomOutButton: document.getElementById('zoomOutButton'),
+        resetViewButton: document.getElementById('resetViewButton'),
         rotateDocsAndSheetButton: document.getElementById('rotateDocsAndSheetButton'),
         calculateButton: document.getElementById('calculateButton'),
         scoreButton: document.getElementById('scoreButton'),
@@ -57,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         foldType: document.getElementById('foldType'),
         calculateScoresButton: document.getElementById('calculateScoresButton')
     };
+
+    let zoomLevel = 1;
 
     // ===== Initialization =====
     // Function to initialize the application
@@ -95,8 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 calculateLayout();
             });
         });
-        elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc'));
-        elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet'));
+        elements.fitSheetButton.addEventListener('click', fitSheet);
+        elements.zoomInButton.addEventListener('click', () => adjustZoom(1.1));
+        elements.zoomOutButton.addEventListener('click', () => adjustZoom(0.9));
+        elements.resetViewButton.addEventListener('click', resetLayout);
         elements.rotateDocsAndSheetButton.addEventListener('click', rotateDocsAndSheet);
         elements.calculateButton.addEventListener('click', calculateLayout);
         elements.scoreButton.addEventListener('click', showScoreOptions);
@@ -156,6 +163,24 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateLayout();
     }
 
+    // ===== View Controls =====
+    function fitSheet() {
+        zoomLevel = 1;
+        drawLayoutWrapper(calculateLayoutDetails());
+    }
+
+    function adjustZoom(factor) {
+        zoomLevel *= factor;
+        drawLayoutWrapper(calculateLayoutDetails());
+    }
+
+    function resetLayout() {
+        zoomLevel = 1;
+        setDefaultValues();
+        selectDefaultSizes();
+        calculateLayout();
+    }
+
     // ===== Layout Calculation =====
     // Main function to calculate and display layout
     function calculateLayout() {
@@ -195,7 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
             marginWidth: layout.marginWidth,
             marginLength: layout.marginLength
         };
-        drawLayout(elements.canvas, layout, scorePositions, marginData);
+        const ratio = `${layout.sheetWidth} / ${layout.sheetLength}`;
+        elements.canvasContainer.style.setProperty('--sheet-ratio', ratio);
+        drawLayout(elements.canvas, layout, scorePositions, marginData, zoomLevel);
     }
 
     // ===== Display Functions =====

@@ -59,12 +59,16 @@
 
             <section class="visualizer-column card">
                 <h2>Layout Visualizer</h2>
-                <div class="button-grid">
-                    <button type="button" id="rotateDocsButton">Rotate Docs</button>
-                    <button type="button" id="rotateSheetButton">Rotate Sheet</button>
-                    <button type="button" id="rotateDocsAndSheetButton">Rotate Docs and Sheet</button>
+                <div class="toolbar button-grid">
+                    <button type="button" id="fitSheetButton" aria-label="Fit sheet">Fit</button>
+                    <button type="button" id="zoomInButton" aria-label="Zoom in">Zoom +</button>
+                    <button type="button" id="zoomOutButton" aria-label="Zoom out">Zoom -</button>
+                    <button type="button" id="resetViewButton" aria-label="Reset view">Reset</button>
+                    <button type="button" id="rotateDocsAndSheetButton" aria-label="Rotate document and sheet">Rotate</button>
                 </div>
-                <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
+                <div id="canvasContainer" class="canvas-container">
+                    <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
+                </div>
                 <div class="button-grid">
                     <button type="button" id="calculateButton">Program Sequence</button>
                     <button type="button" id="scoreButton">Score Measurements</button>
