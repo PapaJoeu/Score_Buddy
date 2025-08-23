@@ -1,5 +1,5 @@
-import { calculateScorePositions } from '../../scoring.js';
-import { renderScorePositions } from '../../display.js';
+import { calculateScorePositions } from './scoring.js';
+import { renderScorePositions } from '../ui/display.js';
 import { calculateLayoutDetails, drawLayoutWrapper } from '../layout/layoutController.js';
 
 let lastScorePositions = [];

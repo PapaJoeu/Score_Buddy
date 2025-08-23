@@ -1,5 +1,5 @@
 // visualizer.js
-import { getColorTokens } from './colorConfig.js';
+import { getColorTokens } from './src/config/colorConfig.js';
 import { drawSheet } from './src/render/drawSheet.js';
 import { drawPrintableArea } from './src/render/drawPrintableArea.js';
 import { drawDocuments } from './src/render/drawDocuments.js';

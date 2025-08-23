@@ -4,7 +4,7 @@ const assert = require('assert');
 (globalThis.getComputedStyle = () => ({ getPropertyValue: () => '' }));
 
 (async () => {
-  const { calculateLayoutDetails } = await import('../calculations.js');
+  const { calculateLayoutDetails } = await import('../src/layout/calculations.js');
   const { drawLayout } = await import('../visualizer.js');
   const { drawPrintableArea } = await import('../src/render/drawPrintableArea.js');
 
