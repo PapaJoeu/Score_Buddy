@@ -1,74 +1,3 @@
-/*
- * Theme variables
- * --bg: page background
- * --card: surface color for cards and inputs
- * --ink: default text color
- * --border: subtle border color
- * --blue: accent color
- * --font-family: base font stack
- *
- * Theme colors
- * --doc-color: RGB components for document outline
- * --margin-color: RGB components for margin areas
- * --printable-color: RGB components for non-printable areas
- * --score-color: RGB components for score lines
- */
-
-:root {
-    /* Shadow tokens */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    /* Theme variables */
-    --bg: #C0C0C0;
-    --card: #FFFFFF;
-    --ink: #000000;
-    --border: #808080;
-    --blue: #000080;
-    --font-family: 'Tahoma', 'Verdana', sans-serif;
-
-    /* Theme colors */
-    --doc-color: 0, 0, 0;
-    --margin-color: 255, 0, 0;
-    --printable-color: 255, 0, 255;
-    --score-color: var(--printable-color);
-}
-
-[data-theme="dark"] {
-    --bg: #000000;
-    --card: #C0C0C0;
-    --ink: #FFFFFF;
-    --border: #808080;
-    --blue: #000080;
-
-    /* Theme colors */
-    --doc-color: 0, 0, 0;
-    --margin-color: 255, 0, 0;
-    --printable-color: 255, 0, 255;
-    --score-color: var(--printable-color);
-}
-
-/* General Styles */
-body {
-    font-family: var(--font-family);
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg);
-    line-height: 1.45;
-    font-size: 16px;
-    color: var(--ink);
-}
-
-/* Container styles */
-.container {
-    display: flex;
-    flex-direction: column;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 24px 24px;
-    gap: 24px;
-}
-
 /* Card component */
 .card {
     padding: 24px;
@@ -119,90 +48,6 @@ body {
 
 .copy-btn:hover:not([disabled]) {
     filter: brightness(0.95);
-}
-
-/* Layout */
-.layout {
-    display: grid;
-    gap: 24px;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-        "visualizer"
-        "inputs"
-        "data";
-}
-
-.inputs-column { grid-area: inputs; }
-.visualizer-column {
-    grid-area: visualizer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.data-column {
-    grid-area: data;
-    display: grid;
-    gap: 16px;
-}
-
-@media (min-width: 1200px) {
-    .layout {
-        grid-template-columns: 420px minmax(560px, 1fr) 360px;
-        grid-template-areas: "inputs visualizer data";
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1199px) {
-    .layout {
-        grid-template-columns: 1fr 420px;
-        grid-template-areas:
-            "visualizer inputs"
-            "data inputs";
-    }
-}
-
-@media (max-width: 767px) {
-    .layout {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "visualizer"
-            "inputs"
-            "data";
-    }
-}
-
-/* Canvas wrapper maintains sheet aspect ratio */
-.canvas-wrapper {
-    width: 100%;
-    max-height: 80vh;
-    aspect-ratio: var(--sheet-aspect, 1/1);
-    margin-top: 16px;
-}
-
-.canvas-wrapper canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background-color: var(--card);
-}
-
-/* Typography */
-h1 {
-    font-size: 28px;
-    text-align: center;
-    margin: 0 0 16px 0;
-    padding: 8px;
-    background-color: var(--card);
-    color: var(--ink);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-h2 {
-    font-size: 20px;
-    margin: 16px 0 8px 0;
-    color: var(--ink);
 }
 
 /* Button Styles */
@@ -369,13 +214,6 @@ select {
     height: auto;
 }
 
-/* Canvas Styles */
-/* Canvas element fills the wrapper */
-#layoutCanvas {
-    width: 100%;
-    height: 100%;
-}
-
 /* Table Styles */
 table {
     width: 100%;
@@ -407,20 +245,6 @@ tbody tr:nth-child(even) {
     background-color: var(--bg);
 }
 
-/* Utility Classes */
-.hidden {
-    display: none;
-}
-
-/* Canvas area overlays */
-.printable-area-overlay {
-    background-color: rgba(var(--printable-color), 0.25);
-}
-
-.margin-area-overlay {
-    background-color: rgba(var(--margin-color), 0.25);
-}
-
 /* Legend styles */
 .legend {
     display: flex;
@@ -444,7 +268,6 @@ tbody tr:nth-child(even) {
     height: 16px;
     border: 2px solid;
 }
-
 
 .legend-swatch.doc {
     border-color: rgb(var(--doc-color));
