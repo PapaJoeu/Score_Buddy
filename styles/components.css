@@ -305,6 +305,12 @@ tbody tr:nth-child(even) {
     background-color: var(--bg);
 }
 
+/* Ensure consistent width for step columns in data tables */
+#programSequence table td:first-child,
+#scorePositions table td:first-child {
+    width: 4ch;
+}
+
 /* Legend styles */
 .legend {
     display: flex;
