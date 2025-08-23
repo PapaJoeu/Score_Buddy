@@ -1,4 +1,4 @@
-import { calculateScorePositions } from './scoring.js';
+import { calculateScorePositions, FOLD_ALLOWANCE_INCH, FOLD_ALLOWANCE_MM } from './scoring.js';
 import { renderScorePositions } from '../ui/display.js';
 import { calculateLayoutDetails, drawLayoutWrapper } from '../layout/layoutController.js';
 
@@ -16,7 +16,8 @@ export function calculateScores(elements) {
             .filter(n => !isNaN(n));
     }
 
-    const scorePositions = calculateScorePositions(layout, foldType, custom);
+    const allowance = elements.metricToggle.checked ? FOLD_ALLOWANCE_MM : FOLD_ALLOWANCE_INCH;
+    const scorePositions = calculateScorePositions(layout, foldType, custom, allowance);
     lastScorePositions = scorePositions;
 
     drawLayoutWrapper(layout, elements.showScores.checked ? scorePositions : [], elements);
@@ -24,7 +25,8 @@ export function calculateScores(elements) {
 }
 
 export function displayScorePositions(scorePositions, elements) {
-    renderScorePositions(scorePositions, elements.scorePositions);
+    const unit = elements.metricToggle.checked ? 'mm' : 'inches';
+    renderScorePositions(scorePositions, elements.scorePositions, unit);
 }
 
 export function getLastScorePositions() {

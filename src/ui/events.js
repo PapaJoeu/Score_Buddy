@@ -1,5 +1,6 @@
 import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom } from '../layout/layoutController.js';
 import { calculateScores, getLastScorePositions, clearScoreData } from '../scoring/scoreController.js';
+import { toggleMetricMode } from './metricToggle.js';
 
 export function registerEventListeners(elements) {
     elements.sheetButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
@@ -7,11 +8,13 @@ export function registerEventListeners(elements) {
     elements.gutterButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
     elements.marginButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
 
-    const customMarginButton = document.getElementById('customMarginSizeButton');
     ['marginWidth', 'marginLength'].forEach(id => {
         elements[id].addEventListener('input', () => {
+            const customMarginButton = document.getElementById('customMarginSizeButton');
             elements.marginButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            customMarginButton.classList.add('active');
+            if (customMarginButton) {
+                customMarginButton.classList.add('active');
+            }
             elements.marginInputs.classList.remove('hidden');
             calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
         });
@@ -35,6 +38,8 @@ export function registerEventListeners(elements) {
     });
     elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc', elements));
     elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet', elements));
+
+    elements.metricToggle.addEventListener('change', () => toggleMetricMode(elements));
 
     const inputIds = ['sheetWidth', 'sheetLength', 'docWidth', 'docLength', 'gutterWidth', 'gutterLength', 'marginWidth', 'marginLength'];
     inputIds.forEach(id => {
