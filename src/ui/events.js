@@ -59,6 +59,7 @@ export function registerEventListeners(elements) {
     elements.themeToggle.addEventListener('click', () => toggleTheme(elements));
 
     toggleCustomInputs(elements);
+    updateThemeIcon(elements);
 }
 
 function handleSizeButtonClick(event, elements) {
@@ -99,15 +100,32 @@ function rotateSize(type, elements, shouldCalculate = true) {
     }
 }
 
+export function initTheme(elements) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    updateThemeIcon(elements);
+}
+
 function toggleTheme(elements) {
     const root = document.documentElement;
-    if (root.getAttribute('data-theme') === 'dark') {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if (isDark) {
         root.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
     } else {
         root.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
     }
+    updateThemeIcon(elements);
     const layout = calculateLayoutDetails(elements);
     drawLayoutWrapper(layout, elements.showScores.checked ? getLastScorePositions() : [], elements);
+}
+
+function updateThemeIcon(elements) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    elements.themeToggle.textContent = isDark ? '☀️' : '🌙';
 }
 
 function toggleCustomInputs(elements) {
