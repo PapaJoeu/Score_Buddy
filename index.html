@@ -12,11 +12,18 @@
     <div class="container">
         <header class="header">
             <h1>Kev's Bitchin' Print Calculator</h1>
-            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+            <div class="menu-bar">
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="slider"></span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" id="metricToggle" aria-label="Toggle metric mode">
+                    <span class="slider"></span>
+                    <span class="switch-text">Metric</span>
+                </label>
+            </div>
         </header>
-        <label for="metricToggle" class="checkbox-label">
-            <input type="checkbox" id="metricToggle"> Metric mode
-        </label>
 
         <main class="layout">
             <section class="inputs-column">
