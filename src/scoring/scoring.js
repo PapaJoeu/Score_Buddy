@@ -1,9 +1,10 @@
 // scoring.js
 // Functions related to scoring positions and other scoring utilities
 
-// Default allowance (in inches) to compensate for paper thickness when folding.
-// Thicker paper stocks may require a larger allowance to prevent overlapping folds.
-export const FOLD_ALLOWANCE = 0.05;
+// Default allowance to compensate for paper thickness when folding.
+// Values are provided for both inches and millimeters.
+export const FOLD_ALLOWANCE_INCH = 0.05;
+export const FOLD_ALLOWANCE_MM = 1.27;
 
 // Supported fold types for calculating score positions
 const SUPPORTED_FOLD_TYPES = ['bifold', 'trifold', 'gatefold', 'custom'];
@@ -20,7 +21,7 @@ export function calculateScorePositions(
     layout,
     foldType = 'bifold',
     customPositions = [],
-    allowance = FOLD_ALLOWANCE
+    allowance = FOLD_ALLOWANCE_INCH
 ) {
     if (!SUPPORTED_FOLD_TYPES.includes(foldType)) {
         throw new Error(`Unsupported fold type: ${foldType}`);

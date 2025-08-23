@@ -52,7 +52,8 @@ export function drawLayoutWrapper(layout, scorePositions = [], elements) {
 
 export function displayProgramSequence(layout, elements) {
     const sequence = calcSequence(layout);
-    renderProgramSequence(sequence, elements.programSequence);
+    const unit = elements.metricToggle && elements.metricToggle.checked ? 'mm' : 'inches';
+    renderProgramSequence(sequence, elements.programSequence, unit);
 }
 
 export function updateLayoutInfo(layout, elements) {
@@ -67,24 +68,42 @@ export function updateLayoutInfo(layout, elements) {
     elements.wasteLegend.textContent = `Waste: ${waste}%`;
 }
 
-export function setDefaultValues(elements) {
-    elements.sheetWidth.value = "12.0";
-    elements.sheetLength.value = "18.0";
-    elements.docWidth.value = "3.5";
-    elements.docLength.value = "4.0";
-    elements.gutterWidth.value = "0.125";
-    elements.gutterLength.value = "0.125";
-    elements.marginWidth.value = "0.25";
-    elements.marginLength.value = "0.25";
+export function setDefaultValues(elements, isMetric = false) {
+    if (isMetric) {
+        elements.sheetWidth.value = "305";
+        elements.sheetLength.value = "457";
+        elements.docWidth.value = "89";
+        elements.docLength.value = "102";
+        elements.gutterWidth.value = "3";
+        elements.gutterLength.value = "3";
+        elements.marginWidth.value = "6";
+        elements.marginLength.value = "6";
+    } else {
+        elements.sheetWidth.value = "12.0";
+        elements.sheetLength.value = "18.0";
+        elements.docWidth.value = "3.5";
+        elements.docLength.value = "4.0";
+        elements.gutterWidth.value = "0.125";
+        elements.gutterLength.value = "0.125";
+        elements.marginWidth.value = "0.25";
+        elements.marginLength.value = "0.25";
+    }
 }
 
-export function selectDefaultSizes(elements) {
-    const defaultSelections = {
-        sheet: { width: 12, length: 18 },
-        doc: { width: 3.5, length: 4 },
-        gutter: { width: 0.125, length: 0.125 },
-        margin: { width: 0.25, length: 0.25 }
-    };
+export function selectDefaultSizes(elements, isMetric = false) {
+    const defaultSelections = isMetric
+        ? {
+              sheet: { width: 305, length: 457 },
+              doc: { width: 89, length: 102 },
+              gutter: { width: 3, length: 3 },
+              margin: { width: 6, length: 6 }
+          }
+        : {
+              sheet: { width: 12, length: 18 },
+              doc: { width: 3.5, length: 4 },
+              gutter: { width: 0.125, length: 0.125 },
+              margin: { width: 0.25, length: 0.25 }
+          };
 
     Object.entries(defaultSelections).forEach(([type, { width, length }]) => {
         const container = elements[`${type}Buttons`];

@@ -1,4 +1,4 @@
-export function renderProgramSequence(sequence, container) {
+export function renderProgramSequence(sequence, container, unit = 'inches') {
     container.innerHTML = `
         <div class="card-header">
             <h2>Program Sequence</h2>
@@ -12,7 +12,7 @@ export function renderProgramSequence(sequence, container) {
             ${sequence.map((cut, index) => `
                 <tr>
                     <td>${index + 1}</td>
-                    <td>${cut.toFixed(3)} inches</td>
+                    <td>${cut.toFixed(3)} ${unit}</td>
                 </tr>
             `).join('')}
             </tbody>
@@ -25,7 +25,7 @@ export function renderProgramSequence(sequence, container) {
     });
 }
 
-export function renderScorePositions(scorePositions, container) {
+export function renderScorePositions(scorePositions, container, unit = 'inches') {
     // Render score measurements into the nested #scorePositions div
     container.innerHTML = `
         <div class="score-header">
@@ -34,7 +34,7 @@ export function renderScorePositions(scorePositions, container) {
         </div>
         <table>
             <thead>
-                <tr><th>Score Position (inches)</th></tr>
+                <tr><th>Score Position (${unit})</th></tr>
             </thead>
             <tbody>
             ${scorePositions.map(pos => `<tr><td>${pos.y.toFixed(3)}</td></tr>`).join('')}

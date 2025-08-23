@@ -45,5 +45,6 @@ export const elements = {
     customScoreInputs: document.getElementById('customScoreInputs'),
     customScores: document.getElementById('customScores'),
     calculateScoresButton: document.getElementById('calculateScoresButton'),
-    themeToggle: document.getElementById('themeToggle')
+    themeToggle: document.getElementById('themeToggle'),
+    metricToggle: document.getElementById('metricToggle')
 };
