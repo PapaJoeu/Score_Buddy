@@ -56,10 +56,9 @@ export function registerEventListeners(elements) {
         });
     });
 
-    elements.themeToggle.addEventListener('click', () => toggleTheme(elements));
+    elements.themeToggle.addEventListener('change', () => toggleTheme(elements));
 
     toggleCustomInputs(elements);
-    updateThemeIcon(elements);
 }
 
 function handleSizeButtonClick(event, elements) {
@@ -104,28 +103,21 @@ export function initTheme(elements) {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
+        elements.themeToggle.checked = true;
     }
-    updateThemeIcon(elements);
 }
 
 function toggleTheme(elements) {
     const root = document.documentElement;
-    const isDark = root.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-        root.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-    } else {
+    if (elements.themeToggle.checked) {
         root.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
+    } else {
+        root.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
     }
-    updateThemeIcon(elements);
     const layout = calculateLayoutDetails(elements);
     drawLayoutWrapper(layout, elements.showScores.checked ? getLastScorePositions() : [], elements);
-}
-
-function updateThemeIcon(elements) {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    elements.themeToggle.textContent = isDark ? '☀️' : '🌙';
 }
 
 function toggleCustomInputs(elements) {
