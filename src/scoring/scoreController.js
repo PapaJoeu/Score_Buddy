@@ -5,13 +5,14 @@ import { calculateLayoutDetails, drawLayoutWrapper } from '../layout/layoutContr
 let lastScorePositions = [];
 
 export function calculateScores(elements) {
-    const foldType = elements.foldType.value;
+    const foldType = elements.scoreControls.querySelector('#foldType').value;
     const layout = calculateLayoutDetails(elements);
 
     let custom = [];
     if (foldType === 'custom') {
-        custom = elements.customScores.value
-            .split(',')
+        custom = elements.scoreControls
+            .querySelector('#customScores')
+            .value.split(',')
             .map(n => parseFloat(n.trim()))
             .filter(n => !isNaN(n));
     }

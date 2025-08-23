@@ -21,6 +21,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 16px;
+}
+
+#scoreControls {
+    margin-bottom: 16px;
+}
+
+#scorePositions {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
 }
 
 /* Sub-header within #scoreOptions for score measurements */

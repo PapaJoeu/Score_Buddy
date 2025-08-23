@@ -41,6 +41,7 @@ export const elements = {
     showDocNumbers: document.getElementById('showDocNumbers'),
     showPrintableArea: document.getElementById('showPrintableArea'),
     showMargins: document.getElementById('showMargins'),
+    scoreControls: document.getElementById('scoreControls'),
     foldType: document.getElementById('foldType'),
     customScoreInputs: document.getElementById('customScoreInputs'),
     customScores: document.getElementById('customScores'),

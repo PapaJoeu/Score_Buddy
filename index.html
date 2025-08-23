@@ -149,9 +149,11 @@
 
                 <!-- Score options card now contains score positions -->
                 <section id="scoreOptions" class="card data-card">
-                    <h2>Scoring</h2>
-                    <!-- Score options controls -->
-                    <div class="form-grid">
+                    <div class="card-header">
+                        <h2>Scoring</h2>
+                        <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
+                    </div>
+                    <div id="scoreControls" class="form-grid">
                         <label for="foldType">Score Type:</label>
                         <select id="foldType">
                             <option value="bifold">Bifold</option>
@@ -163,9 +165,7 @@
                             <label for="customScores">Custom Positions (in, comma-separated)</label>
                             <input type="text" id="customScores" placeholder="e.g., 2,4.5">
                         </div>
-                        <button type="button" id="calculateScoresButton" class="btn btn-primary">Calculate Scores</button>
                     </div>
-                    <!-- Nested container for score position output -->
                     <div id="scorePositions" role="status" aria-live="polite"></div>
                 </section>
             </aside>
