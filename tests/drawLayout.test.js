@@ -6,6 +6,7 @@ const assert = require('assert');
 (async () => {
   const { calculateLayoutDetails } = await import('../calculations.js');
   const { drawLayout } = await import('../visualizer.js');
+  const { drawPrintableArea } = await import('../src/render/drawPrintableArea.js');
 
   const layout = calculateLayoutDetails({
     sheetWidth: 12,
@@ -60,6 +61,16 @@ const assert = require('assert');
   const printableArea = ctx.strokeRectCalls.find(c => c.w === expectedWidth && c.h === expectedHeight);
   assert.ok(printableArea, 'Printable area not drawn with expected dimensions');
   assert.strictEqual(ctx.fillRectCalls.length, 4, 'Margins not drawn correctly');
+
+  // Test the modular printable area function
+  ctx.fillRectCalls = [];
+  ctx.strokeRectCalls = [];
+  drawPrintableArea(ctx, layout, scale, 0, 0, {
+    marginData: { marginWidth: layout.marginWidth, marginLength: layout.marginLength },
+    colors: {},
+    showPrintableArea: true
+  });
+  assert.strictEqual(ctx.fillRectCalls.length, 4, 'drawPrintableArea did not draw four margins');
 
   console.log('All drawLayout tests passed');
 })();
