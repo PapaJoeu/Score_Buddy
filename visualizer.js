@@ -1,5 +1,11 @@
 // visualizer.js
 import { getColorTokens } from './colorConfig.js';
+import { drawSheet } from './src/render/drawSheet.js';
+import { drawPrintableArea } from './src/render/drawPrintableArea.js';
+import { drawDocuments } from './src/render/drawDocuments.js';
+import { drawMargins } from './src/render/drawMargins.js';
+import { drawScoreLines } from './src/render/drawScoreLines.js';
+import { drawDocumentLabels } from './src/render/drawDocumentLabels.js';
 
 // Calculate the scale for an adaptive layout
 export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
@@ -18,34 +24,19 @@ export function calculateAdaptiveScale(layout, canvasWidth, canvasHeight) {
     return scale;
 }
 
-// Draw document labels on the canvas
-export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY) {
-    const colors = getColorTokens();
-    ctx.font = '12px Arial';
-    ctx.fillStyle = colors.label;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    let docNumber = 1;
-    for (let i = 0; i < layout.docsAcross; i++) {
-        for (let j = 0; j < layout.docsDown; j++) {
-            const x = offsetX + (layout.leftMargin + (i + 0.5) * (layout.docWidth + layout.gutterWidth)) * scale;
-            const y = offsetY + (layout.topMargin + (j + 0.5) * (layout.docLength + layout.gutterLength)) * scale;
-            ctx.fillText(docNumber.toString(), x, y);
-            docNumber++;
-        }
-    }
-}
-
 // Draw the layout on the canvas
 export function drawLayout(canvas, layout, scorePositions = [], marginData = {}, zoom = 1, options = {}) {
     const ctx = canvas.getContext('2d');
     const colors = getColorTokens();
-    const {
-        showDocNumbers = true,
-        showPrintableArea = true,
-        showMargins = true
-    } = options;
+    const helperOptions = {
+        showDocNumbers: true,
+        showPrintableArea: true,
+        showMargins: true,
+        ...options,
+        marginData,
+        scorePositions,
+        colors
+    };
 
     const container = canvas.parentElement;
     if (container && container.style) {
@@ -69,112 +60,12 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     ctx.imageSmoothingEnabled = false;
     ctx.translate(0.5, 0.5);
 
-    // Draw sheet
-    ctx.strokeStyle = colors.document;
-    ctx.strokeRect(
-        Math.round(offsetX),
-        Math.round(offsetY),
-        Math.round(layout.sheetWidth * scale),
-        Math.round(layout.sheetLength * scale)
-    );
-
-    // Draw printable area overlay before documents
-    const marginWidth = marginData.marginWidth ?? 0;
-    const marginLength = marginData.marginLength ?? 0;
-    if (showPrintableArea && (marginWidth > 0 || marginLength > 0)) {
-        ctx.fillStyle = colors.printableFill;
-
-        // Top margin
-        ctx.fillRect(
-            Math.round(offsetX),
-            Math.round(offsetY),
-            Math.round(layout.sheetWidth * scale),
-            Math.round(marginLength * scale)
-        );
-
-        // Bottom margin
-        ctx.fillRect(
-            Math.round(offsetX),
-            Math.round(offsetY + (marginLength + layout.usableSheetLength) * scale),
-            Math.round(layout.sheetWidth * scale),
-            Math.round(marginLength * scale)
-        );
-
-        // Left margin
-        ctx.fillRect(
-            Math.round(offsetX),
-            Math.round(offsetY + marginLength * scale),
-            Math.round(marginWidth * scale),
-            Math.round(layout.usableSheetLength * scale)
-        );
-
-        // Right margin
-        ctx.fillRect(
-            Math.round(offsetX + (marginWidth + layout.usableSheetWidth) * scale),
-            Math.round(offsetY + marginLength * scale),
-            Math.round(marginWidth * scale),
-            Math.round(layout.usableSheetLength * scale)
-        );
-
-        // Outline printable area
-        ctx.strokeStyle = colors.score;
-        ctx.strokeRect(
-            Math.round(offsetX + marginWidth * scale),
-            Math.round(offsetY + marginLength * scale),
-            Math.round(layout.usableSheetWidth * scale),
-            Math.round(layout.usableSheetLength * scale)
-        );
-
-        // Reset stroke for documents
-        ctx.strokeStyle = colors.document;
-    }
-
-    // Draw documents
-    for (let i = 0; i < layout.docsAcross; i++) {
-        for (let j = 0; j < layout.docsDown; j++) {
-            const x = offsetX + (layout.leftMargin + i * (layout.docWidth + layout.gutterWidth)) * scale;
-            const y = offsetY + (layout.topMargin + j * (layout.docLength + layout.gutterLength)) * scale;
-            ctx.strokeRect(
-                Math.round(x),
-                Math.round(y),
-                Math.round(layout.docWidth * scale),
-                Math.round(layout.docLength * scale)
-            );
-        }
-    }
-
-    // Draw margins
-    if (showMargins) {
-        ctx.strokeStyle = colors.margin;
-        ctx.strokeRect(
-            Math.round(offsetX + layout.leftMargin * scale),
-            Math.round(offsetY + layout.topMargin * scale),
-            Math.round(layout.imposedSpaceWidth * scale),
-            Math.round(layout.imposedSpaceLength * scale)
-        );
-    }
-
-    // Draw score lines respecting margins and gutters
-    if (scorePositions.length > 0) {
-        ctx.strokeStyle = colors.score;
-        ctx.setLineDash([5, 5]);
-        scorePositions.forEach(pos => {
-            const y = offsetY + pos.y * scale;
-            for (let i = 0; i < layout.docsAcross; i++) {
-                const startX = offsetX + (layout.leftMargin + i * (layout.docWidth + layout.gutterWidth)) * scale;
-                const endX = startX + layout.docWidth * scale;
-                ctx.beginPath();
-                ctx.moveTo(Math.round(startX), Math.round(y));
-                ctx.lineTo(Math.round(endX), Math.round(y));
-                ctx.stroke();
-            }
-        });
-        ctx.setLineDash([]);
-    }
-
+    // Draw layout components
+    drawSheet(ctx, layout, scale, offsetX, offsetY, helperOptions);
+    drawPrintableArea(ctx, layout, scale, offsetX, offsetY, helperOptions);
+    drawDocuments(ctx, layout, scale, offsetX, offsetY, helperOptions);
+    drawMargins(ctx, layout, scale, offsetX, offsetY, helperOptions);
+    drawScoreLines(ctx, layout, scale, offsetX, offsetY, helperOptions);
     ctx.translate(-0.5, -0.5);
-    // Draw document labels
-    if (showDocNumbers) {
-        drawDocumentLabels(ctx, layout, scale, offsetX, offsetY);
-    }
+    drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, helperOptions);
 }
