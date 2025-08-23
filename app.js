@@ -1,8 +1,8 @@
 import { elements } from './src/ui/elements.js';
 import { registerEventListeners } from './src/ui/events.js';
 import { setDefaultValues, selectDefaultSizes, calculateLayout } from './src/layout/layoutController.js';
-import { createSizeButtons } from './buttonCreation.js';
-import { SIZE_OPTIONS } from './sizeOptions.js';
+import { createSizeButtons } from './src/ui/buttonCreation.js';
+import { SIZE_OPTIONS } from './src/config/sizeOptions.js';
 
 function init() {
     createSizeButtons({

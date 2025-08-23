@@ -1,8 +1,8 @@
 const assert = require('assert');
 
 (async () => {
-  const { calculateLayoutDetails } = await import('../calculations.js');
-  const { calculateScorePositions } = await import('../scoring.js');
+  const { calculateLayoutDetails } = await import('../src/layout/calculations.js');
+  const { calculateScorePositions } = await import('../src/scoring/scoring.js');
 
   const layout = calculateLayoutDetails({
     sheetWidth: 12,

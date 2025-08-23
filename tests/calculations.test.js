@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 (async () => {
-  const { calculateLayoutDetails, calculateSequence } = await import('../calculations.js');
+  const { calculateLayoutDetails, calculateSequence } = await import('../src/layout/calculations.js');
 
   const layout = calculateLayoutDetails({
     sheetWidth: 12,
