@@ -61,15 +61,32 @@ body {
 
 /* Typography */
 h1 {
-    font-size: 28px;
-    text-align: center;
-    margin: 0 0 16px 0;
-    padding: 8px;
+    font-size: 24px;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
     background-color: var(--card);
-    color: var(--ink);
     position: sticky;
     top: 0;
     z-index: 10;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--ink);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
 }
 
 h2 {
