@@ -1,0 +1,84 @@
+/*
+ * Theme variables
+ * --bg: page background
+ * --card: surface color for cards and inputs
+ * --ink: default text color
+ * --border: subtle border color
+ * --blue: accent color
+ * --font-family: base font stack
+ *
+ * Theme colors
+ * --doc-color: RGB components for document outline
+ * --margin-color: RGB components for margin areas
+ * --printable-color: RGB components for non-printable areas
+ * --score-color: RGB components for score lines
+ */
+
+:root {
+    /* Shadow tokens */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    /* Theme variables */
+    --bg: #C0C0C0;
+    --card: #FFFFFF;
+    --ink: #000000;
+    --border: #808080;
+    --blue: #000080;
+    --font-family: 'Tahoma', 'Verdana', sans-serif;
+
+    /* Theme colors */
+    --doc-color: 0, 0, 0;
+    --margin-color: 255, 0, 0;
+    --printable-color: 255, 0, 255;
+    --score-color: var(--printable-color);
+}
+
+[data-theme="dark"] {
+    --bg: #000000;
+    --card: #C0C0C0;
+    --ink: #FFFFFF;
+    --border: #808080;
+    --blue: #000080;
+
+    /* Theme colors */
+    --doc-color: 0, 0, 0;
+    --margin-color: 255, 0, 0;
+    --printable-color: 255, 0, 255;
+    --score-color: var(--printable-color);
+}
+
+/* General Styles */
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    line-height: 1.45;
+    font-size: 16px;
+    color: var(--ink);
+}
+
+/* Typography */
+h1 {
+    font-size: 28px;
+    text-align: center;
+    margin: 0 0 16px 0;
+    padding: 8px;
+    background-color: var(--card);
+    color: var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+h2 {
+    font-size: 20px;
+    margin: 16px 0 8px 0;
+    color: var(--ink);
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
