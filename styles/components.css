@@ -21,7 +21,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 8px;
     margin-bottom: 16px;
+}
+
+.card-header h2 {
+    margin: 0;
+}
+
+.card-header .btn {
+    width: auto;
+    flex-shrink: 0;
 }
 
 #scoreControls {
