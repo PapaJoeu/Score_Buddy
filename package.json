@@ -1,0 +1,24 @@
+{
+  "name": "score-buddy",
+  "version": "1.0.0",
+  "description": "Kev's Bitchin' Print Calculator - A web-based tool for calculating print layouts and scoring positions",
+  "main": "app.js",
+  "scripts": {
+    "test": "node tests/scoring.test.js && node tests/calculations.test.js && node tests/scoreLines.test.js && node tests/calculateAdaptiveScale.test.js && node tests/drawLayout.test.js",
+    "build": "npm run test && npm run build:static",
+    "build:static": "mkdir -p dist && cp -r *.html *.js src styles dist/",
+    "serve": "python3 -m http.server 8000",
+    "dev": "npm run serve"
+  },
+  "keywords": [
+    "print",
+    "calculator",
+    "layout",
+    "scoring",
+    "web-app"
+  ],
+  "author": "PapaJoeu",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

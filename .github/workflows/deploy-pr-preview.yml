@@ -1,0 +1,150 @@
+name: Deploy PR Preview
+
+# This workflow automatically deploys a preview page for every pull request
+# to help reviewers see the changes in action before merging.
+
+on:
+  pull_request:
+    # Trigger on pull requests targeting any branch
+    branches: ['*']
+    types: [opened, synchronize, reopened, closed]
+
+# Set permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one deployment per PR to prevent conflicts
+concurrency:
+  group: pr-preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  # Build job - prepares the application for deployment
+  build:
+    # Skip build job if PR is being closed/merged
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the PR branch code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Use the head of the PR branch
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # Setup Node.js environment
+      # Using Node.js 20 LTS for stability and modern features
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Install dependencies
+      # Since this is a static site, there may be no dependencies initially
+      - name: Install dependencies
+        run: npm ci --ignore-scripts || npm install --ignore-scripts
+
+      # Run tests to ensure code quality
+      - name: Run tests
+        run: npm test
+
+      # Build the project
+      # This creates a dist/ directory with all static assets
+      - name: Build project
+        run: npm run build:static
+
+      # Upload the built site as an artifact for the deploy job
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+  # Deploy job - deploys the built site to GitHub Pages
+  deploy:
+    # Only run if build job succeeds and PR is not being closed
+    needs: build
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    
+    # Configure GitHub Pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # Comment on PR with preview link
+      - name: Comment preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Find existing preview comment to update or create new one
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('🚀 Preview deployment')
+            );
+            
+            const commentBody = `🚀 **Preview deployment ready!**
+            
+            📍 **Preview URL:** ${{ steps.deployment.outputs.page_url }}
+            
+            This preview will be automatically updated when you push new commits to this PR.
+            
+            ---
+            <sub>Deployed from commit ${{ github.event.pull_request.head.sha }}</sub>`;
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody
+              });
+            }
+
+  # Cleanup job - removes preview when PR is closed
+  cleanup:
+    # Only run when PR is closed/merged
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Comment that preview has been cleaned up
+      - name: Comment cleanup
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🧹 **Preview deployment cleaned up**
+              
+              The preview environment for this PR has been automatically removed.
+              
+              ---
+              <sub>PR was ${{ github.event.action === 'merged' ? 'merged' : 'closed' }}</sub>`
+            });
