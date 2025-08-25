@@ -92,10 +92,11 @@
 }
 
 .visualizer-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
     gap: 8px;
     margin-bottom: 16px;
+    overflow-x: auto;
 }
 
 .toolbar .btn {
