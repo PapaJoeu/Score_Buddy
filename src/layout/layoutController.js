@@ -5,6 +5,11 @@ import { renderProgramSequence } from '../ui/display.js';
 let zoomFactor = 1;
 const ZOOM_STEP = 1.1;
 
+let storedOptimalConfig = null;
+export function getStoredOptimalConfig() {
+    return storedOptimalConfig;
+}
+
 export function findOptimalLayout(elements) {
     const docWidth = parseFloat(elements.docWidth.value);
     const docLength = parseFloat(elements.docLength.value);
@@ -72,14 +77,31 @@ export function findOptimalLayout(elements) {
 }
 
 export function calculateLayout(elements, scorePositions = [], clearScores = () => {}) {
-    const { layout, config } = findOptimalLayout(elements);
+    const layout = calculateLayoutDetails(elements);
+    const currentNUp = layout.docsAcross * layout.docsDown;
+
+    const { layout: optimalLayout, config } = findOptimalLayout(elements);
+    const optimalNUp = optimalLayout.docsAcross * optimalLayout.docsDown;
+
+    if (optimalNUp > currentNUp) {
+        storedOptimalConfig = config;
+        elements.optimalLayoutButton && elements.optimalLayoutButton.classList.remove('hidden');
+    } else {
+        storedOptimalConfig = null;
+        elements.optimalLayoutButton && elements.optimalLayoutButton.classList.add('hidden');
+    }
+
     drawLayoutWrapper(layout, elements.showScores.checked ? scorePositions : [], elements);
     displayProgramSequence(layout, elements);
-    updateLayoutInfo(layout, elements);
+    const currentConfig = {
+        sheetSize: `${Math.min(layout.sheetWidth, layout.sheetLength)}x${Math.max(layout.sheetWidth, layout.sheetLength)}`,
+        sheetRotated: layout.sheetWidth > layout.sheetLength
+    };
+    updateLayoutInfo(layout, elements, currentConfig);
     if (scorePositions.length > 0) {
         clearScores();
     }
-    return { layout, config };
+    return { layout, config: currentConfig };
 }
 
 export function calculateLayoutDetails(elements) {
@@ -123,13 +145,17 @@ export function displayProgramSequence(layout, elements) {
     renderProgramSequence(sequence, elements.programSequence, unit);
 }
 
-export function updateLayoutInfo(layout, elements) {
+export function updateLayoutInfo(layout, elements, config = null) {
     const nUp = layout.docsAcross * layout.docsDown;
     const docWidth = parseFloat(layout.docWidth.toFixed(2));
     const docLength = parseFloat(layout.docLength.toFixed(2));
     const sheetWidth = parseFloat(layout.sheetWidth.toFixed(2));
     const sheetLength = parseFloat(layout.sheetLength.toFixed(2));
-    elements.layoutTitle.innerHTML = `<li class="legend-item">${docWidth} x ${docLength} ${nUp}-up on ${sheetWidth} x ${sheetLength}</li>`;
+    let sheetInfo = `${sheetWidth} x ${sheetLength}`;
+    if (config) {
+        sheetInfo = `${config.sheetSize}${config.sheetRotated ? ' (rotated)' : ''}`;
+    }
+    elements.layoutTitle.innerHTML = `<li class="legend-item">${docWidth} x ${docLength} ${nUp}-up on ${sheetInfo}</li>`;
     const areaUsed = (layout.docWidth * layout.docLength * nUp) / (layout.sheetWidth * layout.sheetLength);
     const waste = (100 - areaUsed * 100).toFixed(2);
     elements.wasteLegend.textContent = `Waste: ${waste}%`;
