@@ -18,4 +18,6 @@ function init() {
     calculateLayout(elements);
 }
 
-init();
+if (typeof document !== 'undefined') {
+    init();
+}

@@ -1,51 +1,53 @@
+const getElement = id => (typeof document !== 'undefined' ? document.getElementById(id) : null);
+
 export const elements = {
     // Sheet elements
-    sheetButtons: document.getElementById('sheetButtonsContainer'),
-    sheetInputs: document.getElementById('sheetDimensionsInputs'),
-    sheetWidth: document.getElementById('sheetWidth'),
-    sheetLength: document.getElementById('sheetLength'),
+    sheetButtons: getElement('sheetButtonsContainer'),
+    sheetInputs: getElement('sheetDimensionsInputs'),
+    sheetWidth: getElement('sheetWidth'),
+    sheetLength: getElement('sheetLength'),
 
     // Document elements
-    docButtons: document.getElementById('docButtonsContainer'),
-    docInputs: document.getElementById('docDimensionsInputs'),
-    docWidth: document.getElementById('docWidth'),
-    docLength: document.getElementById('docLength'),
+    docButtons: getElement('docButtonsContainer'),
+    docInputs: getElement('docDimensionsInputs'),
+    docWidth: getElement('docWidth'),
+    docLength: getElement('docLength'),
 
     // Gutter elements
-    gutterButtons: document.getElementById('gutterButtonsContainer'),
-    gutterInputs: document.getElementById('gutterDimensionsInputs'),
-    gutterWidth: document.getElementById('gutterWidth'),
-    gutterLength: document.getElementById('gutterLength'),
+    gutterButtons: getElement('gutterButtonsContainer'),
+    gutterInputs: getElement('gutterDimensionsInputs'),
+    gutterWidth: getElement('gutterWidth'),
+    gutterLength: getElement('gutterLength'),
 
     // Margin elements
-    marginButtons: document.getElementById('marginButtonsContainer'),
-    marginInputs: document.getElementById('marginDimensionsInputs'),
-    marginWidth: document.getElementById('marginWidth'),
-    marginLength: document.getElementById('marginLength'),
+    marginButtons: getElement('marginButtonsContainer'),
+    marginInputs: getElement('marginDimensionsInputs'),
+    marginWidth: getElement('marginWidth'),
+    marginLength: getElement('marginLength'),
 
     // Canvas element
-    canvas: document.getElementById('layoutCanvas'),
+    canvas: getElement('layoutCanvas'),
 
     // Other buttons and inputs
-    fitSheetButton: document.getElementById('fitSheetButton'),
-    zoomOutButton: document.getElementById('zoomOutButton'),
-    zoomInButton: document.getElementById('zoomInButton'),
-    resetViewButton: document.getElementById('resetViewButton'),
-    rotateDocsButton: document.getElementById('rotateDocsButton'),
-    rotateSheetButton: document.getElementById('rotateSheetButton'),
-    programSequence: document.getElementById('programSequence'),
-    scorePositions: document.getElementById('scorePositions'),
-    layoutTitle: document.getElementById('layoutTitle'),
-    wasteLegend: document.getElementById('wasteLegend'),
-    showScores: document.getElementById('showScores'),
-    showDocNumbers: document.getElementById('showDocNumbers'),
-    showPrintableArea: document.getElementById('showPrintableArea'),
-    showMargins: document.getElementById('showMargins'),
-    scoreControls: document.getElementById('scoreControls'),
-    foldType: document.getElementById('foldType'),
-    customScoreInputs: document.getElementById('customScoreInputs'),
-    customScores: document.getElementById('customScores'),
-    calculateScoresButton: document.getElementById('calculateScoresButton'),
-    themeToggle: document.getElementById('themeToggle'),
-    metricToggle: document.getElementById('metricToggle')
+    fitSheetButton: getElement('fitSheetButton'),
+    zoomOutButton: getElement('zoomOutButton'),
+    zoomInButton: getElement('zoomInButton'),
+    resetViewButton: getElement('resetViewButton'),
+    rotateDocsButton: getElement('rotateDocsButton'),
+    rotateSheetButton: getElement('rotateSheetButton'),
+    programSequence: getElement('programSequence'),
+    scorePositions: getElement('scorePositions'),
+    layoutTitle: getElement('layoutTitle'),
+    wasteLegend: getElement('wasteLegend'),
+    showScores: getElement('showScores'),
+    showDocNumbers: getElement('showDocNumbers'),
+    showPrintableArea: getElement('showPrintableArea'),
+    showMargins: getElement('showMargins'),
+    scoreControls: getElement('scoreControls'),
+    foldType: getElement('foldType'),
+    customScoreInputs: getElement('customScoreInputs'),
+    customScores: getElement('customScores'),
+    calculateScoresButton: getElement('calculateScoresButton'),
+    themeToggle: getElement('themeToggle'),
+    metricToggle: getElement('metricToggle')
 };
