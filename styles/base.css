@@ -20,11 +20,11 @@
     --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     /* Theme variables */
-    --bg: #C0C0C0;
-    --card: #FFFFFF;
-    --ink: #000000;
-    --border: #808080;
-    --blue: #000080;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --ink: #212529;
+    --border: #dee2e6;
+    --blue: #0b5ed7;
     --font-family: 'Tahoma', 'Verdana', sans-serif;
 
     /* Theme colors */
@@ -35,11 +35,11 @@
 }
 
 [data-theme="dark"] {
-    --bg: #000000;
-    --card: #C0C0C0;
-    --ink: #FFFFFF;
-    --border: #808080;
-    --blue: #000080;
+    --bg: #121417;
+    --card: #1e2125;
+    --ink: #f8f9fa;
+    --border: #343a40;
+    --blue: #66b2ff;
 
     /* Theme colors */
     --doc-color: 0, 0, 0;
