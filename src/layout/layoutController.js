@@ -1,6 +1,7 @@
 import { drawLayout } from '../../visualizer.js';
 import { calculateLayoutDetails as calcDetails, calculateSequence as calcSequence } from './calculations.js';
 import { renderProgramSequence } from '../ui/display.js';
+import { isCurrentLayoutOptimal, getOptimalLayoutComparison } from './optimalLayout.js';
 
 let zoomFactor = 1;
 const ZOOM_STEP = 1.1;
@@ -10,6 +11,7 @@ export function calculateLayout(elements, scorePositions = [], clearScores = () 
     drawLayoutWrapper(layout, elements.showScores.checked ? scorePositions : [], elements);
     displayProgramSequence(layout, elements);
     updateLayoutInfo(layout, elements);
+    updateOptimalLayoutButton(layout, elements);
     if (scorePositions.length > 0) {
         clearScores();
     }
@@ -129,4 +131,117 @@ export function zoomOut() {
 
 export function resetZoom() {
     zoomFactor = 1;
+}
+
+export function updateOptimalLayoutButton(layout, elements) {
+    const isMetric = elements.metricToggle && elements.metricToggle.checked;
+    
+    // Get current values from inputs
+    const docWidth = parseFloat(elements.docWidth.value);
+    const docLength = parseFloat(elements.docLength.value);
+    const gutterWidth = parseFloat(elements.gutterWidth.value);
+    const gutterLength = parseFloat(elements.gutterLength.value);
+    const marginWidth = parseFloat(elements.marginWidth.value);
+    const marginLength = parseFloat(elements.marginLength.value);
+    
+    const comparison = getOptimalLayoutComparison(
+        layout, docWidth, docLength, gutterWidth, gutterLength, marginWidth, marginLength, isMetric
+    );
+    
+    if (comparison && !comparison.isCurrentOptimal && comparison.optimal.improvement > 0) {
+        // Show the button with information about the improvement
+        elements.optimalLayoutButton.classList.remove('hidden');
+        
+        const improvementText = `+${comparison.optimal.improvement} docs`;
+        const sheetInfo = comparison.optimal.layout.isRotated 
+            ? `${comparison.optimal.layout.sheetName} rotated`
+            : comparison.optimal.layout.sheetName;
+        
+        elements.optimalLayoutButton.querySelector('.optimal-text').textContent = `${improvementText} (${sheetInfo})`;
+        elements.optimalLayoutButton.title = `Switch to ${sheetInfo} sheet for ${comparison.optimal.nUp}-up layout (${comparison.optimal.improvement} more documents)`;
+    } else {
+        // Hide the button if current layout is optimal
+        elements.optimalLayoutButton.classList.add('hidden');
+    }
+}
+
+export function applyOptimalLayout(elements) {
+    const isMetric = elements.metricToggle && elements.metricToggle.checked;
+    
+    // Get current values from inputs
+    const docWidth = parseFloat(elements.docWidth.value);
+    const docLength = parseFloat(elements.docLength.value);
+    const gutterWidth = parseFloat(elements.gutterWidth.value);
+    const gutterLength = parseFloat(elements.gutterLength.value);
+    const marginWidth = parseFloat(elements.marginWidth.value);
+    const marginLength = parseFloat(elements.marginLength.value);
+    
+    const currentLayout = calculateLayoutDetails(elements);
+    const comparison = getOptimalLayoutComparison(
+        currentLayout, docWidth, docLength, gutterWidth, gutterLength, marginWidth, marginLength, isMetric
+    );
+    
+    if (comparison && !comparison.isCurrentOptimal && comparison.optimal.layout) {
+        const optimalLayout = comparison.optimal.layout;
+        
+        // Apply the optimal sheet dimensions
+        if (optimalLayout.isRotated) {
+            elements.sheetWidth.value = optimalLayout.originalSheetHeight;
+            elements.sheetLength.value = optimalLayout.originalSheetWidth;
+            // Swap margins for rotated sheet
+            elements.marginWidth.value = marginLength;
+            elements.marginLength.value = marginWidth;
+        } else {
+            elements.sheetWidth.value = optimalLayout.originalSheetWidth;
+            elements.sheetLength.value = optimalLayout.originalSheetHeight;
+            elements.marginWidth.value = marginWidth;
+            elements.marginLength.value = marginLength;
+        }
+        
+        // Update UI to show custom sheet selection
+        const customSheetButton = document.getElementById('customSheetSizeButton');
+        if (customSheetButton) {
+            elements.sheetButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            customSheetButton.classList.add('active');
+            elements.sheetInputs.classList.remove('hidden');
+        }
+        
+        // Update margin buttons to show custom
+        const customMarginButton = document.getElementById('customMarginSizeButton');
+        if (customMarginButton) {
+            elements.marginButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            customMarginButton.classList.add('active');
+            elements.marginInputs.classList.remove('hidden');
+        }
+        
+        // Recalculate layout with new values
+        calculateLayout(elements);
+        
+        // Show feedback about the change
+        showOptimalLayoutFeedback(optimalLayout, comparison.optimal.improvement);
+    }
+}
+
+function showOptimalLayoutFeedback(optimalLayout, improvement) {
+    // Create a temporary notification to show what was applied
+    const notification = document.createElement('div');
+    notification.className = 'optimal-feedback';
+    notification.innerHTML = `
+        <span class="optimal-feedback-icon">✓</span>
+        Applied ${optimalLayout.sheetName} ${optimalLayout.isRotated ? 'rotated' : ''} 
+        (+${improvement} documents)
+    `;
+    
+    // Insert after the layout title
+    const layoutTitle = document.getElementById('layoutTitle');
+    if (layoutTitle && layoutTitle.parentNode) {
+        layoutTitle.parentNode.insertBefore(notification, layoutTitle.nextSibling);
+        
+        // Remove the notification after 3 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 3000);
+    }
 }

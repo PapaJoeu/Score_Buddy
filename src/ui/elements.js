@@ -31,6 +31,7 @@ export const elements = {
     zoomOutButton: document.getElementById('zoomOutButton'),
     zoomInButton: document.getElementById('zoomInButton'),
     resetViewButton: document.getElementById('resetViewButton'),
+    optimalLayoutButton: document.getElementById('optimalLayoutButton'),
     rotateDocsButton: document.getElementById('rotateDocsButton'),
     rotateSheetButton: document.getElementById('rotateSheetButton'),
     programSequence: document.getElementById('programSequence'),

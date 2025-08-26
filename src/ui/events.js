@@ -1,4 +1,4 @@
-import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom } from '../layout/layoutController.js';
+import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom, applyOptimalLayout } from '../layout/layoutController.js';
 import { calculateScores, getLastScorePositions, clearScoreData } from '../scoring/scoreController.js';
 import { toggleMetricMode } from './metricToggle.js';
 
@@ -35,6 +35,9 @@ export function registerEventListeners(elements) {
     elements.resetViewButton.addEventListener('click', () => {
         resetZoom();
         calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+    });
+    elements.optimalLayoutButton.addEventListener('click', () => {
+        applyOptimalLayout(elements);
     });
     elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc', elements));
     elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet', elements));
