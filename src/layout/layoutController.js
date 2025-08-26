@@ -5,14 +5,81 @@ import { renderProgramSequence } from '../ui/display.js';
 let zoomFactor = 1;
 const ZOOM_STEP = 1.1;
 
+export function findOptimalLayout(elements) {
+    const docWidth = parseFloat(elements.docWidth.value);
+    const docLength = parseFloat(elements.docLength.value);
+    const gutterWidth = parseFloat(elements.gutterWidth.value);
+    const gutterLength = parseFloat(elements.gutterLength.value);
+    const marginWidth = parseFloat(elements.marginWidth.value);
+    const marginLength = parseFloat(elements.marginLength.value);
+
+    const sheetSizes = [
+        { width: 12, length: 18 },
+        { width: 13, length: 19 }
+    ];
+
+    let bestLayout = null;
+    let bestConfig = null;
+    let bestNUp = -1;
+    let bestArea = -1;
+
+    sheetSizes.forEach(sheet => {
+        const orientations = [
+            { width: sheet.width, length: sheet.length, sheetRotated: false },
+            { width: sheet.length, length: sheet.width, sheetRotated: true }
+        ];
+
+        orientations.forEach(orientation => {
+            const docOptions = [
+                { width: docWidth, length: docLength, docRotated: false },
+                { width: docLength, length: docWidth, docRotated: true }
+            ];
+
+            docOptions.forEach(doc => {
+                const layout = calcDetails({
+                    sheetWidth: orientation.width,
+                    sheetLength: orientation.length,
+                    docWidth: doc.width,
+                    docLength: doc.length,
+                    gutterWidth,
+                    gutterLength,
+                    marginWidth,
+                    marginLength
+                });
+
+                const nUp = layout.docsAcross * layout.docsDown;
+                const sheetArea = orientation.width * orientation.length;
+                if (
+                    nUp > bestNUp ||
+                    (nUp === bestNUp && sheetArea > bestArea)
+                ) {
+                    bestLayout = layout;
+                    bestConfig = {
+                        sheetWidth: orientation.width,
+                        sheetLength: orientation.length,
+                        sheetSize: `${sheet.width}x${sheet.length}`,
+                        sheetRotated: orientation.sheetRotated,
+                        docRotated: doc.docRotated
+                    };
+                    bestNUp = nUp;
+                    bestArea = sheetArea;
+                }
+            });
+        });
+    });
+
+    return { layout: bestLayout, config: bestConfig };
+}
+
 export function calculateLayout(elements, scorePositions = [], clearScores = () => {}) {
-    const layout = calculateLayoutDetails(elements);
+    const { layout, config } = findOptimalLayout(elements);
     drawLayoutWrapper(layout, elements.showScores.checked ? scorePositions : [], elements);
     displayProgramSequence(layout, elements);
     updateLayoutInfo(layout, elements);
     if (scorePositions.length > 0) {
         clearScores();
     }
+    return { layout, config };
 }
 
 export function calculateLayoutDetails(elements) {
