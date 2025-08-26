@@ -1,4 +1,4 @@
-import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom } from '../layout/layoutController.js';
+import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom, getStoredOptimalConfig } from '../layout/layoutController.js';
 import { calculateScores, getLastScorePositions, clearScoreData } from '../scoring/scoreController.js';
 import { toggleMetricMode } from './metricToggle.js';
 
@@ -38,6 +38,24 @@ export function registerEventListeners(elements) {
     });
     elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc', elements));
     elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet', elements));
+    elements.optimalLayoutButton.addEventListener('click', () => {
+        const config = getStoredOptimalConfig();
+        if (!config) {
+            return;
+        }
+        const currentSheetRotated = parseFloat(elements.sheetWidth.value) > parseFloat(elements.sheetLength.value);
+        if (config.sheetRotated !== currentSheetRotated) {
+            rotateSize('sheet', elements, false);
+        }
+        const currentDocRotated = parseFloat(elements.docWidth.value) > parseFloat(elements.docLength.value);
+        if (config.docRotated !== currentDocRotated) {
+            rotateSize('doc', elements, false);
+        }
+        elements.sheetWidth.value = config.sheetWidth;
+        elements.sheetLength.value = config.sheetLength;
+        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        elements.optimalLayoutButton.classList.add('hidden');
+    });
 
     elements.metricToggle.addEventListener('change', () => toggleMetricMode(elements));
 
