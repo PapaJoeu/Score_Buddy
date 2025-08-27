@@ -346,16 +346,38 @@ tbody tr:nth-child(even) {
 }
 
 .legend-swatch.doc {
-    border-color: rgb(var(--line-color));
+    border-color: var(--ink);
+    background: repeating-linear-gradient(
+        0deg,
+        var(--ink) 0,
+        var(--ink) 2px,
+        transparent 2px,
+        transparent 4px
+    );
 }
 
 .legend-swatch.margin {
-    border-color: rgb(var(--line-color));
+    border-color: var(--ink);
+    background: radial-gradient(var(--ink) 1px, transparent 1px) 0 0 / 4px 4px;
 }
 
 .legend-swatch.printable {
-    border-color: rgb(var(--printable-color));
-    background-color: rgba(var(--printable-color), 0.25);
+    border-color: var(--ink);
+    background:
+        repeating-linear-gradient(
+            45deg,
+            var(--ink) 0,
+            var(--ink) 2px,
+            transparent 2px,
+            transparent 4px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            var(--ink) 0,
+            var(--ink) 2px,
+            transparent 2px,
+            transparent 4px
+        );
 }
 
 .legend-line {
@@ -366,7 +388,7 @@ tbody tr:nth-child(even) {
 
 .legend-line.score {
     border-top-style: dashed;
-    border-color: rgb(var(--line-color));
+    border-color: var(--ink);
 }
 
 .visualizer-column.card {
