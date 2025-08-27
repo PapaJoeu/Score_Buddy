@@ -4,6 +4,9 @@
     --ink: #f8f9fa;
     --border: #343a40;
     --blue: #66b2ff;
+    --button-bg: var(--blue);
+    --button-ink: var(--card);
+    --success: #2ea043;
 
     /* Theme colors */
     --doc-color: 0, 0, 0;

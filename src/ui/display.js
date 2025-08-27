@@ -2,7 +2,7 @@ export function renderProgramSequence(sequence, container, unit = 'inches') {
     container.innerHTML = `
         <div class="card-header">
             <h2>Program Sequence</h2>
-            <button type="button" class="copy-btn" aria-label="Copy Program Sequence">Copy</button>
+            <button type="button" class="btn btn-secondary copy-btn" aria-label="Copy Program Sequence">Copy</button>
         </div>
         <table>
             <thead>
@@ -30,7 +30,7 @@ export function renderScorePositions(scorePositions, container, unit = 'inches')
     container.innerHTML = `
         <div class="score-header">
             <h3>Score Positions</h3>
-            <button type="button" class="copy-btn" aria-label="Copy Score Positions">Copy</button>
+            <button type="button" class="btn btn-secondary copy-btn" aria-label="Copy Score Positions">Copy</button>
         </div>
         <table>
             <thead>
