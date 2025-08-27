@@ -12,6 +12,7 @@
  * --margin-color: RGB components for margin areas
  * --printable-color: RGB components for non-printable areas
  * --score-color: RGB components for score lines
+ * --line-color: RGB components for layout lines
  */
 
 :root {
@@ -32,6 +33,7 @@
     --margin-color: 255, 0, 0;
     --printable-color: 255, 0, 255;
     --score-color: var(--printable-color);
+    --line-color: 0, 0, 0;
 }
 
 

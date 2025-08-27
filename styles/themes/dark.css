@@ -10,4 +10,5 @@
     --margin-color: 255, 0, 0;
     --printable-color: 255, 0, 255;
     --score-color: var(--printable-color);
+    --line-color: 255, 255, 255;
 }
