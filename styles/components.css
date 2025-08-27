@@ -363,11 +363,11 @@ tbody tr:nth-child(even) {
 }
 
 .legend-swatch.doc {
-    border-color: rgb(var(--doc-color));
+    border-color: rgb(var(--line-color));
 }
 
 .legend-swatch.margin {
-    border-color: rgb(var(--margin-color));
+    border-color: rgb(var(--line-color));
 }
 
 .legend-swatch.printable {
@@ -383,7 +383,7 @@ tbody tr:nth-child(even) {
 
 .legend-line.score {
     border-top-style: dashed;
-    border-color: rgb(var(--score-color));
+    border-color: rgb(var(--line-color));
 }
 
 .visualizer-column.card {

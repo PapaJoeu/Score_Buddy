@@ -4,11 +4,12 @@
 export function getColorTokens() {
     const styles = getComputedStyle(document.documentElement);
     const printable = styles.getPropertyValue('--printable-color').trim();
+    const line = styles.getPropertyValue('--line-color').trim();
     return {
-        document: `rgb(${styles.getPropertyValue('--doc-color').trim()})`,
-        margin: `rgb(${styles.getPropertyValue('--margin-color').trim()})`,
+        document: `rgb(${line})`,
+        margin: `rgb(${line})`,
         printableFill: `rgba(${printable}, 0.25)`,
-        score: `rgb(${styles.getPropertyValue('--score-color').trim()})`,
+        score: `rgb(${line})`,
         label: styles.getPropertyValue('--blue').trim()
     };
 }
