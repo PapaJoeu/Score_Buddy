@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- ===== Head ===== -->
 <head>
+    <!-- Metadata and stylesheet links -->
+    <!-- TODO: Add SEO, accessibility, and social sharing meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kev's Bitchin' Print Calculator</title>
@@ -10,7 +13,10 @@
 </head>
 <body>
     <div class="container">
+        <!-- ===== Header ===== -->
         <header class="header">
+            <!-- Site title and mode toggles -->
+            <!-- TODO: Accessibility review and responsive tweaks -->
             <h1>Kev's Bitchin' Print Calculator</h1>
             <div class="menu-bar">
                 <label class="switch">
@@ -27,7 +33,10 @@
         </header>
 
         <main class="layout">
+            <!-- ===== Inputs Column ===== -->
             <section class="inputs-column">
+                <!-- Collects user inputs for dimensions and settings -->
+                <!-- TODO: Validate inputs and improve responsive layout -->
                 <form>
                     <section class="dimensions-section card">
                         <div class="card-header">
@@ -87,10 +96,13 @@
                 </form>
             </section>
 
+            <!-- ===== Visualizer ===== -->
             <section class="visualizer-column card">
+                <!-- Canvas and controls for layout visualization -->
+                <!-- TODO: Enhance keyboard navigation and responsiveness -->
                 <h2>Layout Visualizer</h2>
                 <ul class="legend" id="layoutTitle" aria-label="Layout title"></ul>
-                    <div class="toolbar" role="toolbar" aria-label="Canvas controls">
+                <div class="toolbar" role="toolbar" aria-label="Canvas controls">
                     <button type="button" id="fitSheetButton" class="btn btn-tertiary" aria-label="Fit sheet" aria-describedby="tip-fit">
                         <span class="icon" aria-hidden="true">⤢</span>
                         <span role="tooltip" id="tip-fit" class="tooltip">Fit sheet</span>
@@ -147,7 +159,10 @@
                 </ul>
             </section>
 
+            <!-- ===== Data Column ===== -->
             <aside class="data-column">
+                <!-- Displays program sequence and scoring options -->
+                <!-- TODO: Expand analytics and improve mobile layout -->
                 <!-- Program Sequence output card -->
                 <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
 
@@ -175,6 +190,9 @@
             </aside>
         </main>
     </div>
+    <!-- ===== Closing Scripts ===== -->
+    <!-- Load application modules -->
+    <!-- TODO: Bundle and defer non-critical scripts -->
     <script type="module" src="app.js"></script>
     <script type="module" src="visualizer.js"></script>
 </body>
