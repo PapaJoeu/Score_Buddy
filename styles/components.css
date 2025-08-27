@@ -358,7 +358,7 @@ tbody tr:nth-child(even) {
 
 .legend-swatch.margin {
     border-color: var(--ink);
-    background: radial-gradient(var(--ink) 1px, transparent 1px) 0 0 / 4px 4px;
+    background: radial-gradient(var(--ink) 2px, transparent 2px) 0 0 / 6px 6px;
 }
 
 .legend-swatch.printable {
