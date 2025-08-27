@@ -19,25 +19,6 @@
             <!-- TODO: Accessibility review and responsive tweaks -->
             <h1>Kev's Bitchin' Print Calculator</h1>
             <div class="menu-bar" id="menuBar"></div>
-            <script type="module">
-                import { createToggleSwitch } from './src/ui/toggles.js';
-
-                const menuBar = document.getElementById('menuBar');
-                menuBar.appendChild(
-                    createToggleSwitch({
-                        id: 'themeToggle',
-                        label: 'Toggle dark mode',
-                        icon: '🌙'
-                    })
-                );
-                menuBar.appendChild(
-                    createToggleSwitch({
-                        id: 'metricToggle',
-                        label: 'Toggle metric mode',
-                        icon: '📏'
-                    })
-                );
-            </script>
         </header>
 
 
@@ -245,6 +226,7 @@
     <!-- ===== Closing Scripts ===== -->
     <!-- Load application modules -->
     <!-- TODO: Bundle and defer non-critical scripts -->
+    <script type="module" src="src/ui/initToggles.js"></script>
     <script type="module" src="app.js"></script>
     <script type="module" src="visualizer.js"></script>
 </body>
