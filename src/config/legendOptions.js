@@ -1,10 +1,10 @@
 // legendOptions.js
 
 export const LEGEND_ITEMS = [
-    { type: 'swatch', className: 'doc', label: 'Document' },
+    { type: 'swatch', className: 'doc', label: 'Document outline' },
     { type: 'swatch', className: 'margin', label: 'Margins' },
     { type: 'swatch', className: 'printable', label: 'Non-Printable Area' },
-    { type: 'line', className: 'score', label: 'Score Line' },
+    { type: 'line', className: 'score', label: 'Score Line (dashed)' },
     { type: 'placeholder', id: 'wasteLegend' }
 ];
 
