@@ -1,8 +1,8 @@
 [data-theme="dark"] {
     --bg: #121417;
-    --card: #1e2125;
-    --ink: #f8f9fa;
-    --border: #343a40;
+    --card: #1f2226;
+    --ink: #ffffff;
+    --border: #2a2e33;
     --blue: #66b2ff;
     --button-bg: var(--blue);
     --button-ink: var(--card);
