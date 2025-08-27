@@ -65,27 +65,7 @@
                 <button id="optimalLayoutButton" class="btn btn-success hidden">See optimal layout</button>
 
                 <!-- ===== Visualization Options ===== -->
-                <div class="visualizer-options">
-                    <!-- Toggle score line visibility -->
-                    <label for="showScores" class="checkbox-label">
-                        <input type="checkbox" id="showScores"> Display scores
-                    </label>
-
-                    <!-- Toggle document numbers visibility -->
-                    <label for="showDocNumbers" class="checkbox-label">
-                        <input type="checkbox" id="showDocNumbers" checked> Show document numbers
-                    </label>
-
-                    <!-- Toggle printable area visibility -->
-                    <label for="showPrintableArea" class="checkbox-label">
-                        <input type="checkbox" id="showPrintableArea" checked> Show printable area
-                    </label>
-
-                    <!-- Toggle margin visibility -->
-                    <label for="showMargins" class="checkbox-label">
-                        <input type="checkbox" id="showMargins" checked> Show margins
-                    </label>
-                </div>
+                <div class="visualizer-options" id="visualizerOptions"></div>
 
                 <!-- ===== Canvas ===== -->
                 <div class="canvas-wrapper">
@@ -93,25 +73,7 @@
                 </div>
 
                 <!-- ===== Legend ===== -->
-                <ul class="legend" aria-label="Layout legend">
-                    <li class="legend-item">
-                        <span class="legend-swatch doc" aria-hidden="true"></span>
-                        <span>Document</span>
-                    </li>
-                    <li class="legend-item">
-                        <span class="legend-swatch margin" aria-hidden="true"></span>
-                        <span>Margins</span>
-                    </li>
-                    <li class="legend-item">
-                        <span class="legend-swatch printable" aria-hidden="true"></span>
-                        <span>Non-Printable Area</span>
-                    </li>
-                    <li class="legend-item">
-                        <span class="legend-line score" aria-hidden="true"></span>
-                        <span>Score Line</span>
-                    </li>
-                    <li class="legend-item" id="wasteLegend"></li>
-                </ul>
+                <ul class="legend" aria-label="Layout legend" id="visualizerLegend"></ul>
             </section>
 
 
@@ -150,6 +112,7 @@
     <!-- Load application modules -->
     <!-- TODO: Bundle and defer non-critical scripts -->
     <script type="module" src="src/ui/initToggles.js"></script>
+    <script type="module" src="src/ui/renderLegendOptions.js"></script>
     <script type="module" src="app.js"></script>
     <script type="module" src="visualizer.js"></script>
 </body>
