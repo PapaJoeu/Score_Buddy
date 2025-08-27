@@ -30,7 +30,6 @@ export function createSection({
         btn.appendChild(icon);
 
         const tip = document.createElement('span');
-        tip.role = 'tooltip';
         tip.id = rotate.tooltipId;
         tip.className = 'tooltip';
         tip.textContent = rotate.tooltip;
