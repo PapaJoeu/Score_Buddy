@@ -1,3 +1,4 @@
+import './src/ui/sectionFactory.js';
 import { elements } from './src/ui/elements.js';
 import { registerEventListeners, initTheme } from './src/ui/events.js';
 import { setDefaultValues, selectDefaultSizes, calculateLayout } from './src/layout/layoutController.js';
