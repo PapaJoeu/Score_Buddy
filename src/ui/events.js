@@ -119,9 +119,13 @@ function rotateSize(type, elements, shouldCalculate = true) {
 
 export function initTheme(elements) {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
         document.documentElement.setAttribute('data-theme', 'dark');
         elements.themeToggle.checked = true;
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        elements.themeToggle.checked = false;
     }
 }
 

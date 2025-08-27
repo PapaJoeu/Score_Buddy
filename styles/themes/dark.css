@@ -15,3 +15,30 @@
     --score-color: var(--printable-color);
     --line-color: 255, 255, 255;
 }
+
+[data-theme="dark"] ::selection {
+    background: var(--blue);
+    color: var(--card);
+}
+
+[data-theme="dark"] {
+    scrollbar-color: var(--border) var(--card);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--card);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--blue);
+}
