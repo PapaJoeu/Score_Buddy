@@ -9,8 +9,10 @@ export function renderLegendOptions() {
             const li = document.createElement('li');
             li.classList.add('legend-item');
 
-            if (item.id) {
-                li.id = item.id;
+            if (item.type === 'placeholder') {
+                if (item.id) {
+                    li.id = item.id;
+                }
                 if (item.label) {
                     li.textContent = item.label;
                 }

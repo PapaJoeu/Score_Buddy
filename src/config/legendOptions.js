@@ -1,11 +1,11 @@
 // legendOptions.js
 
 export const LEGEND_ITEMS = [
-    { className: 'doc', label: 'Document', type: 'swatch' },
-    { className: 'margin', label: 'Margins', type: 'swatch' },
-    { className: 'printable', label: 'Non-Printable Area', type: 'swatch' },
-    { className: 'score', label: 'Score Line', type: 'line' },
-    { id: 'wasteLegend' }
+    { type: 'swatch', className: 'doc', label: 'Document' },
+    { type: 'swatch', className: 'margin', label: 'Margins' },
+    { type: 'swatch', className: 'printable', label: 'Non-Printable Area' },
+    { type: 'line', className: 'score', label: 'Score Line' },
+    { type: 'placeholder', id: 'wasteLegend' }
 ];
 
 export const OPTION_CHECKBOXES = [
