@@ -56,18 +56,8 @@
 }
 
 .copy-btn {
-    height: 40px;
+    width: auto;
     padding: 0 8px;
-    border: 1px solid var(--border);
-    background-color: var(--card);
-    border-radius: 4px;
-    cursor: pointer;
-    font: inherit;
-    box-sizing: border-box;
-}
-
-.copy-btn:hover:not([disabled]) {
-    filter: brightness(0.95);
 }
 
 /* Button Styles */
@@ -136,6 +126,7 @@
     opacity: 1;
 }
 
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -147,9 +138,9 @@
     cursor: pointer;
     text-align: center;
     border-radius: 4px;
-    border: 1px solid transparent;
-    background-color: transparent;
-    color: var(--ink);
+    border: 1px solid var(--button-bg);
+    background-color: var(--button-bg);
+    color: var(--button-ink);
     font: inherit;
 }
 
@@ -158,26 +149,19 @@
     line-height: 1;
 }
 
-.btn-primary {
-    background-color: var(--blue);
-    color: #fff;
-    border-color: var(--blue);
-}
-
 .btn-secondary {
-    background-color: var(--card);
-    border-color: var(--border);
+    --button-bg: var(--card);
+    --button-ink: var(--ink);
 }
 
 .btn-tertiary {
-    background-color: transparent;
-    border-color: transparent;
+    --button-bg: transparent;
+    --button-ink: var(--ink);
 }
 
 .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: #fff;
+    --button-bg: var(--success);
+    --button-ink: var(--card);
 }
 
 .btn:hover:not([disabled]) {

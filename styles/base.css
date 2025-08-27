@@ -26,6 +26,9 @@
     --ink: #212529;
     --border: #dee2e6;
     --blue: #0b5ed7;
+    --button-bg: var(--blue);
+    --button-ink: var(--card);
+    --success: #28a745;
     --font-family: 'Tahoma', 'Verdana', sans-serif;
 
     /* Theme colors */
