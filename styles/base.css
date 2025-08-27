@@ -34,19 +34,6 @@
     --score-color: var(--printable-color);
 }
 
-[data-theme="dark"] {
-    --bg: #121417;
-    --card: #1e2125;
-    --ink: #f8f9fa;
-    --border: #343a40;
-    --blue: #66b2ff;
-
-    /* Theme colors */
-    --doc-color: 0, 0, 0;
-    --margin-color: 255, 0, 0;
-    --printable-color: 255, 0, 255;
-    --score-color: var(--printable-color);
-}
 
 /* General Styles */
 body {
