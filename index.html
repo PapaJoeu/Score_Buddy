@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- ===== Head ===== -->
 <head>
+    <!-- Metadata and stylesheet links -->
+    <!-- TODO: Add SEO, accessibility, and social sharing meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kev's Bitchin' Print Calculator</title>
@@ -10,7 +13,10 @@
 </head>
 <body>
     <div class="container">
+        <!-- ===== Header ===== -->
         <header class="header">
+            <!-- Site title and mode toggles -->
+            <!-- TODO: Accessibility review and responsive tweaks -->
             <h1>Kev's Bitchin' Print Calculator</h1>
             <div class="menu-bar">
                 <label class="switch">
@@ -26,9 +32,16 @@
             </div>
         </header>
 
+
         <main class="layout">
+            
+            <!-- ===== Inputs Column ===== -->
             <section class="inputs-column">
+                <!-- Collects user inputs for dimensions and settings -->
+                <!-- TODO: Validate inputs and improve responsive layout -->
                 <form>
+                    
+                    <!-- ===== Sheet Section ===== -->
                     <section class="dimensions-section card">
                         <div class="card-header">
                             <h2>Sheet Dimensions</h2>
@@ -37,7 +50,11 @@
                                 <span role="tooltip" id="tip-rotate-sheet" class="tooltip">Rotate sheet</span>
                             </button>
                         </div>
+                        
+                        <!-- Preset sheet size buttons -->
                         <div class="button-grid" id="sheetButtonsContainer" role="toolbar" aria-label="Sheet size presets"></div>
+
+                        <!-- Manual sheet dimensions -->
                         <div class="input-group hidden form-grid" id="sheetDimensionsInputs">
                             <label for="sheetWidth">Width (in)</label>
                             <input type="number" id="sheetWidth" name="sheetWidth" step="0.25" value="12.0">
@@ -46,6 +63,7 @@
                         </div>
                     </section>
 
+                    <!-- ===== Document Section ===== -->
                     <section class="dimensions-section card">
                         <div class="card-header">
                             <h2>Document Dimensions</h2>
@@ -54,7 +72,11 @@
                                 <span role="tooltip" id="tip-rotate-docs" class="tooltip">Rotate documents</span>
                             </button>
                         </div>
+                        
+                        <!-- Document size presets -->
                         <div class="button-grid" id="docButtonsContainer" role="toolbar" aria-label="Document size presets"></div>
+
+                        <!-- Manual document dimensions -->
                         <div class="input-group hidden form-grid" id="docDimensionsInputs">
                             <label for="docWidth">Width (in)</label>
                             <input type="number" id="docWidth" name="docWidth" step="0.25" value="3.5">
@@ -63,9 +85,14 @@
                         </div>
                     </section>
 
+                    <!-- ===== Gutter Section ===== -->
                     <section class="dimensions-section card">
                         <h2>Gutter Sizes</h2>
+                        
+                        <!-- Gutter size presets -->
                         <div class="button-grid" id="gutterButtonsContainer" role="toolbar" aria-label="Gutter presets"></div>
+
+                        <!-- Manual gutter dimensions -->
                         <div class="input-group hidden form-grid" id="gutterDimensionsInputs">
                             <label for="gutterWidth">Gutter Width (in)</label>
                             <input type="number" id="gutterWidth" name="gutterWidth" step="0.125" value="0.125">
@@ -74,9 +101,14 @@
                         </div>
                     </section>
 
+                    <!-- ===== Margin Section ===== -->
                     <section class="dimensions-section card">
                         <h2>Sheet Margins</h2>
+                        
+                        <!-- Margin presets -->
                         <div class="button-grid" id="marginButtonsContainer" role="toolbar" aria-label="Margin presets"></div>
+
+                        <!-- Manual margin dimensions -->
                         <div class="input-group hidden form-grid" id="marginDimensionsInputs">
                             <label for="marginWidth">Margin Width (in)</label>
                             <input type="number" id="marginWidth" name="marginWidth" step="0.125" value="0.25">
@@ -87,10 +119,18 @@
                 </form>
             </section>
 
+
+            <!-- ===== Visualizer ===== -->
             <section class="visualizer-column card">
+                <!-- Canvas and controls for layout visualization -->
+                <!-- TODO: Enhance keyboard navigation and responsiveness -->
                 <h2>Layout Visualizer</h2>
+
+                <!-- Dynamic layout title -->
                 <ul class="legend" id="layoutTitle" aria-label="Layout title"></ul>
-                    <div class="toolbar" role="toolbar" aria-label="Canvas controls">
+
+                <!-- ===== Toolbar ===== -->
+                <div class="toolbar" role="toolbar" aria-label="Canvas controls">
                     <button type="button" id="fitSheetButton" class="btn btn-tertiary" aria-label="Fit sheet" aria-describedby="tip-fit">
                         <span class="icon" aria-hidden="true">⤢</span>
                         <span role="tooltip" id="tip-fit" class="tooltip">Fit sheet</span>
@@ -108,24 +148,39 @@
                         <span role="tooltip" id="tip-reset" class="tooltip">Reset view</span>
                     </button>
                 </div>
+
+                <!-- Optimal layout trigger -->
                 <button id="optimalLayoutButton" class="btn btn-success hidden">See optimal layout</button>
+
+                <!-- ===== Visualization Options ===== -->
                 <div class="visualizer-options">
+                    <!-- Toggle score line visibility -->
                     <label for="showScores" class="checkbox-label">
                         <input type="checkbox" id="showScores"> Display scores
                     </label>
+
+                    <!-- Toggle document numbers visibility -->
                     <label for="showDocNumbers" class="checkbox-label">
                         <input type="checkbox" id="showDocNumbers" checked> Show document numbers
                     </label>
+
+                    <!-- Toggle printable area visibility -->
                     <label for="showPrintableArea" class="checkbox-label">
                         <input type="checkbox" id="showPrintableArea" checked> Show printable area
                     </label>
+
+                    <!-- Toggle margin visibility -->
                     <label for="showMargins" class="checkbox-label">
                         <input type="checkbox" id="showMargins" checked> Show margins
                     </label>
                 </div>
+
+                <!-- ===== Canvas ===== -->
                 <div class="canvas-wrapper">
                     <canvas id="layoutCanvas" role="img" aria-label="Layout visualization"></canvas>
                 </div>
+
+                <!-- ===== Legend ===== -->
                 <ul class="legend" aria-label="Layout legend">
                     <li class="legend-item">
                         <span class="legend-swatch doc" aria-hidden="true"></span>
@@ -147,7 +202,11 @@
                 </ul>
             </section>
 
+
+            <!-- ===== Data Column ===== -->
             <aside class="data-column">
+                <!-- Displays program sequence and scoring options -->
+                <!-- TODO: Expand analytics and improve mobile layout -->
                 <!-- Program Sequence output card -->
                 <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
 
@@ -175,6 +234,9 @@
             </aside>
         </main>
     </div>
+    <!-- ===== Closing Scripts ===== -->
+    <!-- Load application modules -->
+    <!-- TODO: Bundle and defer non-critical scripts -->
     <script type="module" src="app.js"></script>
     <script type="module" src="visualizer.js"></script>
 </body>
