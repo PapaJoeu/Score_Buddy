@@ -1,52 +1,55 @@
-export const elements = {
+import { defineElements } from '../dom/dom.js';
+
+// Centralized, lazy, cached element access
+export const elements = defineElements({
     // Sheet elements
-    sheetButtons: document.getElementById('sheetButtonsContainer'),
-    sheetInputs: document.getElementById('sheetDimensionsInputs'),
-    sheetWidth: document.getElementById('sheetWidth'),
-    sheetLength: document.getElementById('sheetLength'),
+    sheetButtons: '#sheetButtonsContainer',
+    sheetInputs: '#sheetDimensionsInputs',
+    sheetWidth: '#sheetWidth',
+    sheetLength: '#sheetLength',
 
     // Document elements
-    docButtons: document.getElementById('docButtonsContainer'),
-    docInputs: document.getElementById('docDimensionsInputs'),
-    docWidth: document.getElementById('docWidth'),
-    docLength: document.getElementById('docLength'),
+    docButtons: '#docButtonsContainer',
+    docInputs: '#docDimensionsInputs',
+    docWidth: '#docWidth',
+    docLength: '#docLength',
 
     // Gutter elements
-    gutterButtons: document.getElementById('gutterButtonsContainer'),
-    gutterInputs: document.getElementById('gutterDimensionsInputs'),
-    gutterWidth: document.getElementById('gutterWidth'),
-    gutterLength: document.getElementById('gutterLength'),
+    gutterButtons: '#gutterButtonsContainer',
+    gutterInputs: '#gutterDimensionsInputs',
+    gutterWidth: '#gutterWidth',
+    gutterLength: '#gutterLength',
 
     // Margin elements
-    marginButtons: document.getElementById('marginButtonsContainer'),
-    marginInputs: document.getElementById('marginDimensionsInputs'),
-    marginWidth: document.getElementById('marginWidth'),
-    marginLength: document.getElementById('marginLength'),
+    marginButtons: '#marginButtonsContainer',
+    marginInputs: '#marginDimensionsInputs',
+    marginWidth: '#marginWidth',
+    marginLength: '#marginLength',
 
     // Canvas element
-    canvas: document.getElementById('layoutCanvas'),
+    canvas: '#layoutCanvas',
 
     // Other buttons and inputs
-    fitSheetButton: document.getElementById('fitSheetButton'),
-    zoomOutButton: document.getElementById('zoomOutButton'),
-    zoomInButton: document.getElementById('zoomInButton'),
-    resetViewButton: document.getElementById('resetViewButton'),
-    optimalLayoutButton: document.getElementById('optimalLayoutButton'),
-    rotateDocsButton: document.getElementById('rotateDocsButton'),
-    rotateSheetButton: document.getElementById('rotateSheetButton'),
-    programSequence: document.getElementById('programSequence'),
-    scorePositions: document.getElementById('scorePositions'),
-    layoutTitle: document.getElementById('layoutTitle'),
-    wasteLegend: document.getElementById('wasteLegend'),
-    showScores: document.getElementById('showScores'),
-    showDocNumbers: document.getElementById('showDocNumbers'),
-    showPrintableArea: document.getElementById('showPrintableArea'),
-    showMargins: document.getElementById('showMargins'),
-    scoreControls: document.getElementById('scoreControls'),
-    foldType: document.getElementById('foldType'),
-    customScoreInputs: document.getElementById('customScoreInputs'),
-    customScores: document.getElementById('customScores'),
-    calculateScoresButton: document.getElementById('calculateScoresButton'),
-    themeToggle: document.getElementById('themeToggle'),
-    metricToggle: document.getElementById('metricToggle')
-};
+    fitSheetButton: '#fitSheetButton',
+    zoomOutButton: '#zoomOutButton',
+    zoomInButton: '#zoomInButton',
+    resetViewButton: '#resetViewButton',
+    optimalLayoutButton: '#optimalLayoutButton',
+    rotateDocsButton: '#rotateDocsButton',
+    rotateSheetButton: '#rotateSheetButton',
+    programSequence: '#programSequence',
+    scorePositions: '#scorePositions',
+    layoutTitle: '#layoutTitle',
+    wasteLegend: '#wasteLegend',
+    showScores: '#showScores',
+    showDocNumbers: '#showDocNumbers',
+    showPrintableArea: '#showPrintableArea',
+    showMargins: '#showMargins',
+    scoreControls: '#scoreControls',
+    foldType: '#foldType',
+    customScoreInputs: '#customScoreInputs',
+    customScores: '#customScores',
+    calculateScoresButton: '#calculateScoresButton',
+    themeToggle: '#themeToggle',
+    metricToggle: '#metricToggle'
+});
