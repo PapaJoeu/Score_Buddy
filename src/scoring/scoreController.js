@@ -1,17 +1,17 @@
 import { calculateScorePositions, FOLD_ALLOWANCE_INCH, FOLD_ALLOWANCE_MM } from './scoring.js';
 import { renderScorePositions } from '../ui/display.js';
 import { calculateLayoutDetails, drawLayoutWrapper } from '../layout/layoutController.js';
+import { qs } from '../dom/dom.js';
 
 let lastScorePositions = [];
 
 export function calculateScores(elements) {
-    const foldType = elements.scoreControls.querySelector('#foldType').value;
+    const foldType = qs('#foldType', elements.scoreControls).value;
     const layout = calculateLayoutDetails(elements);
 
     let custom = [];
     if (foldType === 'custom') {
-        custom = elements.scoreControls
-            .querySelector('#customScores')
+        custom = qs('#customScores', elements.scoreControls)
             .value.split(',')
             .map(n => parseFloat(n.trim()))
             .filter(n => !isNaN(n));

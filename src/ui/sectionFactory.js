@@ -127,7 +127,9 @@ const SECTION_CONFIGS = [
     }
 ];
 
-const form = document.getElementById('dimensionsForm');
+import { byId } from '../dom/dom.js';
+
+const form = byId('dimensionsForm', { optional: true });
 if (form) {
     SECTION_CONFIGS.forEach(cfg => form.appendChild(createSection(cfg)));
 }

@@ -1,6 +1,7 @@
 import { createPrintLayout } from './printLayout.js';
+import { byId, qs, qsa } from '../dom/dom.js';
 
-const printButton = document.getElementById('printButton');
+const printButton = byId('printButton');
 
 // Generates a two-page PDF:
 //  • Page 1: layout visualizer
@@ -9,8 +10,8 @@ const printButton = document.getElementById('printButton');
 // with a half‑inch margin on all sides.
 
 printButton.addEventListener('click', async () => {
-    const visualizer = document.querySelector('.visualizer-column');
-    const cards = Array.from(document.querySelectorAll('.data-card'));
+    const visualizer = qs('.visualizer-column');
+    const cards = qsa('.data-card');
     const { container, pages } = createPrintLayout(visualizer, cards);
     document.body.appendChild(container);
 

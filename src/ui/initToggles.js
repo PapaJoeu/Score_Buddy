@@ -1,6 +1,7 @@
 import { createToggleSwitch } from './toggles.js';
+import { byId } from '../dom/dom.js';
 
-const menuBar = document.getElementById('menuBar');
+const menuBar = byId('menuBar');
 
 menuBar.appendChild(
     createToggleSwitch({

@@ -1,6 +1,7 @@
 import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom, getStoredOptimalConfig } from '../layout/layoutController.js';
 import { calculateScores, getLastScorePositions, clearScoreData } from '../scoring/scoreController.js';
 import { toggleMetricMode } from './metricToggle.js';
+import { byId, qsa, classes, visibility } from '../dom/dom.js';
 
 export function registerEventListeners(elements) {
     elements.sheetButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
@@ -10,12 +11,12 @@ export function registerEventListeners(elements) {
 
     ['marginWidth', 'marginLength'].forEach(id => {
         elements[id].addEventListener('input', () => {
-            const customMarginButton = document.getElementById('customMarginSizeButton');
-            elements.marginButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            const customMarginButton = byId('customMarginSizeButton', { optional: true });
+            qsa('button', elements.marginButtons).forEach(btn => classes.remove(btn, 'active'));
             if (customMarginButton) {
-                customMarginButton.classList.add('active');
+                classes.add(customMarginButton, 'active');
             }
-            elements.marginInputs.classList.remove('hidden');
+            visibility.show(elements.marginInputs);
             calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
         });
     });
@@ -88,9 +89,9 @@ function handleSizeButtonClick(event, elements) {
     const inputs = elements[`${type}Inputs`];
     const isCustom = button.id.includes('custom');
 
-    button.parentNode.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    inputs.classList.toggle('hidden', !isCustom);
+    qsa('button', button.parentNode).forEach(btn => classes.remove(btn, 'active'));
+    classes.add(button, 'active');
+    visibility.toggle(inputs, isCustom);
 
     if (!isCustom) {
         if (type === 'gutter') {
@@ -144,8 +145,8 @@ function toggleTheme(elements) {
 
 function toggleCustomInputs(elements) {
     if (elements.foldType.value === 'custom') {
-        elements.customScoreInputs.classList.remove('hidden');
+        visibility.show(elements.customScoreInputs);
     } else {
-        elements.customScoreInputs.classList.add('hidden');
+        visibility.hide(elements.customScoreInputs);
     }
 }

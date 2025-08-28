@@ -1,8 +1,9 @@
 import { LEGEND_ITEMS, OPTION_CHECKBOXES } from '../config/legendOptions.js';
+import { byId } from '../dom/dom.js';
 
 export function renderLegendOptions() {
-    const legendEl = document.getElementById('visualizerLegend');
-    const optionsEl = document.getElementById('visualizerOptions');
+    const legendEl = byId('visualizerLegend', { optional: true });
+    const optionsEl = byId('visualizerOptions', { optional: true });
 
     if (legendEl) {
         LEGEND_ITEMS.forEach(item => {

@@ -1,3 +1,5 @@
+import { qs, qsa } from '../dom/dom.js';
+
 export function renderProgramSequence(sequence, container, unit = 'inches') {
     container.innerHTML = `
         <div class="card-header">
@@ -18,11 +20,13 @@ export function renderProgramSequence(sequence, container, unit = 'inches') {
             </tbody>
         </table>
     `;
-    const copyBtn = container.querySelector('.copy-btn');
-    copyBtn.addEventListener('click', () => {
-        const text = container.querySelector('table').innerText;
-        navigator.clipboard.writeText(text);
-    });
+    const copyBtn = qs('.copy-btn', container, { optional: true });
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const text = qs('table', container).innerText;
+            navigator.clipboard.writeText(text);
+        });
+    }
 }
 
 export function renderScorePositions(scorePositions, container, unit = 'inches') {
@@ -46,12 +50,14 @@ export function renderScorePositions(scorePositions, container, unit = 'inches')
             </tbody>
         </table>
     `;
-    const copyBtn = container.querySelector('.copy-btn');
-    copyBtn.addEventListener('click', () => {
-        const rows = Array.from(container.querySelectorAll('tbody tr'))
-            .map(row => Array.from(row.children).map(cell => cell.innerText).join('\t'));
-        const header = ['Step', `Score Position (${unit})`].join('\t');
-        const text = [header, ...rows].join('\n');
-        navigator.clipboard.writeText(text);
-    });
+    const copyBtn = qs('.copy-btn', container, { optional: true });
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const rows = qsa('tbody tr', container)
+                .map(row => Array.from(row.children).map(cell => cell.innerText).join('\t'));
+            const header = ['Step', `Score Position (${unit})`].join('\t');
+            const text = [header, ...rows].join('\n');
+            navigator.clipboard.writeText(text);
+        });
+    }
 }
