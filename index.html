@@ -28,7 +28,9 @@
             <!-- Site title and mode toggles -->
             <!-- TODO: Accessibility review and responsive tweaks -->
             <h1>Kev's Bitchin' Print Calculator</h1>
-            <div class="menu-bar" id="menuBar"></div>
+            <div class="menu-bar" id="menuBar">
+                <button id="printButton" class="btn btn-secondary">Print PDF</button>
+            </div>
         </header>
 
 
@@ -121,6 +123,9 @@
     <!-- ===== Closing Scripts ===== -->
     <!-- Load application modules -->
     <!-- TODO: Bundle and defer non-critical scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="src/ui/initPrintButton.js"></script>
     <script type="module" src="src/ui/initToggles.js"></script>
     <script type="module" src="src/ui/renderLegendOptions.js"></script>
     <script type="module" src="app.js"></script>
