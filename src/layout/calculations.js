@@ -33,6 +33,22 @@ export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docL
     };
 }
 
+// Appends the internal cut positions and optional back cuts for a given dimension.
+function appendCuts(sequence, count, size, gutter, imposedSize) {
+    // This loop detects if cuts are necessary to separate the documents.
+    // If `count` is 1, no internal cuts are needed; this loop will not execute.
+    for (let i = 1; i < count; i++) {
+        sequence.push(imposedSize - i * (size + gutter));
+    }
+
+    // This statement checks to see if there are gutters and adds back cuts.
+    if (gutter > 0) {
+        for (let i = 1; i < count; i++) {
+            sequence.push(size);
+        }
+    }
+}
+
 export function calculateProgramSequence(layout) {
 
     let sequence = [];
@@ -45,32 +61,28 @@ export function calculateProgramSequence(layout) {
 
     // The following cuts are the internal cuts
 
-    // This loop detects if cuts along the width are necessary to separate the documents. 
-    // If docsAcross is 1, no internal horizontal cuts are needed; this loop will not execute.
-    for (let i = 1; i < layout.docsAcross; i++) {
-        sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
-    }
+    // Handle cuts along the width (horizontal cuts and back cuts).
+    // If `docsAcross` is 1, `appendCuts` will not push any values.
+    appendCuts(
+        sequence,
+        layout.docsAcross,
+        layout.docWidth,
+        layout.gutterWidth,
+        layout.imposedSpaceWidth
+    );
 
-    // this statement checks to see if there are gutters and adds back cuts
-    if (layout.gutterWidth > 0) {
-        for (let i = 1; i < layout.docsAcross; i++) {
-            sequence.push(layout.docWidth);
-        }
-    }
-
-    // This loop detects if cuts along the length are necessary to separate the documents.
-    // If docsDown is 1, no internal vertical cuts are needed; this loop will not execute.
-    for (let i = 1; i < layout.docsDown; i++) {
-        sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterLength));
-    }
-
-    // this statement checks to see if there are gutters and adds back cuts
-    if (layout.gutterLength > 0) {
-        for (let i = 1; i < layout.docsDown; i++) {
-            sequence.push(layout.docLength);
-        }
-    }
+    // Handle cuts along the length (vertical cuts and back cuts).
+    // If `docsDown` is 1, `appendCuts` will not push any values.
+    appendCuts(
+        sequence,
+        layout.docsDown,
+        layout.docLength,
+        layout.gutterLength,
+        layout.imposedSpaceLength
+    );
 
     return sequence;
 }
+
+export const calculateSequence = calculateProgramSequence;
 
