@@ -33,7 +33,7 @@ export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docL
     };
 }
 
-export function calculateSequence(layout) {
+export function calculateProgramSequence(layout) {
     let sequence = [];
     sequence.push(layout.sheetLength - layout.topMargin);
     sequence.push(layout.sheetWidth - layout.leftMargin);

@@ -1,5 +1,5 @@
 import { drawLayout } from '../../visualizer.js';
-import { calculateLayoutDetails as calcDetails, calculateSequence as calcSequence } from './calculations.js';
+import { calculateLayoutDetails as calcDetails, calculateProgramSequence as calcSequence } from './calculations.js';
 import { renderProgramSequence } from '../ui/display.js';
 
 let zoomFactor = 1;
