@@ -161,53 +161,13 @@ export function updateLayoutInfo(layout, elements, config = null) {
     elements.wasteLegend.textContent = `Waste: ${waste}%`;
 }
 
-export function setDefaultValues(elements, isMetric = false) {
-    if (isMetric) {
-        elements.sheetWidth.value = "305";
-        elements.sheetLength.value = "457";
-        elements.docWidth.value = "89";
-        elements.docLength.value = "102";
-        elements.gutterWidth.value = "3";
-        elements.gutterLength.value = "3";
-        elements.marginWidth.value = "6";
-        elements.marginLength.value = "6";
-    } else {
-        elements.sheetWidth.value = "12.0";
-        elements.sheetLength.value = "18.0";
-        elements.docWidth.value = "3.5";
-        elements.docLength.value = "4.0";
-        elements.gutterWidth.value = "0.125";
-        elements.gutterLength.value = "0.125";
-        elements.marginWidth.value = "0.25";
-        elements.marginLength.value = "0.25";
-    }
-}
-
-export function selectDefaultSizes(elements, isMetric = false) {
-    const defaultSelections = isMetric
-        ? {
-              sheet: { width: 305, length: 457 },
-              doc: { width: 89, length: 102 },
-              gutter: { width: 3, length: 3 },
-              margin: { width: 6, length: 6 }
-          }
-        : {
-              sheet: { width: 12, length: 18 },
-              doc: { width: 3.5, length: 4 },
-              gutter: { width: 0.125, length: 0.125 },
-              margin: { width: 0.25, length: 0.25 }
-          };
-
-    Object.entries(defaultSelections).forEach(([type, { width, length }]) => {
+export function selectDefaultSizes(elements) {
+    ['sheet', 'doc', 'gutter', 'margin'].forEach(type => {
         const container = elements[`${type}Buttons`];
-        const button = Array.from(container.children).find(btn =>
-            parseFloat(btn.dataset.width) === width && parseFloat(btn.dataset.length) === length
-        );
+        if (!container) return;
+        const button = Array.from(container.children).find(btn => btn.dataset.default === 'true');
         if (button) {
             button.click();
-        } else {
-            elements[`${type}Width`].value = width;
-            elements[`${type}Length`].value = length;
         }
     });
 }

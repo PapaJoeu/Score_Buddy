@@ -1,6 +1,6 @@
 import { createSizeButtons } from './buttonCreation.js';
 import { INCH_SIZE_OPTIONS, MM_SIZE_OPTIONS } from '../config/sizeOptions.js';
-import { setDefaultValues, selectDefaultSizes, calculateLayout } from '../layout/layoutController.js';
+import { selectDefaultSizes, calculateLayout } from '../layout/layoutController.js';
 import { qs } from '../dom/dom.js';
 
 function updateSteps(elements, isMetric) {
@@ -42,8 +42,7 @@ export function toggleMetricMode(elements) {
         marginButtons: elements.marginButtons
     }, options);
 
-    setDefaultValues(elements, isMetric);
-    selectDefaultSizes(elements, isMetric);
+    selectDefaultSizes(elements);
     updateUnitLabels(isMetric);
     updateSteps(elements, isMetric);
     calculateLayout(elements);

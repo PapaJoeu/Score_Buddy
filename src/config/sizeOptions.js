@@ -3,7 +3,7 @@
 // ===== Constants =====
 export const INCH_SIZE_OPTIONS = {
     sheet: [
-        { width: 12, length: 18, name: "Tabloid Extra" },
+        { width: 12, length: 18, name: "Tabloid Extra", default: true },
         { width: 13, length: 19, name: "Super B" },
         { width: 8.5, length: 11, name: "Letter" },
         { width: 9, length: 12, name: "Letter Plus" },
@@ -13,7 +13,7 @@ export const INCH_SIZE_OPTIONS = {
         { width: 14.66, length: 25, name: "Awful Oversize" }
     ],
     doc: [
-        { width: 3.5, length: 4, name: "Folded Business Card" },
+        { width: 3.5, length: 4, name: "Folded Business Card", default: true },
         { width: 4.25, length: 11, name: "Door Hanger" },
         { width: 4.25, length: 5.5, name: "Quarter Letter" },
         { width: 5, length: 7, name: "5x7" },
@@ -22,14 +22,14 @@ export const INCH_SIZE_OPTIONS = {
         { width: 4, length: 6, name: "Chipotle" }
     ],
     gutter: [
-        { width: 0.125, length: 0.125, name: "1/8" },
+        { width: 0.125, length: 0.125, name: "1/8", default: true },
         { width: 0.25, length: 0.25, name: "1/4" },
         { width: 0, length: 0, name: "No Gutter" },
         { width: 0.3125, length: 0.17, name: "Duplo 25 UP" }
     ],
     margin: [
         { width: 0.0625, length: 0.0625, name: "1/16" },
-        { width: 0.25, length: 0.25, name: "1/4" },
+        { width: 0.25, length: 0.25, name: "1/4", default: true },
         { width: 0.5, length: 0.5, name: "1/2" },
         { width: 0, length: 0, name: "No Margin" },
         { width: 0.125, length: 0.125, name: "1/8" }
@@ -39,7 +39,7 @@ export const INCH_SIZE_OPTIONS = {
 // Metric equivalents in millimeters
 export const MM_SIZE_OPTIONS = {
     sheet: [
-        { width: 305, length: 457, name: "Tabloid Extra" },
+        { width: 305, length: 457, name: "Tabloid Extra", default: true },
         { width: 330, length: 483, name: "Super B" },
         { width: 216, length: 279, name: "Letter" },
         { width: 229, length: 305, name: "Letter Plus" },
@@ -49,7 +49,7 @@ export const MM_SIZE_OPTIONS = {
         { width: 372, length: 635, name: "Awful Oversize" }
     ],
     doc: [
-        { width: 89, length: 102, name: "Folded Business Card" },
+        { width: 89, length: 102, name: "Folded Business Card", default: true },
         { width: 108, length: 279, name: "Door Hanger" },
         { width: 108, length: 140, name: "Quarter Letter" },
         { width: 127, length: 178, name: "5x7" },
@@ -58,14 +58,14 @@ export const MM_SIZE_OPTIONS = {
         { width: 102, length: 152, name: "Chipotle" }
     ],
     gutter: [
-        { width: 3, length: 3, name: "1/8" },
+        { width: 3, length: 3, name: "1/8", default: true },
         { width: 6, length: 6, name: "1/4" },
         { width: 0, length: 0, name: "No Gutter" },
         { width: 8, length: 4, name: "Duplo 25 UP" }
     ],
     margin: [
         { width: 2, length: 2, name: "1/16" },
-        { width: 6, length: 6, name: "1/4" },
+        { width: 6, length: 6, name: "1/4", default: true },
         { width: 13, length: 13, name: "1/2" },
         { width: 0, length: 0, name: "No Margin" },
         { width: 3, length: 3, name: "1/8" }
