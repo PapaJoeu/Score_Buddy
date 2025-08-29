@@ -39,18 +39,29 @@ export function calculateSequence(layout) {
     sequence.push(layout.sheetWidth - layout.leftMargin);
     sequence.push(layout.imposedSpaceLength);
     sequence.push(layout.imposedSpaceWidth);
+
     for (let i = 1; i < layout.docsAcross; i++) {
         sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
     }
-    for (let i = 1; i < layout.docsAcross; i++) {
-        sequence.push(layout.docWidth);
+
+    // Only repeat doc widths when there's no gutter between them
+    if (layout.gutterWidth > 0) {
+        for (let i = 1; i < layout.docsAcross; i++) {
+            sequence.push(layout.docWidth);
+        }
     }
+
     for (let i = 1; i < layout.docsDown; i++) {
         sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterLength));
     }
-    for (let i = 1; i < layout.docsDown; i++) {
-        sequence.push(layout.docLength);
+
+    // Only repeat doc lengths when there's no gutter between them
+    if (layout.gutterLength > 0) {
+        for (let i = 1; i < layout.docsDown; i++) {
+            sequence.push(layout.docLength);
+        }
     }
+
     return sequence;
 }
 
