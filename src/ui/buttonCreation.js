@@ -11,6 +11,9 @@ export function createButtonsForType(type, container, SIZE_OPTIONS) {
         button.textContent = `${option.width} x ${option.length}`;
         button.dataset.width = option.width;
         button.dataset.length = option.length;
+        if (option.default) {
+            button.dataset.default = 'true';
+        }
         container.appendChild(button);
     });
 

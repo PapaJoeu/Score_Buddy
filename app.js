@@ -1,7 +1,7 @@
 import './src/ui/sectionFactory.js';
 import { elements } from './src/ui/elements.js';
 import { registerEventListeners, initTheme } from './src/ui/events.js';
-import { setDefaultValues, selectDefaultSizes, calculateLayout } from './src/layout/layoutController.js';
+import { selectDefaultSizes, calculateLayout } from './src/layout/layoutController.js';
 import { createSizeButtons } from './src/ui/buttonCreation.js';
 import { INCH_SIZE_OPTIONS } from './src/config/sizeOptions.js';
 
@@ -13,9 +13,8 @@ function init() {
         gutterButtons: elements.gutterButtons,
         marginButtons: elements.marginButtons
     }, INCH_SIZE_OPTIONS);
-    setDefaultValues(elements);
-    selectDefaultSizes(elements);
     registerEventListeners(elements);
+    selectDefaultSizes(elements);
     calculateLayout(elements);
 }
 
