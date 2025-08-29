@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 (async () => {
-  const { calculateLayoutDetails, calculateSequence } = await import('../src/layout/calculations.js');
+  const { calculateLayoutDetails, calculateProgramSequence } = await import('../src/layout/calculations.js');
 
   const layout = calculateLayoutDetails({
     sheetWidth: 12,
@@ -31,7 +31,7 @@ const assert = require('assert');
     8.25, 4, 4,
     4
   ];
-  const actualSequence = calculateSequence(layout);
+  const actualSequence = calculateProgramSequence(layout);
   assert.deepStrictEqual(actualSequence, expectedActualSequence, 'Actual sheet sequence incorrect');
 
   // Verify sequence calculation for usable sheet size
@@ -48,7 +48,7 @@ const assert = require('assert');
     8.25, 4, 4,
     4
   ];
-  const usableSequence = calculateSequence(usableLayout);
+  const usableSequence = calculateProgramSequence(usableLayout);
   assert.deepStrictEqual(usableSequence, expectedUsableSequence, 'Usable sheet sequence incorrect');
 
   // Verify default margins produce matching usable dimensions
