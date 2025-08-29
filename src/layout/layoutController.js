@@ -6,7 +6,7 @@ let zoomFactor = 1;
 const ZOOM_STEP = 1.1;
 
 let storedOptimalConfig = null;
-export function getStoredOptimalConfig() {
+export function retrieveOptimalConfig() {
     return storedOptimalConfig;
 }
 

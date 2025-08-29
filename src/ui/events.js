@@ -1,4 +1,4 @@
-import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom, getStoredOptimalConfig } from '../layout/layoutController.js';
+import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom, retrieveOptimalConfig } from '../layout/layoutController.js';
 import { calculateScores, getLastScorePositions, clearScoreData } from '../scoring/scoreController.js';
 import { toggleMetricMode } from './metricToggle.js';
 import { byId, qsa, classes, visibility } from '../dom/dom.js';
@@ -40,7 +40,7 @@ export function registerEventListeners(elements) {
     elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc', elements));
     elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet', elements));
     elements.optimalLayoutButton.addEventListener('click', () => {
-        const config = getStoredOptimalConfig();
+        const config = retrieveOptimalConfig();
         if (!config) {
             return;
         }
