@@ -95,7 +95,7 @@ const SECTION_CONFIGS = [
         inputGroupId: 'docDimensionsInputs',
         inputs: [
             { label: 'Width (in)', id: 'docWidth', step: 0.25, value: 3.5 },
-            { label: 'Length (in)', id: 'docLength', step: 0.25, value: 4 }
+            { label: 'Length (in)', id: 'docLength', step: 0.25, value: 2 }
         ],
         rotate: {
             id: 'rotateDocsButton',
@@ -121,8 +121,8 @@ const SECTION_CONFIGS = [
         buttonAriaLabel: 'Margin presets',
         inputGroupId: 'marginDimensionsInputs',
         inputs: [
-            { label: 'Margin Width (in)', id: 'marginWidth', step: 0.125, value: 0.25 },
-            { label: 'Margin Length (in)', id: 'marginLength', step: 0.125, value: 0.25 }
+            { label: 'Margin Width (in)', id: 'marginWidth', step: 0.125, value: 0.125 },
+            { label: 'Margin Length (in)', id: 'marginLength', step: 0.125, value: 0.125 }
         ]
     }
 ];
