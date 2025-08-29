@@ -3,8 +3,10 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, options
     if (!showDocNumbers) {
         return;
     }
-    ctx.font = '12px Arial';
-    ctx.fillStyle = colors.label;
+
+    // Set font size relative to document size 
+    ctx.font = `${Math.round(1.5 * scale)}px Arial`;
+    ctx.fillStyle = (colors && colors.label) ? colors.label : '#000';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
