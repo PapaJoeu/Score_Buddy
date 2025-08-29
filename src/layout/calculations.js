@@ -34,28 +34,37 @@ export function calculateLayoutDetails({ sheetWidth, sheetLength, docWidth, docL
 }
 
 export function calculateProgramSequence(layout) {
+
     let sequence = [];
+
+    // The first four cuts are the outer edges
     sequence.push(layout.sheetLength - layout.topMargin);
     sequence.push(layout.sheetWidth - layout.leftMargin);
     sequence.push(layout.imposedSpaceLength);
     sequence.push(layout.imposedSpaceWidth);
 
+    // The following cuts are the internal cuts
+
+    // This loop detects if cuts along the width are necessary to separate the documents. 
+    // If docsAcross is 1, no internal horizontal cuts are needed; this loop will not execute.
     for (let i = 1; i < layout.docsAcross; i++) {
         sequence.push(layout.imposedSpaceWidth - i * (layout.docWidth + layout.gutterWidth));
     }
 
-    // Only repeat doc widths when there's no gutter between them
+    // this statement checks to see if there are gutters and adds back cuts
     if (layout.gutterWidth > 0) {
         for (let i = 1; i < layout.docsAcross; i++) {
             sequence.push(layout.docWidth);
         }
     }
 
+    // This loop detects if cuts along the length are necessary to separate the documents.
+    // If docsDown is 1, no internal vertical cuts are needed; this loop will not execute.
     for (let i = 1; i < layout.docsDown; i++) {
         sequence.push(layout.imposedSpaceLength - i * (layout.docLength + layout.gutterLength));
     }
 
-    // Only repeat doc lengths when there's no gutter between them
+    // this statement checks to see if there are gutters and adds back cuts
     if (layout.gutterLength > 0) {
         for (let i = 1; i < layout.docsDown; i++) {
             sequence.push(layout.docLength);
