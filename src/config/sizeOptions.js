@@ -23,9 +23,6 @@ export const INCH_SIZE_OPTIONS = {
         { width: 0.3125, length: 0.17, name: "Duplo 25 UP" }
     ],
     margin: [
-        { width: 0.0625, length: 0.0625, name: "1/16" },
-        { width: 0.25, length: 0.25, name: "1/4",  },
-        { width: 0.5, length: 0.5, name: "1/2" },
         { width: 0, length: 0, name: "No Margin" },
         { width: 0.125, length: 0.125, name: "1/8", default: true }
     ]
