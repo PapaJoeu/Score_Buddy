@@ -51,8 +51,9 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     const baseScale = Math.min(width / layout.sheetWidth, height / layout.sheetLength) * 0.9;
     const scale = baseScale * zoom;
 
-    const offsetX = (canvas.width - layout.sheetWidth * scale) / 2;
-    const offsetY = (canvas.height - layout.sheetLength * scale) / 2;
+    // Center the sheet within the canvas
+    const xOffset = (canvas.width - layout.sheetWidth * scale) / 2;
+    const yOffset = (canvas.height - layout.sheetLength * scale) / 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -61,11 +62,11 @@ export function drawLayout(canvas, layout, scorePositions = [], marginData = {},
     ctx.translate(0.5, 0.5);
 
     // Draw layout components
-    drawSheet(ctx, layout, scale, offsetX, offsetY, helperOptions);
-    drawPrintableArea(ctx, layout, scale, offsetX, offsetY, helperOptions);
-    drawDocuments(ctx, layout, scale, offsetX, offsetY, helperOptions);
-    drawMargins(ctx, layout, scale, offsetX, offsetY, helperOptions);
-    drawScoreLines(ctx, layout, scale, offsetX, offsetY, helperOptions);
+    drawSheet(ctx, layout, scale, xOffset, yOffset, helperOptions);
+    drawPrintableArea(ctx, layout, scale, xOffset, yOffset, helperOptions);
+    drawDocuments(ctx, layout, scale, xOffset, yOffset, helperOptions);
+    drawMargins(ctx, layout, scale, xOffset, yOffset, helperOptions);
+    drawScoreLines(ctx, layout, scale, xOffset, yOffset, helperOptions);
     ctx.translate(-0.5, -0.5);
-    drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, helperOptions);
+    drawDocumentLabels(ctx, layout, scale, xOffset, yOffset, helperOptions);
 }
