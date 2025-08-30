@@ -11,6 +11,7 @@ export function drawDocumentLabels(ctx, layout, scale, offsetX, offsetY, options
     ctx.textBaseline = 'middle';
 
     let docNumber = 1;
+
     for (let i = 0; i < layout.docsAcross; i++) {
         for (let j = 0; j < layout.docsDown; j++) {
             const x = offsetX + (layout.leftMargin + (i + 0.5) * (layout.docWidth + layout.gutterWidth)) * scale;

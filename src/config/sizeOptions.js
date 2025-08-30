@@ -1,4 +1,6 @@
 // sizeOptions.js
+// contains predefined size options for sheets, documents, gutters, and margins
+// default selections for sizes are defined on the respective arrays
 
 // ===== Constants =====
 export const INCH_SIZE_OPTIONS = {
@@ -13,7 +15,8 @@ export const INCH_SIZE_OPTIONS = {
         { width: 14.66, length: 25, name: "Awful Oversize" }
     ],
     doc: [
-        { width: 3.5, length: 4, name: "Folded Business Card", default: true },
+        { width: 3.5, length: 2, name: "Standard Business Card", default: true },
+        { width: 3.5, length: 4, name: "Folded Business Card" },
         { width: 4.25, length: 11, name: "Door Hanger" },
         { width: 4.25, length: 5.5, name: "Quarter Letter" },
         { width: 5, length: 7, name: "5x7" },
@@ -29,10 +32,10 @@ export const INCH_SIZE_OPTIONS = {
     ],
     margin: [
         { width: 0.0625, length: 0.0625, name: "1/16" },
-        { width: 0.25, length: 0.25, name: "1/4", default: true },
+        { width: 0.25, length: 0.25, name: "1/4",  },
         { width: 0.5, length: 0.5, name: "1/2" },
         { width: 0, length: 0, name: "No Margin" },
-        { width: 0.125, length: 0.125, name: "1/8" }
+        { width: 0.125, length: 0.125, name: "1/8", default: true }
     ]
 };
 
