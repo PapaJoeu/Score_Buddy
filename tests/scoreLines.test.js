@@ -5,7 +5,7 @@ const assert = require('assert');
 
 (async () => {
   const { calculateLayoutDetails } = await import('../src/layout/calculations.js');
-  const { calculateScorePositions } = await import('../src/scoring/scoring.js');
+  const { computeScorePositions } = await import('../src/scoring/scoring.js');
   const { drawLayout } = await import('../visualizer.js');
 
   const layout = calculateLayoutDetails({
@@ -17,7 +17,7 @@ const assert = require('assert');
     gutterLength: 0.25
   });
 
-  const scorePositions = calculateScorePositions(layout, 'bifold');
+  const scorePositions = computeScorePositions(layout, 'bifold');
 
   const ctx = {
     moveToCalls: [],
