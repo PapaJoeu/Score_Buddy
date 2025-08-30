@@ -7,51 +7,57 @@ export const FOLD_ALLOWANCE_INCH = 0.05;
 export const FOLD_ALLOWANCE_MM = 1.27;
 
 // Supported fold types for calculating score positions
-const SUPPORTED_FOLD_TYPES = ['bifold', 'trifold', 'gatefold', 'custom'];
+const VALID_FOLD_TYPES = ['bifold', 'trifold', 'gatefold', 'custom'];
+
+// Mapping of fold types to their score line calculation strategies
+const FOLD_STRATEGIES = {
+    bifold: (docLength, allowance) => [{ y: docLength / 2 }],
+    trifold: (docLength, allowance) => [
+        { y: docLength / 3 },
+        { y: (2 * docLength / 3) - allowance }
+    ],
+    gatefold: (docLength, allowance) => [
+        { y: docLength / 4 },
+        { y: (3 * docLength / 4) - allowance }
+    ],
+    custom: (docLength, allowance, customOffsets) =>
+        customOffsets.map(offset => ({ y: offset }))
+};
 
 /**
  * Calculate score line positions for a given layout and fold type.
- * @param {Object} layout - Layout details produced by calculateLayoutDetails.
+ * @param {Object} layoutDetails - Layout details produced by calculateLayoutDetails.
  * @param {string} foldType - The type of fold (bifold, trifold, gatefold, custom).
- * @param {number[]} customPositions - Custom score offsets for 'custom' fold type.
- * @param {number} allowance - Offset to accommodate paper thickness. Increase for heavier stock,
- *                             or decrease for thin paper.
+ * @param {number[]} customOffsets - Custom score offsets for 'custom' fold type.
+ * @param {number} foldAllowance - Offset to accommodate paper thickness. Increase for heavier stock,
+ *                                 or decrease for thin paper.
  */
-export function calculateScorePositions(
-    layout,
+export function computeScorePositions(
+    layoutDetails,
     foldType = 'bifold',
-    customPositions = [],
-    allowance = FOLD_ALLOWANCE_INCH
+    customOffsets = [],
+    foldAllowance = FOLD_ALLOWANCE_INCH
 ) {
-    if (!SUPPORTED_FOLD_TYPES.includes(foldType)) {
+    if (!VALID_FOLD_TYPES.includes(foldType)) {
         throw new Error(`Unsupported fold type: ${foldType}`);
     }
 
     // Filter and sort custom positions when using the 'custom' fold type
-    const processedCustomPositions = foldType === 'custom'
-        ? customPositions
-              .filter(pos => typeof pos === 'number' && pos >= 0 && pos <= layout.docLength)
+    const validCustomOffsets = foldType === 'custom'
+        ? customOffsets
+              .filter(offset => typeof offset === 'number' && offset >= 0 && offset <= layoutDetails.docLength)
               .sort((a, b) => a - b)
         : [];
 
-    const marginOffset = layout.topMargin;
-    const scorePositions = [];
-    for (let i = 0; i < layout.docsDown; i++) {
-        const base = i * (layout.docLength + layout.gutterLength) + marginOffset;
-        if (foldType === 'bifold') {
-            scorePositions.push({ y: (layout.docLength / 2) + base });
-        } else if (foldType === 'trifold') {
-            scorePositions.push({ y: (layout.docLength / 3) + base });
-            scorePositions.push({ y: (2 * layout.docLength / 3) - allowance + base });
-        } else if (foldType === 'gatefold') {
-            scorePositions.push({ y: (layout.docLength / 4) + base });
-            scorePositions.push({ y: (3 * layout.docLength / 4) - allowance + base });
-        } else if (foldType === 'custom') {
-            processedCustomPositions.forEach(pos => {
-                scorePositions.push({ y: pos + base });
-            });
-        }
+    const scoreLines = [];
+    const generateLines = FOLD_STRATEGIES[foldType];
+    for (let rowIndex = 0; rowIndex < layoutDetails.docsDown; rowIndex++) {
+        const baseOffset = rowIndex * (layoutDetails.docLength + layoutDetails.gutterLength) + layoutDetails.topMargin;
+        const lines = generateLines(layoutDetails.docLength, foldAllowance, validCustomOffsets);
+        lines.forEach(line => {
+            scoreLines.push({ y: line.y + baseOffset });
+        });
     }
-    return scorePositions;
+    return scoreLines;
 }
 

@@ -1,5 +1,5 @@
 import { calculateLayout, calculateLayoutDetails, drawLayoutWrapper, zoomIn, zoomOut, resetZoom, retrieveOptimalConfig } from '../layout/layoutController.js';
-import { calculateScores, getLastScorePositions, clearScoreData } from '../scoring/scoreController.js';
+import { calculateAndRenderScores, getCachedScorePositions, resetScorePositions } from '../scoring/scoreController.js';
 import { toggleMetricMode } from './metricToggle.js';
 import { byId, qsa, classes, visibility } from '../dom/dom.js';
 
@@ -17,25 +17,25 @@ export function registerEventListeners(elements) {
                 classes.add(customMarginButton, 'active');
             }
             visibility.show(elements.marginInputs);
-            calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+            calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
         });
     });
 
     elements.fitSheetButton.addEventListener('click', () => {
         resetZoom();
-        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
     });
     elements.zoomOutButton.addEventListener('click', () => {
         zoomOut();
-        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
     });
     elements.zoomInButton.addEventListener('click', () => {
         zoomIn();
-        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
     });
     elements.resetViewButton.addEventListener('click', () => {
         resetZoom();
-        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
     });
     elements.rotateDocsButton.addEventListener('click', () => rotateSize('doc', elements));
     elements.rotateSheetButton.addEventListener('click', () => rotateSize('sheet', elements));
@@ -54,7 +54,7 @@ export function registerEventListeners(elements) {
         }
         elements.sheetWidth.value = config.sheetWidth;
         elements.sheetLength.value = config.sheetLength;
-        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
         elements.optimalLayoutButton.classList.add('hidden');
     });
 
@@ -62,16 +62,16 @@ export function registerEventListeners(elements) {
 
     const inputIds = ['sheetWidth', 'sheetLength', 'docWidth', 'docLength', 'gutterWidth', 'gutterLength', 'marginWidth', 'marginLength'];
     inputIds.forEach(id => {
-        elements[id].addEventListener('input', () => calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements)));
+        elements[id].addEventListener('input', () => calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements)));
     });
 
-    elements.calculateScoresButton.addEventListener('click', () => calculateScores(elements));
+    elements.calculateScoresButton.addEventListener('click', () => calculateAndRenderScores(elements));
     elements.foldType.addEventListener('change', () => toggleCustomInputs(elements));
 
     ['showScores', 'showDocNumbers', 'showPrintableArea', 'showMargins'].forEach(id => {
         elements[id].addEventListener('change', () => {
             const layout = calculateLayoutDetails(elements);
-            drawLayoutWrapper(layout, elements.showScores.checked ? getLastScorePositions() : [], elements);
+            drawLayoutWrapper(layout, elements.showScores.checked ? getCachedScorePositions() : [], elements);
         });
     });
 
@@ -103,7 +103,7 @@ function handleSizeButtonClick(event, elements) {
         }
     }
 
-    calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+    calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
 }
 
 function rotateSize(type, elements, shouldCalculate = true) {
@@ -114,7 +114,7 @@ function rotateSize(type, elements, shouldCalculate = true) {
         [elements.marginWidth.value, elements.marginLength.value] = [elements.marginLength.value, elements.marginWidth.value];
     }
     if (shouldCalculate) {
-        calculateLayout(elements, getLastScorePositions(), () => clearScoreData(elements));
+        calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
     }
 }
 
@@ -140,7 +140,7 @@ function toggleTheme(elements) {
         localStorage.setItem('theme', 'light');
     }
     const layout = calculateLayoutDetails(elements);
-    drawLayoutWrapper(layout, elements.showScores.checked ? getLastScorePositions() : [], elements);
+    drawLayoutWrapper(layout, elements.showScores.checked ? getCachedScorePositions() : [], elements);
 }
 
 function toggleCustomInputs(elements) {
