@@ -8,11 +8,7 @@ export const INCH_SIZE_OPTIONS = {
         { width: 12, length: 18, name: "Tabloid Extra", default: true },
         { width: 13, length: 19, name: "Super B" },
         { width: 8.5, length: 11, name: "Letter" },
-        { width: 9, length: 12, name: "Letter Plus" },
-        { width: 10, length: 13, name: "Letter Plus Plus" },
-        { width: 11.5, length: 17.5, name: "Hemp Paper" },
         { width: 11, length: 17, name: "Tabloid" },
-        { width: 14.66, length: 25, name: "Awful Oversize" }
     ],
     doc: [
         { width: 3.5, length: 2, name: "Standard Business Card", default: true },
