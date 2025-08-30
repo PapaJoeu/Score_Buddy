@@ -17,9 +17,9 @@ export const INCH_SIZE_OPTIONS = {
         { width: 4, length: 6, name: "Chipotle" }
     ],
     gutter: [
+                { width: 0, length: 0, name: "No Gutter" },
         { width: 0.125, length: 0.125, name: "1/8", default: true },
         { width: 0.25, length: 0.25, name: "1/4" },
-        { width: 0, length: 0, name: "No Gutter" },
         { width: 0.3125, length: 0.17, name: "Duplo 25 UP" }
     ],
     margin: [
