@@ -12,10 +12,6 @@ export const INCH_SIZE_OPTIONS = {
     ],
     doc: [
         { width: 3.5, length: 2, name: "Standard Business Card", default: true },
-        { width: 3.5, length: 4, name: "Folded Business Card" },
-        { width: 4.25, length: 11, name: "Door Hanger" },
-        { width: 4.25, length: 5.5, name: "Quarter Letter" },
-        { width: 5, length: 7, name: "5x7" },
         { width: 5.5, length: 8.5, name: "Half Letter" },
         { width: 6, length: 9, name: "Sunrun Postcard" },
         { width: 4, length: 6, name: "Chipotle" }
