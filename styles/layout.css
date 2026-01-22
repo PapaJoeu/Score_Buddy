@@ -1,17 +1,31 @@
-/* Container styles */
+/**
+ * Layout Styles - Grid System & Responsive Layout
+ *
+ * 3-Zone Workbench Layout:
+ * - inputs-column: Setup panel (left) - sticky on desktop
+ * - visualizer-column: Canvas (center) - flexible, dominant
+ * - data-column: Output panel (right) - fixed width
+ *
+ * Breakpoints:
+ * - Desktop: 1200px+ (3-column)
+ * - Tablet: 851-1199px (2-column)
+ * - Mobile: ≤850px (single column)
+ */
+
+/* ===== Container ===== */
 .container {
     display: flex;
     flex-direction: column;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0 24px 24px;
-    gap: 24px;
+    padding: 0 var(--space-lg) var(--space-lg);
+    gap: var(--space-lg);
 }
 
-/* Layout - 3-Zone Workbench */
+/* ===== Main Layout Grid ===== */
 .layout {
     display: grid;
-    gap: 24px;
+    gap: var(--space-lg);
     grid-template-columns: 1fr;
     grid-template-areas:
         "visualizer"
@@ -19,11 +33,13 @@
         "data";
 }
 
+/* ===== Column Definitions ===== */
+
 /* Setup Panel (Left) - Sticky with fixed width */
 .inputs-column {
     grid-area: inputs;
     position: sticky;
-    top: 24px;
+    top: var(--space-lg);
     align-self: start;
 }
 
@@ -38,6 +54,8 @@
 .data-column {
     grid-area: data;
 }
+
+/* ===== Responsive Breakpoints ===== */
 
 /* Desktop Layout: 3-zone workbench */
 @media (min-width: 1200px) {
@@ -57,7 +75,7 @@
     }
 }
 
-/* Mobile Layout: Left setup becomes non-sticky, single column */
+/* Mobile Layout: Single column, non-sticky setup */
 @media (max-width: 850px) {
     .layout {
         grid-template-columns: 1fr;
@@ -70,35 +88,8 @@
     .inputs-column {
         position: static;
     }
-}
 
-/* Canvas wrapper maintains sheet aspect ratio */
-.canvas-wrapper {
-    width: 100%;
-    max-height: 80vh;
-    aspect-ratio: var(--sheet-aspect, 1/1);
-    margin-top: 16px;
-}
-
-.canvas-wrapper canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background-color: var(--card);
-}
-
-/* Canvas Styles */
-/* Canvas element fills the wrapper */
-#layoutCanvas {
-    width: 100%;
-    height: 100%;
-}
-
-/* Canvas area overlays */
-.printable-area-overlay {
-    background-color: rgba(var(--printable-color), 0.25);
-}
-
-.margin-area-overlay {
-    background-color: rgba(var(--margin-color), 0.25);
+    .container {
+        padding: 0 var(--space-md) var(--space-md);
+    }
 }

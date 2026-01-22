@@ -1,11 +1,30 @@
-/* Card component */
+/**
+ * Component Styles - Reusable UI Components
+ *
+ * Sections:
+ * 1. Cards
+ * 2. Buttons
+ * 3. Forms & Inputs
+ * 4. Toggle Switches
+ * 5. Tables
+ * 6. Accordion
+ * 7. Segmented Control
+ * 8. Tabs
+ * 9. Summary & Stats
+ * 10. Warnings
+ */
+
+/* =============================================================================
+   1. CARDS
+   ============================================================================= */
+
 .card {
-    padding: 24px;
-    border-radius: 8px;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     background-color: var(--card);
     box-shadow: var(--shadow-md);
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 .data-card {
@@ -22,8 +41,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
 }
 
 .card-header h2 {
@@ -35,121 +54,54 @@
     flex-shrink: 0;
 }
 
+/* Score Controls Section */
 #scoreControls {
-    margin-bottom: 16px;
+    margin-bottom: var(--space-md);
 }
 
 #scorePositions {
     border-top: 1px solid var(--border);
-    padding-top: 16px;
+    padding-top: var(--space-md);
 }
 
-/* Sub-header within #scoreOptions for score measurements */
 #scoreOptions .score-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 24px;
+    margin-top: var(--space-lg);
 }
 
 #scoreOptions h3 {
     margin: 0;
 }
 
-.copy-btn {
-    width: auto;
-    padding: 0 8px;
-}
-
-/* Button Styles */
-.button-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.button-grid .btn { width: 100%; }
-
-.button-grid .custom-size-button { grid-column: 1 / -1; }
-
-/* Toolbar for canvas controls */
-.toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.visualizer-options {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    margin-bottom: 16px;
-    overflow-x: auto;
-}
-
-.toolbar .btn {
-    position: relative;
-    width: auto;
-    padding: 0 8px;
-    gap: 4px;
-}
-
-.toolbar .btn .icon {
-    font-size: 24px;
-}
-
-.toolbar .btn .label {
-    font-size: 12px;
-}
-
-.toolbar .btn .tooltip {
-    position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--ink);
-    color: var(--card);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    z-index: 1;
-}
-
-.toolbar .btn:hover .tooltip,
-.toolbar .btn:focus-visible .tooltip {
-    opacity: 1;
-}
+/* =============================================================================
+   2. BUTTONS
+   ============================================================================= */
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: var(--space-sm);
     width: 100%;
-    padding: 0 16px;
+    padding: 0 var(--space-md);
     height: 40px;
     cursor: pointer;
     text-align: center;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--button-border, var(--button-bg));
     background-color: var(--button-bg);
     color: var(--button-ink);
     font: inherit;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition: filter var(--transition-fast), background-color var(--transition-normal);
 }
-
 
 .btn .icon {
     line-height: 1;
 }
 
+/* Button Variants */
 .btn-secondary {
     --button-bg: var(--card);
     --button-ink: var(--ink);
@@ -165,11 +117,13 @@
     --button-ink: var(--card);
 }
 
+/* Button States */
 .btn:hover:not([disabled]) {
     filter: brightness(0.95);
 }
 
-.btn:active:not([disabled]), .btn.active {
+.btn:active:not([disabled]),
+.btn.active {
     filter: brightness(0.9);
 }
 
@@ -183,14 +137,50 @@
     cursor: not-allowed;
 }
 
-.hidden {
-    display: none;
+/* Icon Button */
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-/* Form Styles */
+.btn-icon .icon {
+    font-size: 20px;
+}
+
+/* Button Grid */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.button-grid .btn {
+    width: 100%;
+}
+
+.button-grid .custom-size-button {
+    grid-column: 1 / -1;
+}
+
+/* Copy Button */
+.copy-btn {
+    width: auto;
+    padding: 0 var(--space-sm);
+}
+
+/* =============================================================================
+   3. FORMS & INPUTS
+   ============================================================================= */
+
 form {
     display: grid;
-    row-gap: 16px;
+    row-gap: var(--space-md);
 }
 
 .dimensions-section {
@@ -201,26 +191,35 @@ input,
 select {
     width: 100%;
     height: 40px;
-    padding: 8px;
+    padding: var(--space-sm);
     box-sizing: border-box;
     background-color: var(--card);
     color: var(--ink);
     border: 1px solid var(--border);
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid var(--blue);
+    outline-offset: -1px;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: minmax(120px, auto) 1fr;
-    column-gap: 8px;
-    row-gap: 16px;
+    column-gap: var(--space-sm);
+    row-gap: var(--space-md);
     align-items: center;
 }
 
+/* Checkbox Label */
 .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     grid-column: 1 / -1;
 }
 
@@ -229,18 +228,39 @@ select {
     height: auto;
 }
 
-/* Toggle switches used in the menu bar */
+/* Input with Unit Suffix */
+.input-with-unit {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.input-with-unit input {
+    flex: 1;
+}
+
+.input-unit {
+    font-size: 14px;
+    color: var(--ink);
+    opacity: 0.7;
+    min-width: 24px;
+}
+
+/* =============================================================================
+   4. TOGGLE SWITCHES
+   ============================================================================= */
+
 .menu-bar {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: var(--space-md);
 }
 
 .switch {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .switch-icon {
@@ -265,7 +285,7 @@ select {
     height: 24px;
     background-color: var(--border);
     border-radius: 24px;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-normal);
     cursor: pointer;
 }
 
@@ -278,7 +298,7 @@ select {
     top: 2px;
     background-color: var(--card);
     border-radius: 50%;
-    transition: transform 0.2s;
+    transition: transform var(--transition-normal);
 }
 
 .switch input:checked + .slider {
@@ -289,19 +309,27 @@ select {
     transform: translateX(16px);
 }
 
-/* Table Styles */
+.switch input:focus-visible + .slider {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+}
+
+/* =============================================================================
+   5. TABLES
+   ============================================================================= */
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 16px;
+    margin-top: var(--space-md);
 }
 
 th,
 td {
     border: 1px solid var(--border);
-    padding: 8px;
+    padding: var(--space-sm);
     font-size: 14px;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 th {
@@ -321,327 +349,13 @@ tbody tr:nth-child(even) {
     background-color: var(--bg);
 }
 
-/* Ensure consistent width for step columns in data tables */
+/* Step Column Width */
 #programSequence table td:first-child,
 #scorePositions table td:first-child {
     width: 4ch;
 }
 
-/* Legend styles */
-.legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 16px;
-    margin: 8px 0 16px;
-    padding: 0;
-    list-style: none;
-    font-size: 14px;
-}
-
-.legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.legend-swatch {
-    width: 16px;
-    height: 16px;
-    border: 2px solid;
-}
-
-.legend-swatch.doc {
-    border-color: var(--ink);
-    /* Use a high-contrast color for stripes instead of transparent */
-    background: repeating-linear-gradient(
-        0deg,
-        var(--ink) 0,
-        var(--ink) 2px,
-        var(--card) 2px,
-        var(--card) 4px
-    );
-}
-
-/* Fallback for users who prefer increased contrast */
-@media (prefers-contrast: more) {
-    .legend-swatch.doc {
-        background: var(--ink);
-        border-color: var(--card);
-    }
-}
-.legend-swatch.margin {
-    border-color: var(--ink);
-    background: radial-gradient(var(--ink) 2px, transparent 2px) 0 0 / 6px 6px;
-}
-
-.legend-swatch.printable {
-    border-color: var(--ink);
-    background:
-        repeating-linear-gradient(
-            45deg,
-            var(--ink) 0,
-            var(--ink) 2px,
-            transparent 2px,
-            transparent 4px
-        ),
-        repeating-linear-gradient(
-            -45deg,
-            var(--ink) 0,
-            var(--ink) 2px,
-            transparent 2px,
-            transparent 4px
-        );
-}
-
-.legend-line {
-    width: 16px;
-    height: 0;
-    border-top: 2px solid;
-}
-
-.legend-line.score {
-    border-top-style: dashed;
-    border-color: var(--ink);
-}
-
-.visualizer-column.card {
-    border-top: 4px solid var(--blue);
-}
-
-/* ===== Accordion Component ===== */
-.accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-.accordion-item {
-    border: 1px solid var(--border);
-    background-color: var(--card);
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.accordion-item:first-child {
-    border-radius: 8px 8px 0 0;
-}
-
-.accordion-item:last-child {
-    border-radius: 0 0 8px 8px;
-}
-
-.accordion-item:only-child {
-    border-radius: 8px;
-}
-
-.accordion-item + .accordion-item {
-    border-top: none;
-}
-
-.accordion-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s;
-}
-
-.accordion-header:hover {
-    background-color: var(--bg);
-}
-
-.accordion-header h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.accordion-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    font-size: 18px;
-    transition: transform 0.2s;
-}
-
-.accordion-item.expanded .accordion-icon {
-    transform: rotate(180deg);
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.accordion-item.expanded .accordion-content {
-    max-height: 1000px;
-    transition: max-height 0.3s ease-in;
-}
-
-.accordion-body {
-    padding: 0 20px 20px;
-}
-
-/* ===== Segmented Control Component ===== */
-.segmented-control {
-    display: inline-flex;
-    background-color: var(--bg);
-    border-radius: 6px;
-    padding: 2px;
-    gap: 2px;
-    width: 100%;
-}
-
-.segmented-control input[type="radio"] {
-    display: none;
-}
-
-.segmented-control label {
-    flex: 1;
-    padding: 8px 12px;
-    text-align: center;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s, color 0.2s;
-    user-select: none;
-}
-
-.segmented-control input[type="radio"]:checked + label {
-    background-color: var(--card);
-    color: var(--ink);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.segmented-control label:hover {
-    opacity: 0.8;
-}
-
-/* ===== Compact Input with Unit Suffix ===== */
-.input-with-unit {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.input-with-unit input {
-    flex: 1;
-}
-
-.input-unit {
-    font-size: 14px;
-    color: var(--ink);
-    opacity: 0.7;
-    min-width: 24px;
-}
-
-/* ===== Icon Button ===== */
-.btn-icon {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.btn-icon .icon {
-    font-size: 20px;
-}
-
-/* ===== Tabs Component ===== */
-.tabs {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.tab-list {
-    display: flex;
-    border-bottom: 2px solid var(--border);
-    gap: 4px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.tab-button {
-    flex: 1;
-    padding: 12px 16px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    cursor: pointer;
-    font: inherit;
-    color: var(--ink);
-    opacity: 0.6;
-    transition: opacity 0.2s, border-color 0.2s;
-}
-
-.tab-button:hover {
-    opacity: 0.8;
-}
-
-.tab-button.active {
-    opacity: 1;
-    border-bottom-color: var(--blue);
-    font-weight: 600;
-}
-
-.tab-panels {
-    flex: 1;
-    overflow: auto;
-}
-
-.tab-panel {
-    display: none;
-    padding: 20px;
-}
-
-.tab-panel.active {
-    display: block;
-}
-
-/* ===== Canvas Header Stats ===== */
-.canvas-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    background-color: var(--bg);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.canvas-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.canvas-stat-label {
-    font-size: 12px;
-    opacity: 0.7;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.canvas-stat-value {
-    font-size: 18px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-}
-
-/* ===== Dense Table for Cuts ===== */
+/* Dense Table Variant */
 .dense-table {
     width: 100%;
     border-collapse: collapse;
@@ -650,7 +364,7 @@ tbody tr:nth-child(even) {
 
 .dense-table th,
 .dense-table td {
-    padding: 6px 8px;
+    padding: 6px var(--space-sm);
     border: 1px solid var(--border);
 }
 
@@ -667,25 +381,213 @@ tbody tr:nth-child(even) {
     font-variant-numeric: tabular-nums;
 }
 
-/* ===== Summary Stats ===== */
+/* =============================================================================
+   6. ACCORDION
+   ============================================================================= */
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.accordion-item {
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.accordion-item:first-child {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.accordion-item:last-child {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.accordion-item:only-child {
+    border-radius: var(--radius-lg);
+}
+
+.accordion-item + .accordion-item {
+    border-top: none;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--transition-normal);
+}
+
+.accordion-header:hover {
+    background-color: var(--bg);
+}
+
+.accordion-header:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+}
+
+.accordion-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.accordion-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    transition: transform var(--transition-normal);
+}
+
+.accordion-item.expanded .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-slow);
+}
+
+.accordion-item.expanded .accordion-content {
+    max-height: 1000px;
+}
+
+.accordion-body {
+    padding: 0 20px 20px;
+}
+
+/* =============================================================================
+   7. SEGMENTED CONTROL
+   ============================================================================= */
+
+.segmented-control {
+    display: inline-flex;
+    background-color: var(--bg);
+    border-radius: var(--radius-md);
+    padding: 2px;
+    gap: 2px;
+    width: 100%;
+}
+
+.segmented-control input[type="radio"] {
+    display: none;
+}
+
+.segmented-control label {
+    flex: 1;
+    padding: var(--space-sm) 12px;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+    user-select: none;
+}
+
+.segmented-control input[type="radio"]:checked + label {
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+}
+
+.segmented-control label:hover {
+    opacity: 0.8;
+}
+
+/* =============================================================================
+   8. TABS
+   ============================================================================= */
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tab-list {
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    gap: var(--space-xs);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px var(--space-md);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font: inherit;
+    color: var(--ink);
+    opacity: 0.6;
+    transition: opacity var(--transition-normal), border-color var(--transition-normal);
+}
+
+.tab-button:hover {
+    opacity: 0.8;
+}
+
+.tab-button.active {
+    opacity: 1;
+    border-bottom-color: var(--blue);
+    font-weight: 600;
+}
+
+.tab-button:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+}
+
+.tab-panels {
+    flex: 1;
+    overflow: auto;
+}
+
+.tab-panel {
+    display: none;
+    padding: 20px;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* =============================================================================
+   9. SUMMARY & STATS
+   ============================================================================= */
+
 .summary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .summary-card {
-    padding: 16px;
+    padding: var(--space-md);
     background-color: var(--bg);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border);
 }
 
 .summary-card-label {
     font-size: 12px;
     opacity: 0.7;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-sm);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -697,7 +599,7 @@ tbody tr:nth-child(even) {
 }
 
 .summary-section {
-    margin-bottom: 24px;
+    margin-bottom: var(--space-lg);
 }
 
 .summary-section h3 {
@@ -709,6 +611,10 @@ tbody tr:nth-child(even) {
     opacity: 0.7;
 }
 
+/* =============================================================================
+   10. WARNINGS
+   ============================================================================= */
+
 .warning-list {
     list-style: none;
     padding: 0;
@@ -719,30 +625,11 @@ tbody tr:nth-child(even) {
     padding: 12px;
     background-color: rgba(255, 193, 7, 0.1);
     border-left: 3px solid #ffc107;
-    border-radius: 4px;
-    margin-bottom: 8px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-sm);
     font-size: 14px;
 }
 
 .warning-item:last-child {
     margin-bottom: 0;
-}
-
-/* ===== Visualizer Options in Accordion ===== */
-#visualizerOptions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-#visualizerOptions .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-#visualizerOptions .checkbox-label input[type="checkbox"] {
-    cursor: pointer;
 }
