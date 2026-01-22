@@ -1,4 +1,12 @@
+/**
+ * Dark Theme - Color Variable Overrides
+ *
+ * Applied via [data-theme="dark"] attribute on :root
+ * Overrides base.css theme variables for dark mode
+ */
+
 [data-theme="dark"] {
+    /* ===== Theme Color Overrides ===== */
     --bg: #121417;
     --card: #1f2226;
     --ink: #ffffff;
@@ -8,7 +16,7 @@
     --button-ink: var(--card);
     --success: #2ea043;
 
-    /* Theme colors */
+    /* ===== Canvas Theme Colors (RGB) ===== */
     --doc-color: 0, 0, 0;
     --margin-color: 255, 0, 0;
     --printable-color: 255, 0, 255;
@@ -16,11 +24,13 @@
     --line-color: 255, 255, 255;
 }
 
+/* ===== Selection Colors ===== */
 [data-theme="dark"] ::selection {
     background: var(--blue);
     color: var(--card);
 }
 
+/* ===== Scrollbar Styling ===== */
 [data-theme="dark"] {
     scrollbar-color: var(--border) var(--card);
 }
@@ -36,7 +46,7 @@
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
     background: var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
