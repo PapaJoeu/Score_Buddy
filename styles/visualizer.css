@@ -16,9 +16,11 @@
 /* ===== Canvas Wrapper ===== */
 .canvas-wrapper {
     width: 100%;
+    min-height: 300px;
     max-height: 80vh;
     aspect-ratio: var(--sheet-aspect, 1/1);
     margin-top: var(--space-md);
+    position: relative;
 }
 
 .canvas-wrapper canvas {
@@ -26,6 +28,8 @@
     height: 100%;
     display: block;
     background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
 }
 
 #layoutCanvas {
