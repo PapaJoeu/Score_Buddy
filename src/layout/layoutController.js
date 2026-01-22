@@ -1,6 +1,8 @@
 import { drawLayout } from '../../visualizer.js';
 import { calculateLayoutDetails as calcDetails, calculateProgramSequence as calcSequence } from './calculations.js';
 import { renderProgramSequence } from '../ui/display.js';
+import { updateSummaryTab } from '../ui/outputPanel.js';
+import { byId } from '../dom/dom.js';
 
 let zoomFactor = 1;
 const ZOOM_STEP = 1.1;
@@ -142,7 +144,7 @@ export function drawLayoutWrapper(layout, scorePositions = [], elements) {
 export function displayProgramSequence(layout, elements) {
     const sequence = calcSequence(layout);
     const unit = elements.metricToggle && elements.metricToggle.checked ? 'mm' : 'inches';
-    renderProgramSequence(sequence, elements.programSequence, unit);
+    renderProgramSequence(sequence, null, unit);
 }
 
 export function updateLayoutInfo(layout, elements, config = null) {
@@ -155,10 +157,46 @@ export function updateLayoutInfo(layout, elements, config = null) {
     if (config) {
         sheetInfo = `${config.sheetSize}${config.sheetRotated ? ' (rotated)' : ''}`;
     }
-    elements.layoutTitle.innerHTML = `<li class="legend-item">${docWidth} x ${docLength} ${nUp}-up on ${sheetInfo}</li>`;
+
+    // Calculate stats
     const areaUsed = (layout.docWidth * layout.docLength * nUp) / (layout.sheetWidth * layout.sheetLength);
     const waste = (100 - areaUsed * 100).toFixed(2);
-    elements.wasteLegend.textContent = `Waste: ${waste}%`;
+    const usableArea = (areaUsed * 100).toFixed(2);
+
+    // Update canvas header stats
+    const canvasNUp = byId('canvasNUp', { optional: true });
+    const canvasWaste = byId('canvasWaste', { optional: true });
+    const canvasDocSize = byId('canvasDocSize', { optional: true });
+    const canvasSheetSize = byId('canvasSheetSize', { optional: true });
+
+    if (canvasNUp) canvasNUp.textContent = `${nUp}-up`;
+    if (canvasWaste) canvasWaste.textContent = `${waste}%`;
+    if (canvasDocSize) canvasDocSize.textContent = `${docWidth}×${docLength}"`;
+    if (canvasSheetSize) canvasSheetSize.textContent = sheetInfo;
+
+    // Calculate program sequence for cut counts
+    const sequence = calcSequence(layout);
+    const uniqueX = [...new Set(sequence.filter((_, i) => i % 2 === 0))];
+    const uniqueY = [...new Set(sequence.filter((_, i) => i % 2 === 1))];
+
+    // Generate warnings
+    const warnings = [];
+    if (waste > 50) warnings.push('High waste percentage (>50%). Consider adjusting dimensions.');
+    if (nUp === 0) warnings.push('No documents fit on sheet with current dimensions.');
+    if (layout.marginWidth < 0.125 || layout.marginLength < 0.125) {
+        warnings.push('Margins are very tight (<0.125"). May cause printing issues.');
+    }
+
+    // Update summary tab
+    updateSummaryTab({
+        nUp: `${nUp}`,
+        waste: `${waste}%`,
+        usableArea: `${usableArea}%`,
+        totalCuts: sequence.length,
+        xCuts: uniqueX.length,
+        yCuts: uniqueY.length,
+        warnings
+    });
 }
 
 export function selectDefaultSizes(elements) {
