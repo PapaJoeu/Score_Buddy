@@ -4,22 +4,8 @@ import { toggleMetricMode } from './metricToggle.js';
 import { byId, qsa, classes, visibility } from '../dom/dom.js';
 
 export function registerEventListeners(elements) {
-    elements.sheetButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
-    elements.docButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
-    elements.gutterButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
-    elements.marginButtons.addEventListener('click', event => handleSizeButtonClick(event, elements));
-
-    ['marginWidth', 'marginLength'].forEach(id => {
-        elements[id].addEventListener('input', () => {
-            const customMarginButton = byId('customMarginSizeButton', { optional: true });
-            qsa('button', elements.marginButtons).forEach(btn => classes.remove(btn, 'active'));
-            if (customMarginButton) {
-                classes.add(customMarginButton, 'active');
-            }
-            visibility.show(elements.marginInputs);
-            calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
-        });
-    });
+    // Note: Size preset handling is now done by segmented controls in setupPanel.js
+    // No need for button grid event listeners
 
     elements.fitSheetButton.addEventListener('click', () => {
         resetZoom();
@@ -58,7 +44,9 @@ export function registerEventListeners(elements) {
         elements.optimalLayoutButton.classList.add('hidden');
     });
 
-    elements.metricToggle.addEventListener('change', () => toggleMetricMode(elements));
+    if (elements.metricToggle) {
+        elements.metricToggle.addEventListener('change', () => toggleMetricMode(elements));
+    }
 
     const inputIds = ['sheetWidth', 'sheetLength', 'docWidth', 'docLength', 'gutterWidth', 'gutterLength', 'marginWidth', 'marginLength'];
     inputIds.forEach(id => {
@@ -75,36 +63,14 @@ export function registerEventListeners(elements) {
         });
     });
 
-    elements.themeToggle.addEventListener('change', () => toggleTheme(elements));
+    if (elements.themeToggle) {
+        elements.themeToggle.addEventListener('change', () => toggleTheme(elements));
+    }
 
     toggleCustomInputs(elements);
 }
 
-function handleSizeButtonClick(event, elements) {
-    const button = event.target.closest('button');
-    if (!button) {
-        return;
-    }
-    const type = button.dataset.type;
-    const inputs = elements[`${type}Inputs`];
-    const isCustom = button.id.includes('custom');
-
-    qsa('button', button.parentNode).forEach(btn => classes.remove(btn, 'active'));
-    classes.add(button, 'active');
-    visibility.toggle(inputs, isCustom);
-
-    if (!isCustom) {
-        if (type === 'gutter') {
-            elements.gutterWidth.value = button.dataset.width;
-            elements.gutterLength.value = button.dataset.length;
-        } else {
-            elements[`${type}Width`].value = button.dataset.width;
-            elements[`${type}Length`].value = button.dataset.length;
-        }
-    }
-
-    calculateLayout(elements, getCachedScorePositions(), () => resetScorePositions(elements));
-}
+// Size button handling is now done via segmented controls in setupPanel.js
 
 function rotateSize(type, elements, shouldCalculate = true) {
     const widthInput = elements[`${type}Width`];

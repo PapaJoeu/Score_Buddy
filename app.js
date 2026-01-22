@@ -1,20 +1,21 @@
-import './src/ui/sectionFactory.js';
+import { initSetupPanel } from './src/ui/setupPanel.js';
+import { initOutputPanel } from './src/ui/outputPanel.js';
 import { elements } from './src/ui/elements.js';
 import { registerEventListeners, initTheme } from './src/ui/events.js';
-import { selectDefaultSizes, calculateLayout } from './src/layout/layoutController.js';
-import { createSizeButtons } from './src/ui/buttonCreation.js';
-import { INCH_SIZE_OPTIONS } from './src/config/sizeOptions.js';
+import { calculateLayout } from './src/layout/layoutController.js';
 
 function init() {
+    // Initialize theme first
     initTheme(elements);
-    createSizeButtons({
-        sheetButtons: elements.sheetButtons,
-        docButtons: elements.docButtons,
-        gutterButtons: elements.gutterButtons,
-        marginButtons: elements.marginButtons
-    }, INCH_SIZE_OPTIONS);
+
+    // Initialize new UI panels
+    initSetupPanel();
+    initOutputPanel();
+
+    // Register event listeners
     registerEventListeners(elements);
-    selectDefaultSizes(elements);
+
+    // Initial calculation
     calculateLayout(elements);
 }
 

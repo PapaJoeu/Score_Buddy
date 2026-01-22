@@ -26,8 +26,8 @@ export function calculateAndRenderScores(elements) {
 }
 
 export function updateScorePositionDisplay(scoreLines, elements) {
-    const unit = elements.metricToggle.checked ? 'mm' : 'inches';
-    renderScorePositions(scoreLines, elements.scorePositions, unit);
+    const unit = elements.metricToggle && elements.metricToggle.checked ? 'mm' : 'inches';
+    renderScorePositions(scoreLines, null, unit);
 }
 
 export function getCachedScorePositions() {

@@ -50,8 +50,25 @@
                 <!-- TODO: Enhance keyboard navigation and responsiveness -->
                 <h2>Layout Visualizer</h2>
 
-                <!-- Dynamic layout title -->
-                <ul class="legend" id="layoutTitle" aria-label="Layout title"></ul>
+                <!-- Canvas Header with Stats -->
+                <div class="canvas-header">
+                    <div class="canvas-stat">
+                        <div class="canvas-stat-label">N-Up</div>
+                        <div class="canvas-stat-value" id="canvasNUp">-</div>
+                    </div>
+                    <div class="canvas-stat">
+                        <div class="canvas-stat-label">Waste</div>
+                        <div class="canvas-stat-value" id="canvasWaste">-</div>
+                    </div>
+                    <div class="canvas-stat">
+                        <div class="canvas-stat-label">Doc Size</div>
+                        <div class="canvas-stat-value" id="canvasDocSize">-</div>
+                    </div>
+                    <div class="canvas-stat">
+                        <div class="canvas-stat-label">Sheet Size</div>
+                        <div class="canvas-stat-value" id="canvasSheetSize">-</div>
+                    </div>
+                </div>
 
                 <!-- ===== Toolbar ===== -->
                 <div class="toolbar" role="toolbar" aria-label="Canvas controls">
@@ -72,9 +89,6 @@
                         <span role="tooltip" id="tip-reset" class="tooltip">Reset view</span>
                     </button>
                 </div>
-
-                <!-- ===== Visualization Options ===== -->
-                <div class="visualizer-options" id="visualizerOptions"></div>
 
                 <!-- ===== Canvas ===== -->
                 <div class="canvas-wrapper">
