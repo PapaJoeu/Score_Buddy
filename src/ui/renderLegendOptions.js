@@ -53,4 +53,5 @@ export function renderLegendOptions() {
     }
 }
 
-renderLegendOptions();
+// Note: renderLegendOptions() is called from app.js after initSetupPanel()
+// creates the #visualizerOptions container

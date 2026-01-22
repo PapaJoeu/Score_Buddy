@@ -102,41 +102,14 @@
 
 
             <!-- ===== Data Column ===== -->
-            <aside class="data-column">
-                <!-- Displays program sequence and scoring options -->
-                <!-- TODO: Expand analytics and improve mobile layout -->
-                <!-- Program Sequence output card -->
-                <section id="programSequence" class="card data-card" role="status" aria-live="polite"></section>
-
-                <!-- Score options card now contains score positions -->
-                <section id="scoreOptions" class="card data-card">
-                    <div class="card-header">
-                        <h2>Scoring</h2>
-                        <button type="button" id="calculateScoresButton" class="btn">Calculate Scores</button>
-                    </div>
-                    <div id="scoreControls" class="form-grid">
-                        <label for="foldType">Score Type:</label>
-                        <select id="foldType">
-                            <option value="bifold">Bifold</option>
-                            <option value="trifold">Trifold</option>
-                            <option value="gatefold">Gatefold</option>
-                            <option value="custom">Custom</option>
-                        </select>
-                        <div id="customScoreInputs" class="hidden">
-                            <label for="customScores">Custom Positions (in, comma-separated)</label>
-                            <input type="text" id="customScores" placeholder="e.g., 2,4.5">
-                        </div>
-                    </div>
-                    <div id="scorePositions" role="status" aria-live="polite"></div>
-                </section>
-            </aside>
+            <!-- Output panel with tabs - populated by initOutputPanel() -->
+            <aside class="data-column"></aside>
         </main>
     </div>
     <!-- ===== Closing Scripts ===== -->
     <!-- Load application modules -->
     <!-- TODO: Bundle and defer non-critical scripts -->
     <script type="module" src="src/ui/initToggles.js"></script>
-    <script type="module" src="src/ui/renderLegendOptions.js"></script>
     <script type="module" src="app.js"></script>
     <script type="module" src="visualizer.js"></script>
 </body>
