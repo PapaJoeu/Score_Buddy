@@ -408,4 +408,17 @@ export function initSetupPanel() {
     if (docHeader && docContent.rotateButton) {
         docHeader.insertBefore(docContent.rotateButton, docHeader.querySelector('.accordion-icon'));
     }
+
+    // Wire up fold type change handler
+    const foldType = byId('foldType', { optional: true });
+    const customInputs = byId('customScoreInputs', { optional: true });
+    if (foldType && customInputs) {
+        foldType.addEventListener('change', () => {
+            if (foldType.value === 'custom') {
+                customInputs.classList.remove('hidden');
+            } else {
+                customInputs.classList.add('hidden');
+            }
+        });
+    }
 }
