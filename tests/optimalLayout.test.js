@@ -1,4 +1,4 @@
-const assert = require('assert');
+import assert from 'assert';
 
 (async () => {
   const { findOptimalLayout } = await import('../src/layout/layoutController.js');

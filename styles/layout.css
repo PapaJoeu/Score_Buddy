@@ -1,25 +1,17 @@
 /**
  * Layout Styles - Grid System & Responsive Layout
- *
- * 3-Zone Workbench Layout:
- * - inputs-column: Setup panel (left) - sticky on desktop
- * - visualizer-column: Canvas (center) - flexible, dominant
- * - data-column: Output panel (right) - fixed width
- *
- * Breakpoints:
- * - Desktop: 1200px+ (3-column)
- * - Tablet: 851-1199px (2-column)
- * - Mobile: ≤850px (single column)
+ * Score Buddy Premium
  */
 
 /* ===== Container ===== */
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 1440px;
+    max-width: 1600px; /* Slightly wider for the 3-column workbench */
     margin: 0 auto;
     padding: 0 var(--space-lg) var(--space-lg);
-    gap: var(--space-lg);
+    gap: var(--space-md);
+    animation: fadeIn 0.6s var(--transition-normal);
 }
 
 /* ===== Main Layout Grid ===== */
@@ -35,12 +27,9 @@
 
 /* ===== Column Definitions ===== */
 
-/* Setup Panel (Left) - Sticky with fixed width */
+/* Setup Panel (Left) - Sticky with fixed width on desktop */
 .inputs-column {
     grid-area: inputs;
-    position: sticky;
-    top: var(--space-lg);
-    align-self: start;
 }
 
 /* Canvas (Center) - Dominant, flexible */
@@ -48,9 +37,10 @@
     grid-area: visualizer;
     display: flex;
     flex-direction: column;
+    min-width: 0; /* Prevents flex items from breaking layout */
 }
 
-/* Output Panel (Right) - Fixed width */
+/* Output Panel (Right) - Sticky with fixed width on desktop */
 .data-column {
     grid-area: data;
 }
@@ -60,8 +50,18 @@
 /* Desktop Layout: 3-zone workbench */
 @media (min-width: 1200px) {
     .layout {
-        grid-template-columns: 340px minmax(600px, 1fr) 380px;
+        grid-template-columns: 340px minmax(500px, 1fr) 400px;
         grid-template-areas: "inputs visualizer data";
+        align-items: start;
+    }
+
+    .inputs-column,
+    .data-column {
+        position: sticky;
+        top: calc(var(--space-lg) + 60px); /* Pinned below header offset */
+        max-height: calc(100vh - var(--space-lg) * 2 - 80px);
+        overflow-y: auto;
+        padding-right: var(--space-1); /* Subtle gap for custom scrollbar */
     }
 }
 
@@ -72,6 +72,14 @@
         grid-template-areas:
             "inputs visualizer"
             "inputs data";
+        align-items: start;
+    }
+
+    .inputs-column {
+        position: sticky;
+        top: calc(var(--space-lg) + 60px);
+        max-height: calc(100vh - var(--space-lg) * 2 - 80px);
+        overflow-y: auto;
     }
 }
 
@@ -85,11 +93,27 @@
             "data";
     }
 
-    .inputs-column {
+    .inputs-column,
+    .data-column {
         position: static;
+        max-height: none;
+        overflow-y: visible;
     }
 
     .container {
         padding: 0 var(--space-md) var(--space-md);
     }
 }
+
+/* ===== Micro-Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

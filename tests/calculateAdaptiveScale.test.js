@@ -1,4 +1,4 @@
-const assert = require('assert');
+import assert from 'assert';
 
 (async () => {
   const { calculateAdaptiveScale } = await import('../visualizer.js');
