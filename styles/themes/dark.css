@@ -1,38 +1,64 @@
 /**
  * Dark Theme - Color Variable Overrides
- *
- * Applied via [data-theme="dark"] attribute on :root
- * Overrides base.css theme variables for dark mode
+ * Score Buddy Premium
  */
 
 [data-theme="dark"] {
     /* ===== Theme Color Overrides ===== */
-    --bg: #121417;
-    --card: #1f2226;
-    --ink: #ffffff;
-    --border: #2a2e33;
-    --blue: #66b2ff;
-    --button-bg: var(--blue);
-    --button-ink: var(--card);
-    --success: #2ea043;
+    --theme-bg: #090b10;
+    --theme-bg-gradient: radial-gradient(circle at 10% 10%, #161a26 0%, #090b10 80%);
+    --theme-surface: #11141d;
+    --theme-surface-glass: rgba(17, 20, 29, 0.75);
+    --theme-surface-glass-border: rgba(255, 255, 255, 0.08);
+    --theme-border: #1e2638;
+    
+    --theme-text-main: #f8fafc;
+    --theme-text-muted: #94a3b8;
+
+    /* Accent color adjustment for contrast in dark mode */
+    --primary-l: 64%;
+
+    /* ===== Semantic Color Roles ===== */
+    --color-primary: var(--primary-accent);
+    --color-primary-hover: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 6%));
+    --color-success: hsl(142, 65%, 48%);
+    --color-warning: hsl(38, 92%, 55%);
+    
+    --color-bg: var(--theme-bg);
+    --color-surface: var(--theme-surface);
+    --color-surface-glass: var(--theme-surface-glass);
+    --color-border: var(--theme-border);
+    
+    --color-text-main: var(--theme-text-main);
+    --color-text-muted: var(--theme-text-muted);
+
+    /* Legacy mapping fallback */
+    --bg: var(--color-bg);
+    --card: var(--color-surface);
+    --ink: var(--color-text-main);
+    --border: var(--color-border);
+    --blue: var(--color-primary);
+    --button-bg: var(--color-primary);
+    --button-ink: #090b10;
+    --success: var(--color-success);
 
     /* ===== Canvas Theme Colors (RGB) ===== */
-    --doc-color: 0, 0, 0;
-    --margin-color: 255, 0, 0;
-    --printable-color: 255, 0, 255;
-    --score-color: var(--printable-color);
-    --line-color: 255, 255, 255;
+    --doc-color: 248, 250, 252;
+    --margin-color: 248, 113, 113;
+    --printable-color: 129, 140, 248;
+    --score-color: 52, 211, 153;
+    --line-color: 248, 250, 252;
 }
 
 /* ===== Selection Colors ===== */
 [data-theme="dark"] ::selection {
-    background: var(--blue);
-    color: var(--card);
+    background: var(--color-primary);
+    color: #ffffff;
 }
 
 /* ===== Scrollbar Styling ===== */
 [data-theme="dark"] {
-    scrollbar-color: var(--border) var(--card);
+    scrollbar-color: var(--color-border) var(--color-surface);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar {
@@ -41,14 +67,15 @@
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-track {
-    background: var(--card);
+    background: var(--color-surface);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--color-border);
     border-radius: var(--radius-sm);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-    background: var(--blue);
+    background: var(--color-primary);
 }
+

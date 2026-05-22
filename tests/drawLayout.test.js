@@ -1,4 +1,4 @@
-const assert = require('assert');
+import assert from 'assert';
 
 (globalThis.document = { documentElement: {} });
 (globalThis.getComputedStyle = () => ({ getPropertyValue: () => '' }));

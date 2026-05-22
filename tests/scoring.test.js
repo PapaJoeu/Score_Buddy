@@ -1,4 +1,4 @@
-const assert = require('assert');
+import assert from 'assert';
 
 (async () => {
   const { calculateLayoutDetails } = await import('../src/layout/calculations.js');

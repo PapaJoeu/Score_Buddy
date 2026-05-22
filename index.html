@@ -3,19 +3,23 @@
 <!-- ===== Head ===== -->
 <head>
     <!-- Metadata and stylesheet links -->
-    <!-- TODO: Add SEO, accessibility, and social sharing meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kev's Bitchin' Print Calculator</title>
+    <meta name="description" content="Score Buddy - A professional print production calculator, layout planner, and document scoring helper.">
+    <title>Score Buddy — Production Print Planner & Calculator</title>
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('theme');
+            const urlParams = new URLSearchParams(window.location.search);
+            const theme = urlParams.get('theme') || localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            if (theme === 'dark' || (!theme && prefersDark)) {
                 document.documentElement.setAttribute('data-theme', 'dark');
             }
         })();
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/components.css">
@@ -26,9 +30,10 @@
     <div class="container">
         <!-- ===== Header ===== -->
         <header class="header">
-            <!-- Site title and mode toggles -->
-            <!-- TODO: Accessibility review and responsive tweaks -->
-            <h1>Kev's Bitchin' Print Calculator</h1>
+            <div class="logo-group">
+                <h1>Score Buddy</h1>
+                <p class="subtitle">Production Print Planner & Calculator</p>
+            </div>
             <div class="menu-bar" id="menuBar">
                 <button id="optimalLayoutButton" class="btn btn-success hidden">See optimal layout</button>
             </div>
